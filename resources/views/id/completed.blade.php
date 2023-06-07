@@ -20,13 +20,13 @@ $totalPage = 500;
   <body>
   @include('layouts.navbar')
   <div style="display: inline-block;">
-@foreach($data as $item)
-  @if(!in_array($item['animeId'], $blacklist_animeIds))
-    @include('layouts.anime-card', [
-      'animeId' => $item['animeId'],
-      'animeTitle' => $item['animeTitle'],
-      'animeImg' => $item['animeImg'],
-      'status' => 'Episode '.$item['episodeNum'],
+@foreach($data['data'] as $item)
+  @if(!in_array($item['title'], $blacklist_animeIds))
+    @include('layouts.anime-cardid', [
+      'animeId' => $item['slug'],
+      'animeTitle' => $item['title'],
+      'animeImg' => $item['poster'],
+      'status' => 'Total Episode : '.$item['episode_count'],
     ])
   @endif
 @endforeach

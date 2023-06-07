@@ -59,8 +59,6 @@ Route::middleware('admin')->group(function () {
     Route::post('/adding-blacklist', [BlacklistController::class, 'store']);
     Route::post('/del-blacklist', [BlacklistController::class, 'destroy'])->name('blacklist.destroy');
     Route::post('/edit-blacklist', [BlacklistController::class, 'show'])->name('blacklist.destroy');
-
-    
 });
 
 

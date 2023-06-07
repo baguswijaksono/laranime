@@ -91,14 +91,23 @@ class ApiController extends Controller
 
     // Indonesian Start //
     
-    public function GetRecentEpisodesid(Request $request, $page)
+    public function GetOngoingAnimeId(Request $request, $page)
     {
-        $response = Http::get('https://aniyoi-api.vercel.app/nanime/recent?page='.$page);
+        $response = Http::get($this->idapi .'/ongoing-anime/'.$page);
         $data = $response->json();
         $blacklist = Blacklist::pluck('animeId')->toArray(); // Mengambil nilai kolom animeId dan menyimpannya ke dalam array
-        return view('id.recent-release', ['data' => $data, 'blacklist_animeIds' => $blacklist]);
+        return view('id.ongoing', ['data' => $data, 'blacklist_animeIds' => $blacklist]);
     }
 
+    public function GetCompleteAnimeId(Request $request, $page)
+    {
+        $response = Http::get($this->idapi .'/complete-anime/'.$page);
+        $data = $response->json();
+        $blacklist = Blacklist::pluck('animeId')->toArray(); // Mengambil nilai kolom animeId dan menyimpannya ke dalam array
+        return view('id.completed', ['data' => $data, 'blacklist_animeIds' => $blacklist]);
+    }
+
+    
     public function GetAnimeSearchid(Request $request, $keyw)
     {
         $response = Http::get('https://aniyoi-api.vercel.app/nanime/search?query='.$keyw.'&page='.$page);
