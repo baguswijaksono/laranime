@@ -14,11 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
+            $table->date('date_of_birth')->nullable();
             $table->string('role')->default('client');
             $table->string('theme')->default('dark');
             $table->string('lang')->default('en');
         });
     }
+    
+    
 
     /**
      * Reverse the migrations.
@@ -31,6 +34,7 @@ return new class extends Migration
             $table->dropColumn(['role']);
             $table->dropColumn(['theme']);
             $table->dropColumn(['lang']);
+            $table->dropColumn(['date_of_birth']);
         });
     }
 };

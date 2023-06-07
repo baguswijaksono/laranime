@@ -50,7 +50,6 @@
               <a href="/en/watch/">
   <img src="{{ $item['poster'] }}" class="image rounded float-start" alt="...">
 </a>
-
             </div>
             <dt style="max-width: 166.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{$item['title']}}</dt>
             <dd>{{ $item['release_day'] }} , {{ $item['newest_release_date'] }} </dd>

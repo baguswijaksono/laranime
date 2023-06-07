@@ -16,6 +16,11 @@ class User extends Authenticatable
         return $this->attributes['role'];
     }
 
+    public function getdate_of_birth()
+    {
+        return $this->attributes['date_of_birth'];
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -25,6 +30,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'date_of_birth'
     ];
 
     /**
