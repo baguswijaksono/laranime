@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\MinAge;
 
 class MinAgeController extends Controller
 {
@@ -41,9 +42,7 @@ class MinAgeController extends Controller
         ]);
 
         MinAge::create($request->all());
-
-        return redirect()->route('min_age.index')
-            ->with('success', 'Data minAge berhasil disimpan.');
+        return back();
     }
 
     /**

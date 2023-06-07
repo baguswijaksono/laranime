@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('blacklists', function (Blueprint $table) {
             $table->id();
             $table->string('animeId');
-            //$table->string('reason');
+            $table->string('reason');
         });
     }
     

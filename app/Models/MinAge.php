@@ -8,9 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class MinAge extends Model
 {
     use HasFactory;
-    
     protected $fillable = ['animeId', 'minAge'];
-    
     public $timestamps = false;
 }
 

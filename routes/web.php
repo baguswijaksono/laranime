@@ -5,6 +5,7 @@ use App\Http\Controllers\ApiController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BlacklistController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MinAgeController;
 
 Route::middleware(['auth'])->group(function(){
 
@@ -58,7 +59,13 @@ Route::middleware('admin')->group(function () {
     Route::get('/en-blacklist', [BlacklistController::class, 'index']);
     Route::post('/adding-blacklist', [BlacklistController::class, 'store']);
     Route::post('/del-blacklist', [BlacklistController::class, 'destroy'])->name('blacklist.destroy');
-    Route::post('/edit-blacklist', [BlacklistController::class, 'show'])->name('blacklist.destroy');
+    Route::post('/edit-blacklist', [BlacklistController::class, 'show'])->name('blacklist.edit');
+
+    // CRUD minage
+    Route::get('/en-minage', [MinAgeController::class, 'index']);
+    Route::post('/adding-minage', [MinAgeController::class, 'store']);
+    Route::post('/del-blacklist', [MinAgeController::class, 'destroy'])->name('minage.destroy');
+    Route::post('/edit-blacklist', [MinAgeController::class, 'show'])->name('minage.edit');
 });
 
 
