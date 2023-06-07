@@ -15,7 +15,7 @@ class BlacklistController extends Controller
     public function index()
     {
         $blacklist = Blacklist::all();
-        return view('search', compact('blacklist'));
+        return view('blacklist.index', compact('blacklist'));
     }
     
 
@@ -42,7 +42,7 @@ class BlacklistController extends Controller
         ]);
 
         Blacklist::create($request->all());
-        return redirect('/admin/popular/1');
+        return back();
     }
 
     /**
@@ -99,9 +99,9 @@ class BlacklistController extends Controller
     
         if ($blacklist) {
             $blacklist->delete();
-            return redirect('/admin/popular/1')->with('success', 'Anime dengan ID ' . $animeId . ' berhasil dihapus dari blacklist.');
+            return back();
         } else {
-            return redirect('/admin/popular/1')->with('error', 'Anime dengan ID ' . $animeId . ' tidak ditemukan di dalam blacklist.');
+            return back();
         }
     }
     

@@ -40,15 +40,12 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin', [AdminController::class, 'index']);
 
     // en
-    Route::get('/admin/en/recent-release/{page}', [AdminController::class, 'GetRecentEpisodes']);
-    Route::get('/admin/en/popular/{page}', [AdminController::class, 'GetPopularAnime']);
-    Route::get('/admin/en/search/{keyw}', [AdminController::class, 'GetAnimeSearch']);
-    Route::get('/admin/en/anime-movies/{page}', [AdminController::class, 'GetAnimeMovies']);
-    Route::get('/admin/en/top-airing/{page}', [AdminController::class, 'getTopAiring']);
-    Route::get('/admin/en/genre/{genre}/{page}', [AdminController::class, 'GetAnimeGenres']);
-    Route::get('/admin/en/anime-details/{anime}', [AdminController::class, 'GetAnimeDetails']);
-    Route::get('/admin/en/watch/{episodeId}', [AdminController::class, 'GetStreamingURLs']);
-    Route::get('/admin/en/thread/{episodeId}', [AdminController::class, 'GetEpisodeThread']);
+    Route::get('/admin/en/recent-release/{page}', [AdminController::class, 'GetRecentEpisodes']); // done blacklist
+    Route::get('/admin/en/popular/{page}', [AdminController::class, 'GetPopularAnime']); // done blacklist
+    Route::get('/admin/en/search/{keyw}', [AdminController::class, 'GetAnimeSearch']); // done blacklist
+    Route::get('/admin/en/anime-movies/{page}', [AdminController::class, 'GetAnimeMovies']); // done blacklist
+    Route::get('/admin/en/top-airing/{page}', [AdminController::class, 'getTopAiring']);// done blacklist
+    Route::get('/admin/en/genre/{genre}/{page}', [AdminController::class, 'GetAnimeGenres']);// done blacklist
 
     // anime bahasa indonesia
     Route::get('/admin/id/recent-release/{page}', [ApiController::class, 'GetRecentEpisodesid']);
@@ -58,6 +55,7 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/id/watch/{anime}/{episodeId}', [ApiController::class, 'GetStreamingURLsid']);
 
     // CRUD blacklist
+    Route::get('/en-blacklist', [BlacklistController::class, 'index']);
     Route::post('/adding-blacklist', [BlacklistController::class, 'store']);
     Route::post('/del-blacklist', [BlacklistController::class, 'destroy'])->name('blacklist.destroy');
     Route::post('/edit-blacklist', [BlacklistController::class, 'show'])->name('blacklist.destroy');
