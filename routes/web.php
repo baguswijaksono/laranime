@@ -37,6 +37,7 @@ Route::middleware(['auth'])->group(function(){
 
 // admin
 Route::middleware('admin')->group(function () {
+    Route::get('/admin', [AdminController::class, 'index']);
 
     // en
     Route::get('/admin/en/recent-release/{page}', [AdminController::class, 'GetRecentEpisodes']);
