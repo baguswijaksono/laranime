@@ -29,7 +29,7 @@ Route::middleware(['auth'])->group(function(){
     // anime bahasa indonesia
     Route::get('/id/ongoing-anime/{page}', [ApiController::class, 'GetOngoingAnimeId']);
     Route::get('/id/complete-anime/{page}', [ApiController::class, 'GetCompleteAnimeId']);
-    Route::get('/id/search/{page}', [ApiController::class, 'GetAnimeSearchId']);
+    Route::get('/id/search/{keyw}', [ApiController::class, 'GetAnimeSearchId']);
     Route::get('/id/anime/{anime}', [ApiController::class, 'GetAnimeDetailsid']);
     Route::get('/id/watch/{anime}/{episodeId}', [ApiController::class, 'GetStreamingURLsid']);
 

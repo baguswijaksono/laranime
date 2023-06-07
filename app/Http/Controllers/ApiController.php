@@ -117,7 +117,7 @@ class ApiController extends Controller
 
     public function GetAnimeSearchid(Request $request, $keyw)
     {
-        $response = Http::get('https://aniyoi-api.vercel.app/nanime/search?query='.$keyw.'&page='.$page);
+        $response = Http::get($this->idapi .'/search/'.$keyw);
         $data = $response->json();
         $blacklist = Blacklist::pluck('animeId')->toArray(); // Mengambil nilai kolom animeId dan menyimpannya ke dalam array
         return view('id.search', ['data' => $data, 'blacklist_animeIds' => $blacklist]);
