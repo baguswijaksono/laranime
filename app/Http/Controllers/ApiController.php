@@ -107,21 +107,20 @@ class ApiController extends Controller
         return view('id.completed', ['data' => $data, 'blacklist_animeIds' => $blacklist]);
     }
 
-    
+    public function GetAnimeDetailsid(Request $request, $anime)
+    {
+        $response = Http::get($this->idapi .'/anime/'.$anime);
+        $data = $response->json();
+        $blacklist = Blacklist::pluck('animeId')->toArray(); // Mengambil nilai kolom animeId dan menyimpannya ke dalam array
+        return view('id.anime-details', ['data' => $data, 'blacklist_animeIds' => $blacklist]);
+    }
+
     public function GetAnimeSearchid(Request $request, $keyw)
     {
         $response = Http::get('https://aniyoi-api.vercel.app/nanime/search?query='.$keyw.'&page='.$page);
         $data = $response->json();
         $blacklist = Blacklist::pluck('animeId')->toArray(); // Mengambil nilai kolom animeId dan menyimpannya ke dalam array
         return view('id.search', ['data' => $data, 'blacklist_animeIds' => $blacklist]);
-    }
-
-    public function GetAnimeDetailsid(Request $request, $anime)
-    {
-        $response = Http::get('https://aniyoi-api.vercel.app/nanime/anime/'.$anime);
-        $data = $response->json();
-        $blacklist = Blacklist::pluck('animeId')->toArray(); // Mengambil nilai kolom animeId dan menyimpannya ke dalam array
-        return view('id.anime-details', ['data' => $data, 'blacklist_animeIds' => $blacklist]);
     }
 
     public function GetStreamingURLsid(Request $request, $anime, $episodeId)

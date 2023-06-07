@@ -211,20 +211,15 @@ header .logo
       <h2 class="logo">GOGOANIME</h2>
       <div class="toggle"></div>
     </header>
-    <img src="{{ $data['animeImg'] }}">
+    <img src="{{ $data['data']['poster'] }}">
     <div class="overlay"></div>
     <div class="text">
-      <h3>{{ $data['animeTitle'] }}</h3> 
-      <p>{{ $data['synopsis'] }}</p>
-      @php
-  $lastIndex = count($data['episodesList']) - 1;
-@endphp
 
-@foreach($data['episodesList'] as $key => $eps)
-  @if($key == $lastIndex)
-    <a href="/en/watch/{{ $eps['episodeId'] }}">Watch {{ $eps['episodeNum'] }}</a>
-  @endif
-@endforeach
+    <h3>{{ $data['data']['title'] }}</h3> 
+
+     
+      <p>{{ $data['data']['synopsis'] }}</p>
+
 
     </div>
     <ul class="social">
@@ -253,10 +248,3 @@ header .logo
   </div>
 </body>
 </html>
-<div></div>
-    <div>{{ $data['type'] }}</div>
-    <div>{{ $data['releasedDate'] }}</div>
-    <div>{{ $data['status'] }}</div>
-
-
-</div>
