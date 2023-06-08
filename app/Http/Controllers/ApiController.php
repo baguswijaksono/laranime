@@ -117,6 +117,8 @@ class ApiController extends Controller
         ->where('episodeId', $episodeId)
         ->get()
         ->toArray();
+
+        $comments = array_reverse($commentsArray);
         
         $parts = explode('/', $url);
         $title = $parts[5];
@@ -134,7 +136,7 @@ class ApiController extends Controller
             'details' => $details,
             'recs' => $recs,
             'episode_number' => $episode_number,
-            'comments' => $commentsArray,
+            'comments' => $comments,
             'x' => $episodeId
         ]);
     }
