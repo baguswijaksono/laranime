@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('watchlists', function (Blueprint $table) {
             $table->id();
-            $table->string('username');
-            $table->string('watchlist');
+            $table->string('email');
+            $table->string('animeId');
         });
         
     }

@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Watchlists extends Model
 {
+    protected $fillable = ['email', 'animeId'];
+    public $timestamps = false;
     use HasFactory;
 }

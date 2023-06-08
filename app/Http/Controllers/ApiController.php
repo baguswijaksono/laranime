@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Blacklist;
+use App\Models\Watchlists;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
 
 class ApiController extends Controller
 {
@@ -17,24 +19,39 @@ class ApiController extends Controller
         $response = Http::get($this->enapi . '/recent-release?page=' . $page);
         $data = $response->json();
         $blacklist = Blacklist::pluck('animeId')->toArray();
-        return view('en.recent-release', ['data' => $data, 'blacklist_animeIds' => $blacklist]);
+        $watchlist = Watchlists::where('email', Auth::user()->email)->pluck('animeId')->toArray();
+        return view('en.recent-release', [
+            'data' => $data, 
+            'blacklist_animeIds' => $blacklist]);
     }
     
-
     public function GetPopularAnime(Request $request, $page)
     {
         $response = Http::get($this->enapi . '/popular?page='.$page);
         $data = $response->json();
-        $blacklist = Blacklist::pluck('animeId')->toArray(); // Mengambil nilai kolom animeId dan menyimpannya ke dalam array
-        return view('en.popular', ['data' => $data, 'blacklist_animeIds' => $blacklist]);
+        $blacklist = Blacklist::pluck('animeId')->toArray(); 
+        $watchlist = Watchlists::where('email', Auth::user()->email)->pluck('animeId')->toArray();
+        $birthday = Auth::user()->date_of_birth;
+        $currentDate = Carbon::now();
+        $birthDate = Carbon::createFromFormat('Y-m-d', $birthday);
+        $age = $birthDate->diffInYears($currentDate);
+        return view('en.popular', [
+            'data' => $data, 
+            'blacklist_animeIds' => $blacklist, 
+            'watchlist'=>$watchlist,
+            'age'=>$age
+        ]);
     }
 
     public function GetAnimeSearch(Request $request, $keyw)
     {
         $response = Http::get($this->enapi . '/search?keyw='.$keyw);
         $data = $response->json();
-        $blacklist = Blacklist::pluck('animeId')->toArray(); // Mengambil nilai kolom animeId dan menyimpannya ke dalam array
-        return view('en.search', ['data' => $data, 'blacklist_animeIds' => $blacklist]);
+        $blacklist = Blacklist::pluck('animeId')->toArray(); 
+        $watchlist = Watchlists::where('email', Auth::user()->email)->pluck('animeId')->toArray();
+        return view('en.search', [
+            'data' => $data, 
+            'blacklist_animeIds' => $blacklist]);
     }
     
 
@@ -42,16 +59,22 @@ class ApiController extends Controller
     {
         $response = Http::get($this->enapi . '/anime-movies?page='.$page);
         $data = $response->json();
-        $blacklist = Blacklist::pluck('animeId')->toArray(); // Mengambil nilai kolom animeId dan menyimpannya ke dalam array
-        return view('en.anime-movies', ['data' => $data, 'blacklist_animeIds' => $blacklist]);
+        $blacklist = Blacklist::pluck('animeId')->toArray(); 
+        $watchlist = Watchlists::where('email', Auth::user()->email)->pluck('animeId')->toArray();
+        return view('en.anime-movies', [
+            'data' => $data, 
+            'blacklist_animeIds' => $blacklist]);
     }
 
     public function GetTopAiring(Request $request,$page)
     {
         $response = Http::get($this->enapi . '/top-airing?page='.$page);
         $data = $response->json();
-        $blacklist = Blacklist::pluck('animeId')->toArray(); // Mengambil nilai kolom animeId dan menyimpannya ke dalam array
-        return view('en.top-airing', ['data' => $data, 'blacklist_animeIds' => $blacklist]);
+        $blacklist = Blacklist::pluck('animeId')->toArray(); 
+        $watchlist = Watchlists::where('email', Auth::user()->email)->pluck('animeId')->toArray();
+        return view('en.top-airing', [
+            'data' => $data, 
+            'blacklist_animeIds' => $blacklist]);
     }
 
     public function GetAnimeGenres(Request $request, $genre, $page)
@@ -59,7 +82,10 @@ class ApiController extends Controller
         $response = Http::get($this->enapi . '/genre/' . $genre . '?page=' . $page);
         $data = $response->json();
         $blacklist = Blacklist::pluck('animeId')->toArray();
-        return view('en.genre', ['data' => $data, 'blacklist_animeIds' => $blacklist]);
+        $watchlist = Watchlists::where('email', Auth::user()->email)->pluck('animeId')->toArray();
+        return view('en.genre', [
+            'data' => $data, 
+            'blacklist_animeIds' => $blacklist]);
     }
     
 
@@ -67,7 +93,8 @@ class ApiController extends Controller
     {
         $response = Http::get($this->enapi . '/anime-details/'.$anime);
         $data = $response->json();
-        return view('en.anime-details', ['data' => $data]);
+        return view('en.anime-details', [
+            'data' => $data]);
     }
 
     public function GetStreamingURLs(Request $request,$episodeId)
@@ -86,7 +113,12 @@ class ApiController extends Controller
         $details = $response2->json();
         $rec = Http::get($this->enapi . '/search?keyw='.$parts2[0]);
         $recs = $rec->json();
-        return view('en.watch', ['data' => $data, 'details'=>$details,'recs'=>$recs, 'episode_number'=>$episode_number ,'x'=>$episodeId]);
+        return view('en.watch', [
+            'data' => $data, 
+            'details'=>$details,
+            'recs'=>$recs, 
+            'episode_number'=>$episode_number ,
+            'x'=>$episodeId]);
     }
 
     // Indonesian Start //

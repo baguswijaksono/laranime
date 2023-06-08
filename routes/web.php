@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BlacklistController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MinAgeController;
+use App\Http\Controllers\WatchListController;
 
 Route::middleware(['auth'])->group(function(){
 
@@ -33,6 +34,11 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/id/search/{keyw}', [ApiController::class, 'GetAnimeSearchId']);
     Route::get('/id/anime/{anime}', [ApiController::class, 'GetAnimeDetailsid']);
     Route::get('/id/watch/{anime}/{episodeId}', [ApiController::class, 'GetStreamingURLsid']);
+
+    // CRUD watchlist
+    Route::get('/en-minage', [WatchListController::class, 'index']);
+    Route::post('/adding-watchlist', [WatchListController::class, 'store']);
+    Route::post('/del-watchlist', [WatchListController::class, 'destroy'])->name('watchlist.destroy');
 
 });
 
