@@ -7,6 +7,8 @@ use App\Models\Blacklist;
 use App\Models\Watchlists;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
+use App\Models\History;
+
 
 class ApiController extends Controller
 {
@@ -97,29 +99,38 @@ class ApiController extends Controller
             'data' => $data]);
     }
 
-    public function GetStreamingURLs(Request $request,$episodeId)
+    public function GetStreamingURLs(Request $request, $episodeId)
     {
-        $response = Http::get($this->enapi . '/vidcdn/watch/'.$episodeId);
+        $response = Http::get($this->enapi . '/vidcdn/watch/' . $episodeId);
         $data = $response->json();
-        $url = url()->current(); 
-        $parts = explode('/', $url); 
-        $title = $parts[5]; 
-        $episode_index = strpos($title, "episode-") + strlen("episode-"); 
-        $episode_number = substr($title, $episode_index); 
+        $url = url()->current();
+        $userEmail = Auth::user()->email;
+    
+        $history = new History;
+        $history->url = $url;
+        $history->email = $userEmail; 
+        $history->save();
+    
+        $parts = explode('/', $url);
+        $title = $parts[5];
+        $episode_index = strpos($title, "episode-") + strlen("episode-");
+        $episode_number = substr($title, $episode_index);
         $parts2 = explode('-', $title);
-        $trimmed_parts2 = array_slice($parts2, 0, count($parts2) - 2); 
-        $anime = implode('-', $trimmed_parts2); 
-        $response2 = Http::get($this->enapi . '/anime-details/'.$anime);
+        $trimmed_parts2 = array_slice($parts2, 0, count($parts2) - 2);
+        $anime = implode('-', $trimmed_parts2);
+        $response2 = Http::get($this->enapi . '/anime-details/' . $anime);
         $details = $response2->json();
-        $rec = Http::get($this->enapi . '/search?keyw='.$parts2[0]);
+        $rec = Http::get($this->enapi . '/search?keyw=' . $parts2[0]);
         $recs = $rec->json();
         return view('en.watch', [
-            'data' => $data, 
-            'details'=>$details,
-            'recs'=>$recs, 
-            'episode_number'=>$episode_number ,
-            'x'=>$episodeId]);
+            'data' => $data,
+            'details' => $details,
+            'recs' => $recs,
+            'episode_number' => $episode_number,
+            'x' => $episodeId
+        ]);
     }
+    
 
     // Indonesian Start //
     
