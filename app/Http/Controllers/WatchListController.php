@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Watchlists;
 
@@ -84,8 +84,16 @@ class WatchListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $animeId = $request->input('animeId');
+        $userEmail = Auth::user()->email;
+    
+        $Watchlist = Watchlists::where('animeId', $animeId)
+                              ->where('email', $userEmail)
+                              ->first();
+        $Watchlist->delete();
+        return back();
     }
+    
 }
