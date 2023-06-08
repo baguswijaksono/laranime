@@ -86,7 +86,7 @@ class ApiController extends Controller
         $details = $response2->json();
         $rec = Http::get($this->enapi . '/search?keyw='.$parts2[0]);
         $recs = $rec->json();
-        return view('en.watch', ['data' => $data, 'details'=>$details,'recs'=>$recs, 'episode_number'=>$episode_number]);
+        return view('en.watch', ['data' => $data, 'details'=>$details,'recs'=>$recs, 'episode_number'=>$episode_number ,'x'=>$episodeId]);
     }
 
     // Indonesian Start //

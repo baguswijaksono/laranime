@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use App\Models\Blacklist;
+use App\Models\MinAge;
+
 class AdminController extends Controller
 {
 
@@ -20,7 +22,8 @@ class AdminController extends Controller
         $response = Http::get($this->enapi .'/popular?page='.$page);
         $data = $response->json();
         $blacklist = Blacklist::pluck('animeId')->toArray(); 
-        return view('admin.popular', ['data' => $data, 'blacklist_animeIds' => $blacklist]);
+        $minage = MinAge::pluck('animeId')->toArray(); 
+        return view('admin.popular', ['data' => $data, 'blacklist_animeIds' => $blacklist, 'min_age' => $minage]);
     }
 
     public function GetAnimeMovies(Request $request, $page)

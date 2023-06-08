@@ -64,8 +64,8 @@ Route::middleware('admin')->group(function () {
     // CRUD minage
     Route::get('/en-minage', [MinAgeController::class, 'index']);
     Route::post('/adding-minage', [MinAgeController::class, 'store']);
-    Route::post('/del-blacklist', [MinAgeController::class, 'destroy'])->name('minage.destroy');
-    Route::post('/edit-blacklist', [MinAgeController::class, 'show'])->name('minage.edit');
+    Route::post('/del-minage', [MinAgeController::class, 'destroy'])->name('minage.destroy');
+    Route::post('/edit-minage', [MinAgeController::class, 'show'])->name('minage.edit');
 });
 
 

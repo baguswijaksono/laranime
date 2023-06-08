@@ -29,7 +29,7 @@
   <li>
   <div class="jendala-stream">
   <div class="ratio ratio-16x9">
-  <iframe src="{{ $data['Referer'] }}" title="{{ $details['animeTitle'] }}" allowfullscreen></iframe>
+  <iframe src="https://player.anikatsu.me/?id={{$x}}" title="{{ $details['animeTitle'] }}" allowfullscreen></iframe>
 </div>
   
   <h1>{{ $details['animeTitle'] }} </h1>

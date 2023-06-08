@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Blacklist extends Model
 {
     use HasFactory;
-    protected $fillable = ['animeId'];
+    protected $fillable = ['animeId','reason'];
     public $timestamps = false;
 
 }

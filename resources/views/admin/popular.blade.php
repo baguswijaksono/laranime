@@ -28,32 +28,61 @@ $totalPage = 500;
   <div class="card-body">
     <h6 class="card-title">{{ $item['animeTitle']}}</h6>
     <p class="card-text">{{ $item['releasedDate']}}</p>
+    @if(!in_array($item['animeId'], $min_age))
     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop2_{{$item['animeId']}}">Set Min Age</button>
 
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop2_{{$item['animeId']}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdrop2Label" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Min Age Confirmation</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p style="color: black;">yakin nih mau masukin {{$item['animeId']}} ke dalem min age</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <form method="POST" action="/adding-minage">
-        @csrf 
-<input type="hidden" name="animeId" value="{{$item['animeId']}}">
-<input class="form-control" name="minAge" type="text" placeholder="Default input" aria-label="default input example">
-<button type="submit" class="btn btn-danger">Add to Blacklist</button>
-</form>
+      <!-- Modal -->
+      <div class="modal fade" id="staticBackdrop2_{{$item['animeId']}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdrop2Label" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Min Age Confirmation</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p style="color: black;">yakin nih mau masukin {{$item['animeId']}} ke dalem min age</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <form method="POST" action="/adding-minage">
+              @csrf 
+      <input type="hidden" name="animeId" value="{{$item['animeId']}}">
+      <input class="form-control" name="minAge" type="text" placeholder="Default input" aria-label="default input example">
+      <button type="submit" class="btn btn-danger">Add to Min age</button>
+      </form>
 
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</div>
+
+      @else
+
+        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop_{{$item['animeId']}}">Delete</button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop_{{$item['animeId']}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Blacklist Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p style="color: black;">yakin nih mau hapus {{$item['animeId']}} dari blacklist</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form method="POST" action="/del-blacklist">
+                @csrf 
+  <input type="hidden" name="animeId" value="{{$item['animeId']}}">
+  <button type="submit" class="btn btn-danger">delete from Blacklist</button>
+</form>
+              </div>
+            </div>
+          </div>
+        </div>
+@endif
 
 
 
@@ -88,6 +117,7 @@ $totalPage = 500;
                 <form method="POST" action="/adding-blacklist">
                 @csrf 
   <input type="hidden" name="animeId" value="{{$item['animeId']}}">
+  <input class="form-control" name="reason" type="text" placeholder="Default input">
   <button type="submit" class="btn btn-danger">Add to Blacklist</button>
 </form>
 
