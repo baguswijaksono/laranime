@@ -54,50 +54,43 @@
 </div>
 </div>
 
-<div class="Comments"style='max-width: 1056px;'>
-            <div class="card">
-                <div class="p-3">
-                    <h6>Comments</h6>
-                <div class="mt-3 d-flex flex-row align-items-center p-3 form-color"> <img src="https://i.imgur.com/zQZSWrt.jpg" width="50" class="rounded-circle mr-2"> <input type="text" class="form-control" placeholder="Enter your comment..."> </div>
-                <div class="mt-2">
+<form id="commentForm" action="/add-comment" method="POST">
 
-                    <div class="d-flex flex-row p-3"> <img src="" width="40" height="40" class="rounded-circle mr-3">
-                        <div class="w-100">
-                            <div class="d-flex justify-content-between align-items-center">
-<h6>Example heading <span class="badge bg-primary">New</span></h6> <small>2h ago</small>
-                            </div>
-                            <p class="text-justify comment-text mb-0">Tellus in hac habitasse platea dictumst vestibulum. Lectus nulla at volutpat diam ut venenatis tellus. Aliquam etiam erat velit scelerisque in dictum non consectetur. Sagittis nisl rhoncus mattis rhoncus urna neque viverra justo nec. Tellus cras adipiscing enim eu turpis egestas pretium aenean pharetra. Aliquam faucibus purus in massa.</p>
-                            <p>
-  <a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-    4 Reply
-  </a>
+<div class="Comments" style="max-width: 1056px;">
+  <div class="card">
+    <div class="p-2">
+      <h5 style="padding-left: 15px; padding-top: 15px">Comments</h5>
+      <div class="mt-2 d-flex flex-row align-items-center p-3 form-color"> 
+        <img src="https://www.asiamediajournal.com/wp-content/uploads/2022/11/Best-Default-PFP.png" width="40" height="40" class="rounded-circle mr-2">
+        <div style="width: 20px;"></div>
+        <input type="text" class="form-control" placeholder="Enter your comment..." name="comment">
+<input type="hidden" class="form-control" placeholder="Enter your comment..." value="{{ Auth::user()->name }}" name="username">
+<input type="hidden" class="form-control" placeholder="Enter your comment..." value="{{ Auth::user()->role }}" name="role">
+<input type="hidden" class="form-control" placeholder="Enter your comment..." value="{{ $x }}" name="episodeId">
 
-</p>
-<div class="collapse" id="collapseExample">
-
-
-<div class="Comments"style='max-width: 1056px;'>
-
-                    <div class="d-flex flex-row p-3"> <img src="" width="40" height="40" class="rounded-circle mr-3">
-                        <div class="w-100">
-                            <div class="d-flex justify-content-between align-items-center">
-<h6>Example heading <span class="badge bg-secondary">New</span></h6> <small>2h ago</small>
-                            </div>
-                            <p class="text-justify comment-text mb-0">Tellus in hac habitasse platea dictumst vestibulum. Lectus nulla at volutpat diam ut venenatis tellus. Aliquam etiam erat velit scelerisque in dictum non consectetur. Sagittis nisl rhoncus mattis rhoncus urna neque viverra justo nec. Tellus cras adipiscing enim eu turpis egestas pretium aenean pharetra. Aliquam faucibus purus in massa.</p>
-                            
-                       
-
-
-
-</div>
-                       
-                          </div>
-                    </div>
-                </div>
+      </div>
+      <div class="mt-2">
+        @foreach($comments as $comment)
+        <div class="d-flex flex-row">
+          <div class="p-2">
+          </div>
+          <img src="https://www.asiamediajournal.com/wp-content/uploads/2022/11/Best-Default-PFP.png" width="40" height="40" class="rounded-circle mr-3">
+          <div style="width: 20px;"></div>
+          <div class="w-100">
+            <div class="d-flex justify-content-between align-items-center">
+              <h6>{{$comment['username']}} <span class="badge bg-primary">{{$comment['role']}}</span></h6>
+              <small>2h ago</small>
             </div>
-                </div>
-
+            <p>{{$comment['comment']}}</p>
+          </div>
+        </div>
+        @endforeach
+      </div>
+    </div>
   </div>
+</div>
+  </form>
+
   </li>
   <li>
     <h2 style="padding-left: 35px;">Episode List</h2>

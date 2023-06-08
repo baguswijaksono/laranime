@@ -5,6 +5,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Blacklist;
 use App\Models\Watchlists;
+use App\Models\Comments;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use App\Models\History;
@@ -105,12 +106,18 @@ class ApiController extends Controller
         $data = $response->json();
         $url = url()->current();
         $userEmail = Auth::user()->email;
+        $userName = Auth::user()->name;
     
         $history = new History;
         $history->url = $url;
         $history->email = $userEmail; 
         $history->save();
-    
+
+        $commentsArray = Comments::select('username', 'role', 'episodeId', 'comment')
+        ->where('episodeId', $episodeId)
+        ->get()
+        ->toArray();
+        
         $parts = explode('/', $url);
         $title = $parts[5];
         $episode_index = strpos($title, "episode-") + strlen("episode-");
@@ -127,6 +134,7 @@ class ApiController extends Controller
             'details' => $details,
             'recs' => $recs,
             'episode_number' => $episode_number,
+            'comments' => $commentsArray,
             'x' => $episodeId
         ]);
     }

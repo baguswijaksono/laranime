@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MinAgeController;
 use App\Http\Controllers\WatchListController;
 use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\CommentsController;
 
 Route::middleware(['auth'])->group(function(){
 
@@ -45,6 +46,10 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/en-history', [HistoryController::class, 'index']);
     Route::post('/adding-history', [HistoryController::class, 'store']);
     Route::post('/del-history', [HistoryController::class, 'destroy'])->name('history.destroy');
+
+    // CRUD History
+    Route::post('/add-comment', [CommentsController::class, 'store']);
+    Route::post('/del-comments', [CommentsController::class, 'destroy'])->name('history.destroy');
 });
 
 // admin
