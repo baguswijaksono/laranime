@@ -215,7 +215,7 @@ header .logo
     <div class="overlay"></div>
     <div class="text">
       <h3>{{ $data['animeTitle'] }}</h3> 
-      <p>{{ $data['synopis'] }}</p>
+      <p>{{ $data['synopsis'] }}</p>
       @php
   $lastIndex = count($data['episodesList']) - 1;
 @endphp

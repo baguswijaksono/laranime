@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class GenreEn extends Model
+class EnDetails extends Model
 {
-    protected $fillable = ['page','genre', 'json'];
+    protected $fillable = ['anime_id', 'json'];
     public $timestamps = false;
     use HasFactory;
 }

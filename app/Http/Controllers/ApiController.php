@@ -14,6 +14,7 @@ use App\Models\Recent;
 use App\Models\Movies;
 use App\Models\GenreEn;
 use App\Models\TopAir;
+use App\Models\EnDetails;
 
 
 class ApiController extends Controller
@@ -64,8 +65,14 @@ class ApiController extends Controller
 
     public function GetAnimeSearch(Request $request, $keyw)
     {
-        $response = Http::get($this->enapi . '/search?keyw='.$keyw);
-        $data = $response->json();
+        $data = EnDetails::where('anime_id', 'LIKE', '%' . $keyw . '%')
+        ->pluck('json')
+        ->map(function ($item) {
+            return json_decode($item, true);
+        })
+        ->toArray();
+
+        
         $blacklist = Blacklist::pluck('animeId')->toArray(); 
         $watchlist = Watchlists::where('email', Auth::user()->email)->pluck('animeId')->toArray();
         return view('en.search', [
@@ -126,16 +133,19 @@ class ApiController extends Controller
 
     public function GetAnimeDetails(Request $request,$anime)
     {
-        $response = Http::get($this->enapi . '/anime-details/'.$anime);
-        $data = $response->json();
+        $data = EnDetails::where('anime_id', $anime)
+        ->pluck('json')
+        ->map(function ($item) {
+            return json_decode($item, true);
+        })
+        ->toArray();
+        $data = $data[0];
         return view('en.anime-details', [
             'data' => $data]);
     }
 
     public function GetStreamingURLs(Request $request, $episodeId)
     {
-        $response = Http::get($this->enapi . '/vidcdn/watch/' . $episodeId);
-        $data = $response->json();
         $url = url()->current();
         $userEmail = Auth::user()->email;
         $userName = Auth::user()->name;
@@ -159,12 +169,26 @@ class ApiController extends Controller
         $parts2 = explode('-', $title);
         $trimmed_parts2 = array_slice($parts2, 0, count($parts2) - 2);
         $anime = implode('-', $trimmed_parts2);
-        $response2 = Http::get($this->enapi . '/anime-details/' . $anime);
-        $details = $response2->json();
-        $rec = Http::get($this->enapi . '/search?keyw=' . $parts2[0]);
-        $recs = $rec->json();
+
+        $details = EnDetails::where('anime_id', $anime)
+        ->pluck('json')
+        ->map(function ($item) {
+            return json_decode($item, true);
+        })
+        ->toArray();
+        $details = $details[0];
+
+
+        $recs = EnDetails::where('anime_id', 'LIKE', '%' . $parts2[0] . '%')
+        ->pluck('json')
+        ->map(function ($item) {
+            return json_decode($item, true);
+        })
+        ->toArray();
+    
+
         return view('en.watch', [
-            'data' => $data,
+            'details' => $details,
             'details' => $details,
             'recs' => $recs,
             'episode_number' => $episode_number,
@@ -179,43 +203,43 @@ class ApiController extends Controller
     public function GetOngoingAnimeId(Request $request, $page)
     {
         $response = Http::get($this->idapi .'/ongoing-anime/'.$page);
-        $data = $response->json();
+        $details = $response->json();
         $blacklist = Blacklist::pluck('animeId')->toArray(); // Mengambil nilai kolom animeId dan menyimpannya ke dalam array
-        return view('id.ongoing', ['data' => $data, 'blacklist_animeIds' => $blacklist]);
+        return view('id.ongoing', ['details' => $details, 'blacklist_animeIds' => $blacklist]);
     }
 
     public function GetCompleteAnimeId(Request $request, $page)
     {
         $response = Http::get($this->idapi .'/complete-anime/'.$page);
-        $data = $response->json();
+        $details = $response->json();
         $blacklist = Blacklist::pluck('animeId')->toArray(); // Mengambil nilai kolom animeId dan menyimpannya ke dalam array
-        return view('id.completed', ['data' => $data, 'blacklist_animeIds' => $blacklist]);
+        return view('id.completed', ['details' => $details, 'blacklist_animeIds' => $blacklist]);
     }
 
     public function GetAnimeDetailsid(Request $request, $anime)
     {
         $response = Http::get($this->idapi .'/anime/'.$anime);
-        $data = $response->json();
+        $details = $response->json();
         $blacklist = Blacklist::pluck('animeId')->toArray(); // Mengambil nilai kolom animeId dan menyimpannya ke dalam array
-        return view('id.anime-details', ['data' => $data, 'blacklist_animeIds' => $blacklist]);
+        return view('id.anime-details', ['details' => $details, 'blacklist_animeIds' => $blacklist]);
     }
 
     public function GetAnimeSearchid(Request $request, $keyw)
     {
         $response = Http::get($this->idapi .'/search/'.$keyw);
-        $data = $response->json();
+        $details = $response->json();
         $blacklist = Blacklist::pluck('animeId')->toArray(); // Mengambil nilai kolom animeId dan menyimpannya ke dalam array
-        return view('id.search', ['data' => $data, 'blacklist_animeIds' => $blacklist]);
+        return view('id.search', ['details' => $details, 'blacklist_animeIds' => $blacklist]);
     }
 
     public function GetStreamingURLsid(Request $request, $anime, $episodeId)
     {
         $response = Http::get($this->idapi . '/anime/' . $anime . '/episodes/' . $episodeId);
-        $data = $response->json();
+        $details = $response->json();
         $details = Http::get($this->idapi . '/anime/' . $anime);
         $details2 = $details->json();
         $blacklist = Blacklist::pluck('animeId')->toArray(); 
-        return view('id.watch', ['data' => $data, 'blacklist_animeIds' => $blacklist, 'details' => $details2]);
+        return view('id.watch', ['details' => $details, 'blacklist_animeIds' => $blacklist, 'details' => $details2]);
     }
     
 

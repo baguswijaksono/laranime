@@ -23,7 +23,7 @@
 
 
   @include('layouts.navbar')
-  @if(isset($data))
+  @if(isset($x))
   <div style="padding-top: 15px;">
   <ul style="display: flex;align-items: flex-start; justify-content: center; list-style: none;">
   <li>
@@ -123,14 +123,22 @@
     <div class="card mb-3" style="max-width: 400px;">
       <div class="row g-0">
         <div class="col-md-4">
-          <a href="/en/anime-details/{{$rekomendasi['animeId']}}">
+        @php
+$title = $rekomendasi['episodesList'][0]['episodeId'];
+$parts2 = explode('-', $title);
+$trimmed_parts2 = array_slice($parts2, 0, count($parts2) - 2);
+$animeIdrec = implode('-', $trimmed_parts2);
+@endphp
+
+<a href="/en/anime-details/{{ $animeIdrec }}">
             <img src="{{$rekomendasi['animeImg']}}" class="img-fluid rounded-start" alt="...">
           </a>
         </div>
         <div class="col-md-8">
           <div class="card-body">
             <h5 class="card-title">{{$rekomendasi['animeTitle']}}</h5>
-            <p class="card-text"><small class="text-muted"></small>{{$rekomendasi['status']}}</p>
+            <p>{{$rekomendasi['releasedDate']}}</p>
+            <p class="card-text">{{$rekomendasi['status']}}</p>
           </div>
         </div>
       </div>

@@ -10,13 +10,82 @@
   @include('layouts.navbar')
   <div style="display: inline-block;">
 @foreach($data as $item)
-  @if(!in_array($item['animeId'], $blacklist_animeIds))
-    @include('layouts.anime-card', [
-      'animeId' => $item['animeId'],
-      'animeTitle' => $item['animeTitle'],
-      'animeImg' => $item['animeImg'],
-      'status' => $item['status'],
-    ])
+@php
+$title = $item['episodesList'][0]['episodeId'];
+$parts2 = explode('-', $title);
+$trimmed_parts2 = array_slice($parts2, 0, count($parts2) - 2);
+$animeIdrec = implode('-', $trimmed_parts2);
+@endphp
+  @if(!in_array($animeIdrec, $blacklist_animeIds))
+  <div style="padding-left: 15px; padding-top: 15px; display: inline-block;">
+<div class="card" style="width: 15rem;">
+<a href="/en/anime-details/{{ $animeIdrec}}">  <img src="{{ $item['animeImg'] }}" class="rounded" alt="" style="height: 318px; width: 239px;">
+</a>
+
+  <div class="card-body">
+    <h6 class="card-title">{{ $item['animeTitle'] }}</h6>
+    <p class="card-text">{{$item['status']}}</p>
+    <a href="/en/anime-details/{{ $animeIdrec}}" class="btn btn-primary btn-sm">Details</a>
+
+    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop2_{{$animeIdrec}}">Add to watchlist</button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="staticBackdrop2_{{$animeIdrec}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdrop2Label" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Watch list Confirmation</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p style="color: black;">yakin nih mau masukin {{ $animeIdrec}}  ke dalem min age</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <form method="POST" action="/adding-watchlist">
+              @csrf 
+      <input type="hidden" name="animeId" value="{{ $animeIdrec}}">
+      <input type="hidden" name="email" value=" {{ Auth::user()->email }}">
+      <button type="submit" class="btn btn-danger">Add</button>
+      </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+              <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop_{{$animeIdrec}}">Delete</button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop_{{$animeIdrec}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Blacklist Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p style="color: black;">yakin nih mau hapus {{$animeIdrec}} dari blacklist</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form method="POST" action="/del-watchlist">
+                @csrf 
+  <input type="hidden" name="animeId" value="{{$animeIdrec}}">
+  <input type="hidden" name="email" value=" {{ Auth::user()->email }}">
+  <button type="submit" class="btn btn-danger">delete from Blacklist</button>
+</form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+  </div>
+  
+</div>
+</div>
   @endif
 @endforeach
 </div>
