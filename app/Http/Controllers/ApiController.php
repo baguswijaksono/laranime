@@ -9,6 +9,11 @@ use App\Models\Comments;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use App\Models\History;
+use App\Models\Popular;
+use App\Models\Recent;
+use App\Models\Movies;
+use App\Models\GenreEn;
+use App\Models\TopAir;
 
 
 class ApiController extends Controller
@@ -19,8 +24,13 @@ class ApiController extends Controller
 
     public function GetRecentEpisodes(Request $request, $page)
     {
-        $response = Http::get($this->enapi . '/recent-release?page=' . $page);
-        $data = $response->json();
+        $data = Recent::where('page', $page)
+        ->pluck('json')
+        ->map(function ($item) {
+            return json_decode($item, true);
+        })
+        ->toArray();
+        $data = $data[0];
         $blacklist = Blacklist::pluck('animeId')->toArray();
         $watchlist = Watchlists::where('email', Auth::user()->email)->pluck('animeId')->toArray();
         return view('en.recent-release', [
@@ -30,8 +40,14 @@ class ApiController extends Controller
     
     public function GetPopularAnime(Request $request, $page)
     {
-        $response = Http::get($this->enapi . '/popular?page='.$page);
-        $data = $response->json();
+        $data = Popular::where('page', $page)
+        ->pluck('json')
+        ->map(function ($item) {
+            return json_decode($item, true);
+        })
+        ->toArray();
+
+        $data = $data[0];        
         $blacklist = Blacklist::pluck('animeId')->toArray(); 
         $watchlist = Watchlists::where('email', Auth::user()->email)->pluck('animeId')->toArray();
         $birthday = Auth::user()->date_of_birth;
@@ -60,8 +76,13 @@ class ApiController extends Controller
 
     public function GetAnimeMovies(Request $request, $page)
     {
-        $response = Http::get($this->enapi . '/anime-movies?page='.$page);
-        $data = $response->json();
+        $data = Movies::where('page', $page)
+        ->pluck('json')
+        ->map(function ($item) {
+            return json_decode($item, true);
+        })
+        ->toArray();
+        $data = $data[0];
         $blacklist = Blacklist::pluck('animeId')->toArray(); 
         $watchlist = Watchlists::where('email', Auth::user()->email)->pluck('animeId')->toArray();
         return view('en.anime-movies', [
@@ -71,8 +92,13 @@ class ApiController extends Controller
 
     public function GetTopAiring(Request $request,$page)
     {
-        $response = Http::get($this->enapi . '/top-airing?page='.$page);
-        $data = $response->json();
+        $data = TopAir::where('page', $page)
+        ->pluck('json')
+        ->map(function ($item) {
+            return json_decode($item, true);
+        })
+        ->toArray();
+        $data = $data[0];
         $blacklist = Blacklist::pluck('animeId')->toArray(); 
         $watchlist = Watchlists::where('email', Auth::user()->email)->pluck('animeId')->toArray();
         return view('en.top-airing', [
@@ -82,8 +108,14 @@ class ApiController extends Controller
 
     public function GetAnimeGenres(Request $request, $genre, $page)
     {
-        $response = Http::get($this->enapi . '/genre/' . $genre . '?page=' . $page);
-        $data = $response->json();
+        $data = GenreEn::where('page', $page)
+        ->where('genre', $genre) 
+        ->pluck('json')
+        ->map(function ($item) {
+            return json_decode($item, true);
+        })
+        ->toArray();
+        $data = $data[0];
         $blacklist = Blacklist::pluck('animeId')->toArray();
         $watchlist = Watchlists::where('email', Auth::user()->email)->pluck('animeId')->toArray();
         return view('en.genre', [
