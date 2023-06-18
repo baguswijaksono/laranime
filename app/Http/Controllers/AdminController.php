@@ -161,15 +161,15 @@ class AdminController extends Controller
         $movie = Movies::all();
         $blacklist = Blacklist::pluck('animeId')->toArray(); 
         $minage = MinAge::pluck('animeId')->toArray(); 
-    
         return view('admin.database-movie-manage', ['movie' => $movie ,'blacklist_animeIds' => $blacklist, 'min_age' => $minage]);
     }
 
     public function entopair(Request $request)
     {
         $topair = TopAir::all();
-    
-        return view('admin.database-topair-manage', ['topair' => $topair]);
+        $blacklist = Blacklist::pluck('animeId')->toArray(); 
+        $minage = MinAge::pluck('animeId')->toArray(); 
+        return view('admin.database-topair-manage', ['topair' => $topair,'blacklist_animeIds' => $blacklist, 'min_age' => $minage]);
     }
 
     public function enrecent(Request $request)
