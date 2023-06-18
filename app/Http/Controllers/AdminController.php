@@ -28,55 +28,6 @@ class AdminController extends Controller
         return view('admin.index',['userActivity' => $userActivity]);
     }
 
-    public function GetPopularAnime(Request $request, $page)
-    {
-        $response = Http::get($this->enapi .'/popular?page='.$page);
-        $data = $response->json();
-        $blacklist = Blacklist::pluck('animeId')->toArray(); 
-        $minage = MinAge::pluck('animeId')->toArray(); 
-        return view('admin.popular', ['data' => $data, 'blacklist_animeIds' => $blacklist, 'min_age' => $minage]);
-    }
-
-    public function GetAnimeMovies(Request $request, $page)
-    {
-        $response = Http::get($this->enapi .'/anime-movies?page='.$page);
-        $data = $response->json();
-        $blacklist = Blacklist::pluck('animeId')->toArray();
-        return view('admin.anime-movies', ['data' => $data, 'blacklist_animeIds' => $blacklist]);
-    }
-
-    public function GetRecentEpisodes(Request $request, $page)
-    {
-        $response = Http::get($this->enapi .'/recent-release?page='.$page);
-        $data = $response->json();
-        $blacklist = Blacklist::pluck('animeId')->toArray();
-        return view('admin.recent-release', ['data' => $data, 'blacklist_animeIds' => $blacklist]);
-    }
-
-    public function GetAnimeSearch(Request $request, $keyw)
-    {
-        $response = Http::get($this->enapi .'/search?keyw='.$keyw);
-        $data = $response->json();
-        $blacklist = Blacklist::pluck('animeId')->toArray();
-        return view('admin.search', ['data' => $data, 'blacklist_animeIds' => $blacklist]);
-    }
-
-    public function GetTopAiring(Request $request,$page)
-    {
-        $response = Http::get($this->enapi .'/top-airing?page='.$page);
-        $data = $response->json();
-        $blacklist = Blacklist::pluck('animeId')->toArray(); 
-        return view('admin.top-airing', ['data' => $data, 'blacklist_animeIds' => $blacklist]);
-    }
-
-    public function GetAnimeGenres(Request $request,$genre,$page)
-    {
-        $response = Http::get($this->enapi .'/genre/'.$genre.'?page='.$page);
-        $data = $response->json();
-        $blacklist = Blacklist::pluck('animeId')->toArray(); 
-        return view('admin.genre', ['data' => $data,'blacklist_animeIds' => $blacklist]);
-    }
-
     public function prepopulatePopular(Request $request)
     {
         
@@ -148,8 +99,6 @@ class AdminController extends Controller
         return view('admin.populate-genre');
     }
 
-
-    
 
     // Database CRUD 
 

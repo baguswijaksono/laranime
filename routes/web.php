@@ -74,23 +74,9 @@ Route::get('/', function () {
 
 // admin
 Route::middleware('admin')->group(function () {
+
     Route::get('/admin', [AdminController::class, 'index'])->name('admin');
     Route::get('/user', [AdminController::class, 'viewUser'])->name('user');
-
-    // en
-    Route::get('/admin/en/recent-release/{page}', [AdminController::class, 'GetRecentEpisodes']); // done blacklist
-    Route::get('/admin/en/popular/{page}', [AdminController::class, 'GetPopularAnime']); // done blacklist
-    Route::get('/admin/en/search/{keyw}', [AdminController::class, 'GetAnimeSearch']); // done blacklist
-    Route::get('/admin/en/anime-movies/{page}', [AdminController::class, 'GetAnimeMovies']); // done blacklist
-    Route::get('/admin/en/top-airing/{page}', [AdminController::class, 'getTopAiring']);// done blacklist
-    Route::get('/admin/en/genre/{genre}/{page}', [AdminController::class, 'GetAnimeGenres']);// done blacklist
-
-    // anime bahasa indonesia
-    Route::get('/admin/id/recent-release/{page}', [ApiController::class, 'GetRecentEpisodesid']);
-    Route::get('/admin/id/search/{keyw}/{page}', [ApiController::class, 'GetAnimeSearchid']);
-    Route::get('/admin/id/genre/{genre}/{page}', [ApiController::class, 'GetAnimeGenresid']);
-    Route::get('/admin/id/anime-details/{anime}', [ApiController::class, 'GetAnimeDetailsid']);
-    Route::get('/admin/id/watch/{anime}/{episodeId}', [ApiController::class, 'GetStreamingURLsid']);
 
     // CRUD blacklist
     Route::get('/en-blacklist', [BlacklistController::class, 'index'])->name('blacklist');
