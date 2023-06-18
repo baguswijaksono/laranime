@@ -154,8 +154,6 @@ class AdminController extends Controller
     
     
 
-    
-
     public function enmovie(Request $request)
     {
         $movie = Movies::all();
@@ -175,8 +173,9 @@ class AdminController extends Controller
     public function enrecent(Request $request)
     {
         $recent = Recent::all();
-    
-        return view('admin.database-recent-manage', ['recent' => $recent]);
+        $blacklist = Blacklist::pluck('animeId')->toArray(); 
+        $minage = MinAge::pluck('animeId')->toArray(); 
+        return view('admin.database-recent-manage', ['recent' => $recent,'blacklist_animeIds' => $blacklist, 'min_age' => $minage]);
     }
 
     public function engenre(Request $request)

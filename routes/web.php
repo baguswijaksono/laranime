@@ -34,28 +34,19 @@ Route::get('/', function () {
 
     Route::get('/en/season-anime', [HomeController::class, 'seasonAnime'])->name('season');
     Route::get('/en/season/{specify}', [HomeController::class, 'specifyseasonAnime']);
-
     
     // anime bahasa inggris
-    Route::get('/en/recent-release/{page}', [ApiController::class, 'GetRecentEpisodes']);
-    Route::get('/en/popular/{page}', [ApiController::class, 'GetPopularAnime'])->name('userPopular');
+    Route::get('/en/recent-release/{page}', [ApiController::class, 'GetRecentEpisodes'])->name('userRecent');// Done Sepenuhnya
+    Route::get('/en/popular/{page}', [ApiController::class, 'GetPopularAnime'])->name('userPopular');// Done Sepenuhnya
     Route::get('/en/search/{keyw}', [ApiController::class, 'GetAnimeSearch']);
-    Route::get('/en/anime-movies/{page}', [ApiController::class, 'GetAnimeMovies'])->name('userMovie');
-    Route::get('/en/top-airing/{page}', [ApiController::class, 'getTopAiring'])->name('userTopair');
-    Route::get('/en/genre/{genre}/{page}', [ApiController::class, 'GetAnimeGenres'])->name('userGenre');
+    Route::get('/en/anime-movies/{page}', [ApiController::class, 'GetAnimeMovies'])->name('userMovie');// Done Sepenuhnya
+    Route::get('/en/top-airing/{page}', [ApiController::class, 'getTopAiring'])->name('userTopair');// Done Sepenuhnya
+    Route::get('/en/genre/{genre}/{page}', [ApiController::class, 'GetAnimeGenres'])->name('userGenre');// Done Sepenuhnya
     Route::get('/en/anime-details/{anime}', [ApiController::class, 'GetAnimeDetails']);
     Route::get('/en/watch/{episodeId}', [ApiController::class, 'GetStreamingURLs']);
-    Route::get('/en/thread/{episodeId}', [ApiController::class, 'GetEpisodeThread']);
-
-    // anime bahasa indonesia
-    Route::get('/id/ongoing-anime/{page}', [ApiController::class, 'GetOngoingAnimeId']);
-    Route::get('/id/complete-anime/{page}', [ApiController::class, 'GetCompleteAnimeId']);
-    Route::get('/id/search/{keyw}', [ApiController::class, 'GetAnimeSearchId']);
-    Route::get('/id/anime/{anime}', [ApiController::class, 'GetAnimeDetailsid']);
-    Route::get('/id/watch/{anime}/{episodeId}', [ApiController::class, 'GetStreamingURLsid']);
 
     // CRUD watchlist
-    Route::get('/en-watchlist', [WatchListController::class, 'index'])->name('watchlist');
+    Route::get('/en-watchlist', [WatchListController::class, 'index'])->name('watchlist');// Done Sepenuhnya
     Route::post('/adding-watchlist', [WatchListController::class, 'store']);
     Route::post('/del-watchlist', [WatchListController::class, 'destroy'])->name('watchlist.destroy');
 
@@ -80,14 +71,14 @@ Route::middleware('admin')->group(function () {
 
     // CRUD blacklist
     Route::get('/en-blacklist', [BlacklistController::class, 'index'])->name('blacklist');
-    Route::post('/adding-blacklist', [BlacklistController::class, 'store'])->name('blacklist.add');
-    Route::post('/del-blacklist', [BlacklistController::class, 'destroy'])->name('blacklist.destroy');
+    Route::post('/adding-blacklist', [BlacklistController::class, 'store'])->name('blacklist.add');// Done Sepenuhnya
+    Route::post('/del-blacklist', [BlacklistController::class, 'destroy'])->name('blacklist.destroy');// Done Sepenuhnya
     Route::post('/edit-blacklist', [BlacklistController::class, 'show'])->name('blacklist.edit');
 
     // CRUD minage
     Route::get('/en-minage', [MinAgeController::class, 'index'])->name('minage');
-    Route::post('/adding-minage', [MinAgeController::class, 'store'])->name('minage.add');
-    Route::post('/del-minage', [MinAgeController::class, 'destroy'])->name('minage.destroy');
+    Route::post('/adding-minage', [MinAgeController::class, 'store'])->name('minage.add');// Done Sepenuhnya
+    Route::post('/del-minage', [MinAgeController::class, 'destroy'])->name('minage.destroy');// Done Sepenuhnya
     Route::post('/edit-minage', [MinAgeController::class, 'show'])->name('minage.edit');
 
     //Databases Popular Anime
@@ -122,16 +113,16 @@ Route::middleware('admin')->group(function () {
     Route::post('/en-db-popular/delete', [AdminController::class, 'enpopularDel'])->name('popular.del');// Done Sepenuhnya
 
     // CRUD Movies
-    Route::get('/en-db-movies', [AdminController::class, 'enmovie'])->name('admin-movie-manage');
+    Route::get('/en-db-movies', [AdminController::class, 'enmovie'])->name('admin-movie-manage');// Done Sepenuhnya
     Route::get('/en-db-movies/{page}/info', [AdminController::class, 'enmovieInfo']);
     Route::get('/en-db-movies/{page}/edit', [AdminController::class, 'enmovieEdit']);
     Route::post('/en-db-movies/delete', [AdminController::class, 'enmovieDel'])->name('admin-popular-manage')->name('movie.del');
 
     //CRUD Top Airing
-    Route::get('/en-db-topair', [AdminController::class, 'entopair'])->name('admin-topAir-manage');
+    Route::get('/en-db-topair', [AdminController::class, 'entopair'])->name('admin-topAir-manage');// Done Sepenuhnya
 
     //CRUD Recent
-    Route::get('/en-db-recent', [AdminController::class, 'enrecent'])->name('admin-recent-manage');
+    Route::get('/en-db-recent', [AdminController::class, 'enrecent'])->name('admin-recent-manage');// Done Sepenuhnya
 
     //CRUD Genre
     Route::get('/en-db-genre', [AdminController::class, 'engenre'])->name('admin-genre-manage');
