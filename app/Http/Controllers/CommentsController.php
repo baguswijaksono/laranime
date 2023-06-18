@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Comments;
+use App\Models\userActivity;
 
 class CommentsController extends Controller
 {
@@ -39,12 +40,25 @@ class CommentsController extends Controller
             'username' => 'required',
             'role' => 'required',
             'episodeId' => 'required',
-            'comment' => 'required'
+            'comment' => 'required',
+            'at' => 'required'
         ]);
     
         Comments::create($request->all());
+        $date = date('Y-m-d H:i:s');
+    
+        $user = new userActivity();
+        $user->userName = $request->username;
+        $user->activityType = "comment";
+        $user->episodeId = $request->episodeId;
+        $user->animeId = '';
+        $user->content = $request->comment;
+        $user->at = $date;
+        $user->save();
+    
         return back();
     }
+    
     
 
     /**
@@ -76,9 +90,23 @@ class CommentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $commentId = $request->input('id');
+        $updatedcomment = $request->input('update');
+        $comment = Comments::find($commentId);
+        $date = date('Y-m-d H:i:s');
+        
+        // Update the comment if found
+        if ($comment) {
+            $comment->comment = $updatedcomment; 
+            $comment->at = $date;
+            $comment->edited = 'yes';
+            $comment->save();
+            return back();
+        }
+        
+        
     }
 
     /**
@@ -87,8 +115,19 @@ class CommentsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+    $commentId = $request->input('id');
+    $user = $request->input('user');
+    $comment = Comments::find($commentId);
+
+    // Delete the comment if found
+    if ($comment) {
+        $comment->delete();
+        return back();
     }
+
+    }
+    
+    
 }

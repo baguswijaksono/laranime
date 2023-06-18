@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Laranime</a>
+    <a class="navbar-brand" href="/">Laranime</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -15,6 +15,8 @@
             <li><a class="dropdown-item" href="/en/recent-release/1">Recent Release</a></li>
             <li><a class="dropdown-item" href="/en/anime-movies/1">Anime Movies</a></li>
             <li><a class="dropdown-item" href="/en/top-airing/1">Top Airing</a></li>
+            <li><a class="dropdown-item" href="{{route('all')}}">All Anime</a></li>
+            <li><a class="dropdown-item" href="{{route('season')}}">Group by Season</a></li>
           </ul>
         </li>
 
@@ -25,42 +27,18 @@
           <ul class="dropdown-menu">
           <div>
   <ul style="list-style: none; margin: 0; padding: 0; width: 400px;">
-    <li style="display: inline-block; width: 180px;">
-      <a class="dropdown-item" href="/en/genre/action/1">action</a>
+  @php 
+  use App\Models\genreList;
+  $genre = genreList::all();
+  @endphp
+  @foreach($genre as $genrelist)
+  <li style="display: inline-block; width: 180px;">
+      <a class="dropdown-item" href="/en/genre/{{$genrelist->slug}}/1">{{$genrelist->name}}</a>
     </li>
-    <li style="display: inline-block; width: 180px;">
-      <a class="dropdown-item" href="/en/genre/adventure/1">adventure</a>
-    </li>
-    <li style="display: inline-block; width: 180px;">
-      <a class="dropdown-item" href="/en/genre/cars/1">cars</a>
-    </li>
-    <li style="display: inline-block; width: 180px;">
-      <a class="dropdown-item" href="/en/genre/comedy/1">comedy</a>
-    </li>
-    <li style="display: inline-block; width: 180px;">
-      <a class="dropdown-item" href="/en/genre/crime/1">crime</a>
-    </li>
-    <li style="display: inline-block; width: 180px;">
-      <a class="dropdown-item" href="/en/genre/dementia/1">dementia</a>
-    </li>
-    <li style="display: inline-block; width: 180px;">
-      <a class="dropdown-item" href="/en/genre/demons/1">demons</a>
-    </li>
-    <li style="display: inline-block; width: 180px;">
-      <a class="dropdown-item" href="/en/genre/drama/1">drama</a>
-    </li>
-    <li style="display: inline-block; width: 180px;">
-      <a class="dropdown-item" href="/en/genre/dub/1">dub</a>
-    </li>
-    <li style="display: inline-block; width: 180px;">
-      <a class="dropdown-item" href="/en/genre/family/1">family</a>
-    </li>
-    <li style="display: inline-block; width: 180px;">
-      <a class="dropdown-item" href="/en/genre/fantasy/1">fantasy</a>
-    </li>
-    <li style="display: inline-block; width: 180px;">
-      <a class="dropdown-item" href="/en/genre/game/1">game</a>
-    </li>
+  @endforeach
+
+
+
   </ul>
 </div>
 
@@ -70,7 +48,7 @@
       </ul>
 
 <form role="search" id="search-form">
-  <input class="form-control" type="text" placeholder="Search" aria-label="Search" id="inputan" style="width: 50vw; text-align: center;">
+  <input class="form-control" type="text" placeholder="Search" aria-label="Search" id="inputan" style="width: 55vw; text-align: center;">
 </form>
 
 
@@ -96,15 +74,54 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+
+                                <a class="dropdown-item" href="/setting">
+                                      Settings
+                                    </a>
+                                    @if(Auth::check() && Auth::user()->role == 'admin')
+    <a class="dropdown-item" href="{{ route('admin') }}">
+        Switch to admin
+    </a>
+@endif
+
+@php
+    $url = $_SERVER['REQUEST_URI'];
+@endphp
+
+@if (strpos($url, '/en') === 0)
+    <a class="dropdown-item" href="/id">Switch to Indonesia</a>
+@elseif (strpos($url, '/id') === 0)
+    <a class="dropdown-item" href="/">Switch to English</a>
+@endif
+
+<a class="dropdown-item" href="{{ route('history') }}">
+        My Watch History
+    </a>
+
+    <a class="dropdown-item" href="{{ route('watchlist') }}">
+        My Watch List
+    </a>
+
+    @if (Auth::check() && Auth::user()->theme === 'light')
+    <a class="dropdown-item" href="{{ route('dark') }}">
+        Dark Mode
+    </a>
+@else
+<a class="dropdown-item" href="{{ route('light') }}">
+        Light Mode
+    </a>
+@endif
+
+
+
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
-                                    <a class="dropdown-item" href="/setting">
-                                      Settings
-                                    </a>
+
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf

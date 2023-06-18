@@ -16,7 +16,10 @@ return new class extends Migration
         Schema::create('top_airs', function (Blueprint $table) {
             $table->id();
             $table->integer('page');
-            $table->longText('json');
+            $table->string('animeId');
+            $table->string('animeTitle');
+            $table->string('animeImg');
+            $table->string('latestEp');
         });
     }
 

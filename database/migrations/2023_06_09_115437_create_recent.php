@@ -16,7 +16,11 @@ return new class extends Migration
         Schema::create('recents', function (Blueprint $table) {
             $table->id();
             $table->integer('page');
-            $table->longText('json');
+            $table->string('episodeId');
+            $table->string('animeTitle');
+            $table->string('episodeNum');
+            $table->string('subOrDub');
+            $table->string('animeImg');
         });
     }
 

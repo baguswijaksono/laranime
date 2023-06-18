@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class EnDetails extends Model
 {
-    protected $fillable = ['anime_id', 'json'];
+    protected $fillable = ['anime_id', 'animeTitle','type','releasedDate','status','genres','otherNames','synopsis','totalEpisodes','episodesList','animeImg'];
     public $timestamps = false;
     use HasFactory;
 }

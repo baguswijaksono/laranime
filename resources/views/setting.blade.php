@@ -1,5 +1,9 @@
 <!doctype html>
-<html lang="en" data-bs-theme="dark">
+@if (Auth::check() && Auth::user()->theme === 'light')
+    <html lang="en">
+@else
+    <html lang="en" data-bs-theme="dark">
+@endif
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,11 +23,20 @@ form {
   </style>
 
   <body>
+  @include('layouts.navbar')
+  @if (Session::has('success'))
+    <div class="alert alert-success">
+        {{ Session::get('success') }}
+    </div>
+@endif
 
-  <form class="row g-3 needs-validation" novalidate>
+  <form class="row g-3 needs-validation" novalidate action="{{route('updateUser')}}" method="POST">
+  @csrf
   <div class="col-md-8">
     <label for="validationCustom01" class="form-label">Full name</label>
-    <input type="text" class="form-control" id="validationCustom01" value="{{ Auth::user()->name }}" required>
+    <input type="text" class="form-control" id="validationCustom01" name="validationCustom01" value="{{ Auth::user()->name }}" required>
+
+    
     <div class="valid-feedback">
       Looks good!
     </div>
@@ -31,28 +44,21 @@ form {
   <div class="col-4">
   <label for="start" class="form-label">Date of birth</label>
   <input class="form-control" type="date" id="start" name="trip-start"
-       value="2018-07-22"
+       value="{{ Auth::user()->date_of_birth }}"
        min="2018-01-01" max="2018-12-31">
 
 </div>
 
 
-  <div class="col-md-9">
+  <div class="col-md-12">
     <label for="validationCustom03" class="form-label">Email</label>
-    <input type="text" class="form-control" id="validationCustom03" value="{{ Auth::user()->email }}" required>
+    <input type="text" class="form-control" id="validationCustom03" name="validationCustom03" value="{{ Auth::user()->email }}" required>
     <div class="invalid-feedback">
       Please provide a valid city.
     </div>
   </div>
 
-  <div class="col-md-3">
-    <label for="validationCustom05" class="form-label">Theme</label>
-    <select class="form-select" aria-label="Default select example">
-  <option selected>{{ Auth::user()->theme }}</option>
-  <option value="dark">Dark</option>
-  <option value="light">Light</option>
-</select>
-  </div>
+
   
   <div class="col-12">
   <label for="inputPassword5" class="form-label">Password</label>
@@ -61,16 +67,7 @@ form {
   Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
 </div>
 </div>
-  <div class="col-12">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-      <label class="form-check-label" for="invalidCheck">
-        Agree to terms and conditions
-      </label>
-      <div class="invalid-feedback">
-        You must agree before submitting.
-      </div>
-    </div>
+
   </div>
 
 

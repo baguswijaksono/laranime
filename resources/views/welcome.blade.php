@@ -1,5 +1,9 @@
 <!doctype html>
-<html lang="en" data-bs-theme="dark">
+@if (Auth::check() && Auth::user()->theme === 'light')
+    <html lang="en">
+@else
+    <html lang="en" data-bs-theme="dark">
+@endif
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,10 +36,50 @@
   </head>
   <body>
   @include('layouts.navbar')
+  <div id="carouselExampleCaptions" class="carousel slide">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner" style="height:450px;">
+    <div class="carousel-item active">
+      <img src="https://www.nawpic.com/media/2020/jujutsu-kaisen-nawpic-8-scaled.jpg" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>First slide label</h5>
+        <p>Some representative placeholder content for the first slide.</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="https://www.nawpic.com/media/2020/jujutsu-kaisen-nawpic-8-scaled.jpg" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Second slide label</h5>
+        <p>Some representative placeholder content for the second slide.</p>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="https://www.nawpic.com/media/2020/jujutsu-kaisen-nawpic-8-scaled.jpg" class="d-block w-100" alt="...">
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Third slide label</h5>
+        <p>Some representative placeholder content for the third slide.</p>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
 
   <!-- This is a comment in HTML -->
-<center><h1  style="    padding-top: 30px; padding-bottom: 30px;">Popular</h1></center>
-<div style="display: inline-block; overflow: hidden;">
+  <div class="popular" style="padding-top: 10px;padding-left: 15px;">
+  <h6>Popular</h6>
+
+  <div style="display: inline-block; overflow: hidden;">
   <div class="row row-cols-auto">
     @php $counter = 0; @endphp
     @foreach($data as $item)
@@ -63,10 +107,14 @@
   </div>
 </div>
 
+  </div>
+
+
 <!-- This is a comment in HTML -->
 
   <!-- This is a comment in HTML -->
-<center>  <h1  style="    padding-top: 30px; padding-bottom: 30px;">Recent Release</h1></center>
+  <div class="popular" style="padding-left: 15px;">
+  <h6>Recent</h6>
 <div style="display: inline-block; overflow: hidden;">
   <div class="row row-cols-auto">
     @php $counter2 = 0; @endphp
@@ -94,10 +142,11 @@
     @endforeach
   </div>
 </div>
+  </div>
 
 <!-- This is a comment in HTML -->
-
-<center><h1  style="    padding-top: 30px; padding-bottom: 30px;">Movies</h1></center>
+<div class="Movies" style="padding-left: 15px;">
+  <h6>Recent</h6>
 <div style="display: inline-block; overflow: hidden;">
   <div class="row row-cols-auto">
     @php $counter3 = 0; @endphp
@@ -125,9 +174,10 @@
     @endforeach
   </div>
 </div>
+  </div>
 <!-- This is a comment in HTML -->
-
-<center>  <h1  style="    padding-top: 30px; padding-bottom: 30px;">Top Airing</h1></center>
+<div class="popular" style="padding-left: 15px;">
+  <h6>Top Airing</h6>
 <div style="display: inline-block; overflow: hidden;">
   <div class="row row-cols-auto">
     @php $counter4 = 0; @endphp
@@ -155,10 +205,11 @@
     @endforeach
   </div>
 </div>
+</div>
 
-
-		
+@include('layouts.footer')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
   </body>
 </html>
+
 

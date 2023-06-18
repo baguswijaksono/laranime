@@ -15,7 +15,7 @@ class MinAgeController extends Controller
     public function index()
     {
         $minAge = MinAge::all();
-        return view('min_age.index', compact('minAge'));
+        return view('admin.minage-manage', compact('minAge'));
     }
 
     /**
@@ -85,8 +85,16 @@ class MinAgeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $animeId = $request->input('animeId');
+        $MinAge = MinAge::where('animeId', $animeId)->first();
+    
+        if ($MinAge) {
+            $MinAge->delete();
+            return back();
+        } else {
+            return back();
+        }
     }
 }

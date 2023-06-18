@@ -17,7 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('username');
             $table->string('role');
-            $table->longText('comment'); 
+            $table->string('episodeId');
+            $table->longText('comment');
+            $table->datetime('at'); 
+            $table->string('edited')->default('no'); 
         });
     }
     

@@ -15,10 +15,20 @@ return new class extends Migration
     {
         Schema::create('en_details', function (Blueprint $table) {
             $table->id();
-            $table->string('anime_id');
-            $table->longText('json');
+            $table->string('animeId');
+            $table->string('animeTitle');
+            $table->string('type');
+            $table->string('releasedDate');
+            $table->string('status');
+            $table->string('genres');
+            $table->string('otherNames');
+            $table->longText('synopsis');
+            $table->string('animeImg');
+            $table->string('totalEpisodes');
+            $table->longText('episodesList'); 
         });
     }
+    
 
     /**
      * Reverse the migrations.

@@ -1,57 +1,118 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="#">Laranime</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Anime
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Server
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Popular Anime</a></li>
-            <li><a class="dropdown-item" href="#">Recent Release</a></li>
-            <li><a class="dropdown-item" href="#">Anime Movies</a></li>
-            <li><a class="dropdown-item" href="#">Top Airing</a></li>
+            <li><a class="dropdown-item" href="{{route('homeId')}}">Indonesia</a></li>
+            <li><a class="dropdown-item" href="{{route('home')}}">English</a></li>
+          </ul>
+</li>
+
+<li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Manage
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{{route('blacklist')}}">Blacklist</a></li>
+            <li><a class="dropdown-item" href="{{route('minage')}}">Minimum Age</a></li>
+            <li><a class="dropdown-item" href="{{ route('genre') }}">Genre</a></li>
+            <li><a class="dropdown-item" href="{{ route('user') }}">User</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Populate Database
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{{route('prepopulatePopular')}}">Populate Popular</a></li>
+            <li><a class="dropdown-item" href="{{route('prepopulateAnime')}}">Populate Anime</a></li>
+            <li><a class="dropdown-item" href="{{route('prepopulateMovie')}}">Populate Movie</a></li>
+            <li><a class="dropdown-item" href="{{ route('prepopulateTopAir') }}">Populate Top Airing</a></li>
+            <li><a class="dropdown-item" href="{{ route('prepopulateRecent') }}">Populate Recent</a></li>
+            <li><a class="dropdown-item" href="{{ route('prepopulateGenre') }}">Populate Genre</a></li>
+                     
           </ul>
         </li>
 
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Genre
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Insert Database
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">action</a></li>
-            <li><a class="dropdown-item" href="#">adventure</a></li>
-            <li><a class="dropdown-item" href="#">cars</a></li>
-            <li><a class="dropdown-item" href="#">comedy</a></li>
-            <li><a class="dropdown-item" href="#">crime</a></li>
-            <li><a class="dropdown-item" href="#">dementia</a></li>
-            <li><a class="dropdown-item" href="#">demons</a></li>
-            <li><a class="dropdown-item" href="#">drama</a></li>
-            <li><a class="dropdown-item" href="#">dub</a></li>
-            <li><a class="dropdown-item" href="#">family</a></li>
-            <li><a class="dropdown-item" href="#">fantasy</a></li>
-            <li><a class="dropdown-item" href="#">game</a></li>
+            <li><a class="dropdown-item" href="{{route('prepopulatePopular')}}">Insert Popular</a></li>
+            <li><a class="dropdown-item" href="{{route('prepopulateAnime')}}">Insert Anime</a></li>
+            <li><a class="dropdown-item" href="{{route('prepopulateMovie')}}">Insert Movie</a></li>
+            <li><a class="dropdown-item" href="{{ route('prepopulateTopAir') }}">Insert Top Airing</a></li>
+            <li><a class="dropdown-item" href="{{ route('prepopulateRecent') }}">Insert Recent</a></li>
+            <li><a class="dropdown-item" href="{{ route('prepopulateGenre') }}">Insert Genre</a></li>
+                     
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Database
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{{route('admin-popular-manage')}}">Popular</a></li>
+            <li><a class="dropdown-item" href="{{route('admin-anime-manage')}}">Anime</a></li>
+            <li><a class="dropdown-item" href="{{route('admin-movie-manage')}}">Movie</a></li>
+            <li><a class="dropdown-item" href="{{ route('admin-topAir-manage') }}">Top Airing</a></li>
+            <li><a class="dropdown-item" href="{{ route('admin-recent-manage') }}">Recent</a></li>
+            <li><a class="dropdown-item" href="{{ route('admin-genre-manage') }}">Genre</a></li>
+                     
           </ul>
         </li>
 
       </ul>
+      <ul class="navbar-nav ms-auto">
+                        <!-- Authentication Links -->
+                        @guest
+                            @if (Route::has('login'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                </li>
+                            @endif
 
-      <form class="d-flex" role="search" id="search-form">
-        <input class="form-control me-2" type="text" placeholder="Search" aria-label="Search" id="inputan">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-      </form>
-<script>
-    document.querySelector('#search-form').addEventListener('submit', function(e) {
-        e.preventDefault();
-        var inputan = document.querySelector('#inputan').value;
-        var url = window.location.origin + '/admin/search/' + inputan;
-        window.location.href = url;
-    });
-</script>
+                            @if (Route::has('register'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                </li>
+                            @endif
+                        @else
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->name }}
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="/en">
+                                      Switch to Normal User
+                                    </a>
+
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+
+
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
+                        @endguest
+                    </ul>
     </div>
   </div>
 </nav>

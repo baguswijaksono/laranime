@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comments extends Model
 {
-    protected $fillable = ['username','role','episodeId','comment'];
+    protected $fillable = ['id','username','role','episodeId','comment','at'];
     public $timestamps = false;
     use HasFactory;
 }

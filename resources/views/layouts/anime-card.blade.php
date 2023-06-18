@@ -1,15 +1,39 @@
+@php
+    $urlrl = request()->url(); 
+    $segmentsrl = explode('/', $urlrl); 
+    $secondLastSegmentrl = $segmentsrl[count($segmentsrl) - 2];
+@endphp
+
+
 <div style="padding-left: 15px; padding-top: 15px; display: inline-block;">
-<div class="card" style="width: 15rem;">
-<a href="/en/anime-details/{{ $animeId}}">  <img src="{{ $animeImg }}" class="rounded" alt="" style="height: 318px; width: 239px;">
+<div class="card" style=" width: 175px;">
+@if($secondLastSegmentrl=='recent-release')
+<a href="/en/watch/{{ $animeId}}">  <img src="{{ $animeImg }}" class="rounded" alt="" style="height : 250px; width: 175px;">
+@else
+<a href="/en/anime-details/{{$animeId}}">  <img src="{{ $animeImg }}" class="rounded" alt="" style="height : 250px; width: 175px;">
+@endif
 </a>
-
   <div class="card-body">
-    <h6 class="card-title">{{ $animeTitle }}</h6>
+  <h6 style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden; text-overflow: ellipsis;">{{ $animeTitle }}</h6>
     <p class="card-text">{{$status}}</p>
-    <a href="/en/anime-details/{{ $animeId}}" class="btn btn-primary btn-sm">Details</a>
+    @if($secondLastSegmentrl=='recent-release')
+    @php
+    $animeParts = explode('-', $animeId);
+    $animeParts = array_slice($animeParts, 0, -2);
+    $animeId = implode('-', $animeParts);
+@endphp
+@endif
+    @if (Auth::check() && Auth::user()->theme === 'light')
+    <a href="/en/anime-details/{{ $animeId}}" class="btn btn-dark btn-sm">Details</a>
+@else
+<a href="/en/anime-details/{{ $animeId}}" class="btn btn-light btn-sm">Details</a>
+@endif
 
-    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop2_{{$item['animeId']}}">Add to watchlist</button>
 
+    @if(!in_array($item->animeId, $watchlist))
+    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop2_{{$item['animeId']}}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-fill" viewBox="0 0 16 16">
+  <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/>
+</svg></button>
       <!-- Modal -->
       <div class="modal fade" id="staticBackdrop2_{{$item['animeId']}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdrop2Label" aria-hidden="true">
         <div class="modal-dialog">
@@ -19,7 +43,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <p style="color: black;">yakin nih mau masukin {{ $animeId}}  ke dalem min age</p>
+              <p>yakin nih mau masukin {{ $animeId}}  ke dalem min age</p>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -33,21 +57,24 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> 
 
-
-              <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop_{{$item['animeId']}}">Delete</button>
-
+      @else
+      <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop_{{$item['animeId']}}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+  <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
+</svg>
+              </button>
         <!-- Modal -->
         <div class="modal fade" id="staticBackdrop_{{$item['animeId']}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Blacklist Confirmation</h5>
+                <h5 class="modal-title" id="staticBackdropLabel">Delete Watchlist Confirmation</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <p style="color: black;">yakin nih mau hapus {{$item['animeId']}} dari blacklist</p>
+                <p>yakin nih mau hapus {{$item['animeId']}} dari Watchlist</p>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -55,13 +82,16 @@
                 @csrf 
   <input type="hidden" name="animeId" value="{{$animeId}}">
   <input type="hidden" name="email" value=" {{ Auth::user()->email }}">
-  <button type="submit" class="btn btn-danger">delete from Blacklist</button>
+  <button type="submit" class="btn btn-danger">delete from Watchlist</button>
 </form>
               </div>
             </div>
           </div>
         </div>
+<!--endmodal-->
 
+      @endif
+      
 
   </div>
   

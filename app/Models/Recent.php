@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Recent extends Model
 {
-    protected $fillable = ['page', 'json'];
+    protected $fillable = ['page', 'episodeId','animeTitle','episodeNum','subOrDub','animeImg'];
     public $timestamps = false;
     use HasFactory;
 }

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class GenreEn extends Model
 {
-    protected $fillable = ['page','genre', 'json'];
+    protected $fillable = ['page','genre', 'animeId','animeTitle','animeImg','releasedDate'];
     public $timestamps = false;
     use HasFactory;
 }

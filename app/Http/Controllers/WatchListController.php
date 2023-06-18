@@ -14,7 +14,10 @@ class WatchListController extends Controller
      */
     public function index()
     {
-        //
+        $email = Auth::user()->email; 
+        $watchlist = Watchlists::where('email', Auth::user()->email)->pluck('animeId')->toArray();
+        return view('en.watch-list', [
+            'watchlist'=>$watchlist]);
     }
 
     /**
