@@ -84,21 +84,23 @@ Route::middleware('admin')->group(function () {
     Route::post('/del-minage', [MinAgeController::class, 'destroy'])->name('minage.destroy');// Done Sepenuhnya
     Route::post('/edit-minage', [MinAgeController::class, 'update'])->name('minage.edit');// Done Sepenuhnya
 
-    //Databases Popular Anime
+    //Populate Popular Anime
     Route::get('/pre-populate-popular', [AdminController::class, 'prepopulatePopular'])->name('prepopulatePopular'); //Done Sepenuhnya
     Route::get('/populate-popular', [AdminController::class, 'populatePopular'])->name('populatePopular'); //Done Sepenuhnya
 
-    //Databases Anime Anime
+    //Populate Movie Anime
     Route::get('/pre-populate-movie', [AdminController::class, 'prepopulateMovie'])->name('prepopulateMovie'); //Done Sepenuhnya
     Route::get('/populate-movie', [AdminController::class, 'populateMovie'])->name('populateMovie'); //Done Sepenuhnya
 
-    //Databases Anime Anime
+    //Populate Anime Details
     Route::get('/pre-populate-anime', [AdminController::class, 'prepopulateAnime'])->name('prepopulateAnime');
     Route::get('/populate-anime', [AdminController::class, 'populateAnime'])->name('populateAnime');
 
+    //Populate Top Airing Anime
     Route::get('/pre-populate-top-airing', [AdminController::class, 'prepopulateTopAir'])->name('prepopulateTopAir');//Done Sepenuhnya
     Route::get('/populate-top-airing', [AdminController::class, 'populateTopAir'])->name('populateTopAir');//Done Sepenuhnya
 
+    //Populate Recent Episode
     Route::get('/pre-populate-recent-release', [AdminController::class, 'prepopulateRecent'])->name('prepopulateRecent');//Done Sepenuhnya
     Route::get('/populate-recent-release', [AdminController::class, 'populateRecent'])->name('populateRecent');//Done Sepenuhnya
 
@@ -136,6 +138,9 @@ Route::middleware('admin')->group(function () {
 
     //CRUD Genre
     Route::get('/en-db-genre', [AdminController::class, 'engenre'])->name('admin-genre-manage');// Done Sepenuhnya
+    Route::get('/en-db-genre/{animeId}/edit', [AdminController::class, 'engenreEdit']);// Done Sepenuhnya
+    Route::post('/en-db-genre/save-edit', [AdminController::class, 'engenreEditsave']);//Done Sepenuhnya
+    Route::post('/en-db-genre/delete', [AdminController::class, 'engenreDel'])->name('engenre.del');// Done Sepenuhnya
 
     //CRUD Anime
     Route::get('/en-db-anime', [AdminController::class, 'enanime'])->name('admin-anime-manage');
