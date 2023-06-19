@@ -21,8 +21,6 @@ use App\Models\epsList;
 class ApiController extends Controller
 {
     // Englisht Start //
-    public $enapi = 'https://gogoanime-api-production.up.railway.app';
-    public $idapi = 'https://otakudesu-unofficial-api.rzkfyn.tech/api/v1';
 
     public function GetRecentEpisodes(Request $request, $page)
     {
@@ -55,8 +53,11 @@ class ApiController extends Controller
 
     public function GetAnimeSearch(Request $request, $keyw)
     {
-        $keyw = str_replace("%20", "-", $keyw);
-        $data = EnDetails::where('animeId', 'LIKE', '%' . $keyw . '%')->get();    
+        $keyw = str_replace("%20", "", $keyw);
+        $data = EnDetails::where(function ($query) use ($keyw) {
+            $query->where('animeId', 'LIKE', '%' . $keyw . '%')
+                ->orWhere('otherNames', 'LIKE', '%' . $keyw . '%');
+        })->get();
 
         $blacklist = Blacklist::pluck('animeId')->toArray(); 
         $watchlist = Watchlists::where('email', Auth::user()->email)->pluck('animeId')->toArray();
@@ -156,52 +157,6 @@ class ApiController extends Controller
         ]);
     }
     
-
-    // Indonesian Start //
-    
-    public function GetOngoingAnimeId(Request $request, $page)
-    {
-        $response = Http::get($this->idapi .'/ongoing-anime/'.$page);
-        $details = $response->json();
-        $blacklist = Blacklist::pluck('animeId')->toArray(); // Mengambil nilai kolom animeId dan menyimpannya ke dalam array
-        return view('id.ongoing', ['details' => $details, 'blacklist_animeIds' => $blacklist]);
-    }
-
-    public function GetCompleteAnimeId(Request $request, $page)
-    {
-        $response = Http::get($this->idapi .'/complete-anime/'.$page);
-        $details = $response->json();
-        $blacklist = Blacklist::pluck('animeId')->toArray(); // Mengambil nilai kolom animeId dan menyimpannya ke dalam array
-        return view('id.completed', ['details' => $details, 'blacklist_animeIds' => $blacklist]);
-    }
-
-    public function GetAnimeDetailsid(Request $request, $anime)
-    {
-        $response = Http::get($this->idapi .'/anime/'.$anime);
-        $details = $response->json();
-        $blacklist = Blacklist::pluck('animeId')->toArray(); // Mengambil nilai kolom animeId dan menyimpannya ke dalam array
-        return view('id.anime-details', ['details' => $details, 'blacklist_animeIds' => $blacklist]);
-    }
-
-    public function GetAnimeSearchid(Request $request, $keyw)
-    {
-        $response = Http::get($this->idapi .'/search/'.$keyw);
-        $details = $response->json();
-        $blacklist = Blacklist::pluck('animeId')->toArray(); // Mengambil nilai kolom animeId dan menyimpannya ke dalam array
-        return view('id.search', ['details' => $details, 'blacklist_animeIds' => $blacklist]);
-    }
-
-    public function GetStreamingURLsid(Request $request, $anime, $episodeId)
-    {
-        $response = Http::get($this->idapi . '/anime/' . $anime . '/episodes/' . $episodeId);
-        $data = $response->json();
-        $response2 = Http::get($this->idapi . '/anime/' . $anime);
-        $details2 = $response2->json();
-        $blacklist = Blacklist::pluck('animeId')->toArray(); 
-        return view('id.watch', ['data' => $data, 'blacklist_animeIds' => $blacklist, 'details' => $details2]);
-    }
-    
-
 }
 
 

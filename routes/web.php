@@ -33,12 +33,12 @@ Route::middleware(['auth'])->group(function(){
     // bahasa inggris
     Route::get('/en/recent-release/{page}', [ApiController::class, 'GetRecentEpisodes'])->name('userRecent');// Done Sepenuhnya
     Route::get('/en/popular/{page}', [ApiController::class, 'GetPopularAnime'])->name('userPopular');// Done Sepenuhnya
-    Route::get('/en/search/{keyw}', [ApiController::class, 'GetAnimeSearch']);
+    Route::get('/en/search/{keyw}', [ApiController::class, 'GetAnimeSearch']);// Done Sepenuhnya
     Route::get('/en/anime-movies/{page}', [ApiController::class, 'GetAnimeMovies'])->name('userMovie');// Done Sepenuhnya
     Route::get('/en/top-airing/{page}', [ApiController::class, 'getTopAiring'])->name('userTopair');// Done Sepenuhnya
     Route::get('/en/genre/{genre}/{page}', [ApiController::class, 'GetAnimeGenres'])->name('userGenre');// Done Sepenuhnya
     Route::get('/en/anime-details/{anime}', [ApiController::class, 'GetAnimeDetails'])->name('userAnimeDtls');// Done Sepenuhnya
-    Route::get('/en/watch/{episodeId}', [ApiController::class, 'GetStreamingURLs']);
+    Route::get('/en/watch/{episodeId}', [ApiController::class, 'GetStreamingURLs']);// Done Sepenuhnya
 
     // CRUD watchlist
     Route::get('/en-watchlist', [WatchListController::class, 'index'])->name('watchlist');// Done Sepenuhnya
