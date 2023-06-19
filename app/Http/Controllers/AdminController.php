@@ -221,6 +221,47 @@ class AdminController extends Controller
         return view('admin.database-topair-manage', ['topair' => $topair,'blacklist_animeIds' => $blacklist, 'min_age' => $minage]);
     }
 
+    public function entopairDel(Request $request)
+    {
+        $animeId = $request->input('animeId');
+        $TopAir = TopAir::where('animeId', $animeId)->first();
+        $TopAir->delete();
+        return back();
+    }
+
+    public function entopairEdit(Request $request,$animeId)
+    {
+        $TopAir = TopAir::where('animeId', $animeId)->first();
+        return view('admin.database-topair-manage-edit',['topair'=>$TopAir ]);
+    }
+
+    public function entopairEditsave(Request $request)
+    {
+        $animeId = $request->input('validationCustom02');
+        $animeTitle = $request->input('validationCustom03');
+        $animeImg = $request->input('validationCustom04');
+        $latestEp = $request->input('validationCustom05');
+        $page = $request->input('validationCustom01');
+    
+        $update = TopAir::where('animeId', $animeId)->first();
+    
+        if ($update) {
+            $update->page = $page;
+            $update->animeId = $animeId;
+            $update->animeTitle = $animeTitle;
+            $update->animeImg = $animeImg;
+            $update->latestEp = $latestEp;
+            $update->save();
+    
+            $TopAir = TopAir::all();
+    
+            return redirect()->route('admin-topAir-manage', ['topair' => $TopAir]);
+        }
+
+        return back()->with('error', 'Record not found');
+    }
+    
+
     public function enrecent(Request $request)
     {
         $recent = Recent::all();

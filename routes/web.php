@@ -124,9 +124,14 @@ Route::middleware('admin')->group(function () {
 
     //CRUD Top Airing
     Route::get('/en-db-topair', [AdminController::class, 'entopair'])->name('admin-topAir-manage');// Done Sepenuhnya
+    Route::get('/en-db-topair/{animeId}/edit', [AdminController::class, 'entopairEdit']);// Done Sepenuhnya
+    Route::post('/en-db-topair/save-edit', [AdminController::class, 'entopairEditsave']);//Done Sepenuhnya
+    Route::post('/en-db-topair/delete', [AdminController::class, 'entopairDel'])->name('topair.del');// Done Sepenuhnya
 
     //CRUD Recent
     Route::get('/en-db-recent', [AdminController::class, 'enrecent'])->name('admin-recent-manage');// Done Sepenuhnya
+
+    Route::post('/en-db-recent/delete', [AdminController::class, 'enrecentDel'])->name('recent.del');// Done Sepenuhnya
 
     //CRUD Genre
     Route::get('/en-db-genre', [AdminController::class, 'engenre'])->name('admin-genre-manage');// Done Sepenuhnya
@@ -135,10 +140,6 @@ Route::middleware('admin')->group(function () {
     Route::get('/en-db-anime', [AdminController::class, 'enanime'])->name('admin-anime-manage');
     Route::get('/en-db-anime/eps/{animeId}', [AdminController::class, 'enanimeEps'])->name('admin-epslist-manage');
 
-});
-
-Route::get('/underage', function () {
-    return view('underage');
 });
 
 Auth::routes();

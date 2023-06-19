@@ -78,10 +78,8 @@
                                 <a class="dropdown-item" href="/setting">
                                       Settings
                                     </a>
-                                    @if(Auth::check() && Auth::user()->role == 'admin')
-    <a class="dropdown-item" href="{{ route('admin') }}">
-        Switch to admin
-    </a>
+                                    @if(Auth::check() && (Auth::user()->role == 'admin' || Auth::user()->role == 'superadmin'))
+                                    <a class="dropdown-item" href="{{ route('admin') }}">Switch to admin</a>
 @endif
 
 @php
