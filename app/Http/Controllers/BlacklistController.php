@@ -74,16 +74,15 @@ class BlacklistController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $request->validate([
-            'animeId' => 'required'
+            'animeId' => 'required',
+            'reason' => 'required'
         ]);
-
+        $blacklist = Blacklist::findOrFail($request->input('id'));
         $blacklist->update($request->all());
-
-        return redirect()->route('blacklist.index')
-            ->with('success', 'Data blacklist berhasil diperbarui.');
+        return back();
     }
 
     /**

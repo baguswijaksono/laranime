@@ -28,18 +28,43 @@
               <td>{{ $item->animeId }}</td>
               <td>{{ $item->reason }}</td>
               <td>
-                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop_{{ $item->id }}">Delete</button>
-
+                <!-- Edit Genre Modal -->
+                <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdropedit_{{ $item->id }}">Edit</button>
+                <div class="modal fade" id="staticBackdropedit_{{ $item->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Edit Blacklist</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                      <form method="POST" action="{{ route('blacklist.edit') }}">
+                          @csrf
+                          <label class="form-label">Anime ID</label>
+                          <input class="form-control" type="text" name="animeId" value="{{ $item->animeId }}">
+                          <label class="form-label">Reason</label>
+                          <textarea class="form-control" rows="3" name="reason">{{ $item->reason }}</textarea>
+                          <input type="hidden" name="id" value="{{ $item->id }}">
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                          <button type="submit" class="btn btn-success">Save Changes</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <!-- Delete Genre Modal -->
+                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop_{{ $item->id }}">Delete</button>
                 <div class="modal fade" id="staticBackdrop_{{ $item->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdropLabel">Delete Genre Confirmation</h5>
+                        <h5 class="modal-title" id="staticBackdropLabel">Delete Blacklist Confirmation</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body">
-                        <p>Are you sure you want to delete {{ $item->name }} from genres?</p>
+                        <p>Are you sure you want to delete {{ $item->animeId }} from Blacklist?</p>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -52,7 +77,9 @@
                     </div>
                   </div>
                 </div>
+
               </td>
+
             </tr>
           @endforeach
         </tbody>
@@ -71,13 +98,14 @@
             <form method="POST" action="{{ route('blacklist.add') }}">
               @csrf
               <div class="modal-body">
-                <p>Are you sure you want to add a new genre?</p>
-                <input class="form-control" name="animeId" type="text" placeholder="Default input" aria-label="default input example">
-                <input class="form-control" name="reason" type="text" placeholder="Default input" aria-label="default input example">
+              <label for="exampleFormControlInput1" class="form-label">Anime ID</label>
+                <input class="form-control" name="animeId" type="text" placeholder="Enter the animeId">
+                <label for="exampleFormControlInput1" class="form-label">Reason</label>
+                <input class="form-control" name="reason" type="text" placeholder="Enter the reason">
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="submit" class="btn btn-danger">Add to Genre</button>
+                <button type="submit" class="btn btn-danger">Add to Blacklist</button>
               </div>
             </form>
           </div>

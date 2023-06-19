@@ -68,7 +68,7 @@ Route::middleware('admin')->group(function () {
     Route::get('/en-blacklist', [BlacklistController::class, 'index'])->name('blacklist');
     Route::post('/adding-blacklist', [BlacklistController::class, 'store'])->name('blacklist.add');// Done Sepenuhnya
     Route::post('/del-blacklist', [BlacklistController::class, 'destroy'])->name('blacklist.destroy');// Done Sepenuhnya
-    Route::post('/edit-blacklist', [BlacklistController::class, 'show'])->name('blacklist.edit');
+    Route::post('/edit-blacklist', [BlacklistController::class, 'update'])->name('blacklist.edit');// Done Sepenuhnya
 
     // CRUD minage
     Route::get('/en-minage', [MinAgeController::class, 'index'])->name('minage');
