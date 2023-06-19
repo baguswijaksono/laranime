@@ -270,6 +270,50 @@ class AdminController extends Controller
         return view('admin.database-recent-manage', ['recent' => $recent,'blacklist_animeIds' => $blacklist, 'min_age' => $minage]);
     }
 
+    public function enrecentEdit(Request $request,$episodeId)
+    {
+        $Recent = Recent::where('episodeId', $episodeId)->first();
+        return view('admin.database-recent-manage-edit',['Recent'=>$Recent ]);
+    }
+
+    public function enrecentEditsave(Request $request)
+    {
+        $page = $request->input('validationCustom01');
+        $episodeId = $request->input('validationCustom02');
+        $animeTitle = $request->input('validationCustom03');
+        $animeImg = $request->input('validationCustom04');
+        $episodeNum = $request->input('validationCustom05');
+        $subordub = $request->input('validationCustom06');
+    
+        $update = Recent::where('episodeId', $episodeId)->first();
+    
+        if ($update) {
+            $update->page = $page;
+            $update->episodeId = $episodeId;
+            $update->animeTitle = $animeTitle;
+            $update->episodeNum = $episodeNum;
+            $update->subOrDub = $subordub;
+            $update->animeImg = $animeImg;
+            $update->save();
+    
+            $Recent = Recent::all();
+    
+            return redirect()->route('admin-recent-manage', ['recent' => $Recent]);
+        }
+
+        return back()->with('error', 'Record not found');
+    }
+    
+    
+
+    public function enrecentDel(Request $request)
+    {
+        $episodeId = $request->input('episodeId');
+        $Recent = Recent::where('episodeId', $episodeId)->first();
+        $Recent->delete();
+        return back();
+    }
+
     public function engenre(Request $request)
     {
         $genre = GenreEn::all();

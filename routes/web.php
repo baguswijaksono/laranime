@@ -130,7 +130,8 @@ Route::middleware('admin')->group(function () {
 
     //CRUD Recent
     Route::get('/en-db-recent', [AdminController::class, 'enrecent'])->name('admin-recent-manage');// Done Sepenuhnya
-
+    Route::get('/en-db-recent/{animeId}/edit', [AdminController::class, 'enrecentEdit']);// Done Sepenuhnya
+    Route::post('/en-db-recent/save-edit', [AdminController::class, 'enrecentEditsave']);//Done Sepenuhnya
     Route::post('/en-db-recent/delete', [AdminController::class, 'enrecentDel'])->name('recent.del');// Done Sepenuhnya
 
     //CRUD Genre
