@@ -24,7 +24,7 @@ class AdminController extends Controller
 
     public function index()
     {
-        $userActivity = userActivity::all();
+        $userActivity = userActivity::all()->reverse();
         return view('admin.index',['userActivity' => $userActivity]);
     }
 
@@ -181,8 +181,10 @@ class AdminController extends Controller
     public function engenre(Request $request)
     {
         $genre = GenreEn::all();
-    
-        return view('admin.database-genre-manage', ['genre' => $genre]);
+        $blacklist = Blacklist::pluck('animeId')->toArray(); 
+        $minage = MinAge::pluck('animeId')->toArray(); 
+        $genreList = genreList::all();
+        return view('admin.database-genre-manage', ['genre' => $genre,'blacklist_animeIds' => $blacklist, 'min_age' => $minage,'genreList'=>$genreList]);
     }
 
     public function enanime(Request $request)

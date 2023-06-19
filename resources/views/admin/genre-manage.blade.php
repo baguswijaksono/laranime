@@ -31,9 +31,35 @@
               <td>{{ $item->name }}</td>
               <td>{{ $item->slug }}</td>
               <td>
-                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop_{{ $item->id }}">Delete</button>
+                <!-- Edit Genre Modal -->
+                <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdropedit_{{ $item->id }}">Edit</button>
+                <div class="modal fade" id="staticBackdropedit_{{ $item->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Edit Genre</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <form method="POST" action="{{ route('genre.edit') }}">
+                          @csrf
+                      <div class="modal-body">
+                      <label for="exampleFormControlInput1" class="form-label">Genre Slug</label>
+                        <input class="form-control" type="text" placeholder="Default input" value="{{ $item->slug }}" name="slug">
+                        <label for="exampleFormControlInput1" class="form-label">Genre Name</label>
+                        <input class="form-control" type="text" placeholder="Default input" value="{{ $item->name }}" name="name">
+                        <input type="hidden" value="{{ $item->id }}" name="id">
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                          <button type="submit" class="btn btn-success">Save Changes</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
                 <!-- Delete Genre Modal -->
+                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop_{{ $item->id }}">Delete</button>
                 <div class="modal fade" id="staticBackdrop_{{ $item->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
@@ -55,7 +81,9 @@
                     </div>
                   </div>
                 </div>
+
               </td>
+
             </tr>
           @endforeach
         </tbody>

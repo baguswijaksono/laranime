@@ -88,12 +88,6 @@
     $url = $_SERVER['REQUEST_URI'];
 @endphp
 
-@if (strpos($url, '/en') === 0)
-    <a class="dropdown-item" href="/id">Switch to Indonesia</a>
-@elseif (strpos($url, '/id') === 0)
-    <a class="dropdown-item" href="/">Switch to English</a>
-@endif
-
 <a class="dropdown-item" href="{{ route('history') }}">
         My Watch History
     </a>

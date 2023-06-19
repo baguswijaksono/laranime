@@ -11,7 +11,6 @@
             Server
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{{route('homeId')}}">Indonesia</a></li>
             <li><a class="dropdown-item" href="{{route('home')}}">English</a></li>
           </ul>
 </li>

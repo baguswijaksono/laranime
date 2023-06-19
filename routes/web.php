@@ -14,28 +14,23 @@ use App\Http\Controllers\UserController;
 
 Route::middleware(['auth'])->group(function(){
     
-Route::get('/', function () {
-    return redirect('/en');
-});
+    Route::get('/', function () { return redirect('/en');});// Done Sepenuhnya
 
-    Route::get('/en', [HomeController::class, 'index'])->name('home');
-    Route::get('/id', [HomeController::class, 'indexId'])->name('homeId');
+    Route::get('/en', [HomeController::class, 'index'])->name('home');// Done Sepenuhnya
 
-    Route::get('/setting', function () {
-        return view('setting');
-    });
+    Route::get('/setting', function () {return view('setting');});// Done Sepenuhnya
 
-    Route::post('/setting/update', [UserController::class, 'updateUser'])->name('updateUser');
+    Route::post('/setting/update', [UserController::class, 'updateUser'])->name('updateUser');// Done Sepenuhnya
 
-    Route::get('/dark', [HomeController::class, 'dark'])->name('dark');
-    Route::get('/light', [HomeController::class, 'light'])->name('light');
+    Route::get('/dark', [HomeController::class, 'dark'])->name('dark');// Done Sepenuhnya
+    Route::get('/light', [HomeController::class, 'light'])->name('light');// Done Sepenuhnya
 
-    Route::get('/en/all-anime', [HomeController::class, 'allAnime'])->name('all');
+    Route::get('/en/all-anime', [HomeController::class, 'allAnime'])->name('all');// Done Sepenuhnya
 
-    Route::get('/en/season-anime', [HomeController::class, 'seasonAnime'])->name('season');
-    Route::get('/en/season/{specify}', [HomeController::class, 'specifyseasonAnime']);
+    Route::get('/en/season-anime', [HomeController::class, 'seasonAnime'])->name('season');// Done Sepenuhnya
+    Route::get('/en/season/{specify}', [HomeController::class, 'specifyseasonAnime']);// Done Sepenuhnya
     
-    // anime bahasa inggris
+    // bahasa inggris
     Route::get('/en/recent-release/{page}', [ApiController::class, 'GetRecentEpisodes'])->name('userRecent');// Done Sepenuhnya
     Route::get('/en/popular/{page}', [ApiController::class, 'GetPopularAnime'])->name('userPopular');// Done Sepenuhnya
     Route::get('/en/search/{keyw}', [ApiController::class, 'GetAnimeSearch']);
@@ -47,8 +42,8 @@ Route::get('/', function () {
 
     // CRUD watchlist
     Route::get('/en-watchlist', [WatchListController::class, 'index'])->name('watchlist');// Done Sepenuhnya
-    Route::post('/adding-watchlist', [WatchListController::class, 'store']);
-    Route::post('/del-watchlist', [WatchListController::class, 'destroy'])->name('watchlist.destroy');
+    Route::post('/adding-watchlist', [WatchListController::class, 'store']);//Done Sepenuhnya
+    Route::post('/del-watchlist', [WatchListController::class, 'destroy'])->name('watchlist.destroy');//Done Sepenuhnya
 
     // CRUD History
     Route::get('/en-history', [HistoryController::class, 'index'])->name('history');
@@ -102,9 +97,10 @@ Route::middleware('admin')->group(function () {
     Route::get('/pre-populate-genre', [AdminController::class, 'prepopulateGenre'])->name('prepopulateGenre');//Done Sepenuhnya
     Route::get('/populate-genre', [AdminController::class, 'populateGenre'])->name('populateGenre');//Done Sepenuhnya
 
-    Route::get('/en-genre-list', [GenreListController::class, 'index'])->name('genre');
-    Route::post('/add-genre', [GenreListController::class, 'store'])->name('genre.add');
-    Route::post('/delete-genre', [GenreListController::class, 'destroy'])->name('genre.del');
+    Route::get('/en-genre-list', [GenreListController::class, 'index'])->name('genre');//Done Sepenuhnya
+    Route::post('/edit-genre', [GenreListController::class, 'update'])->name('genre.edit');//Done Sepenuhnya
+    Route::post('/add-genre', [GenreListController::class, 'store'])->name('genre.add');//Done Sepenuhnya
+    Route::post('/delete-genre', [GenreListController::class, 'destroy'])->name('genre.del');//Done Sepenuhnya
 
     // CRUD Popular
     Route::get('/en-db-popular', [AdminController::class, 'enpopular'])->name('admin-popular-manage');// Done Sepenuhnya
@@ -125,7 +121,7 @@ Route::middleware('admin')->group(function () {
     Route::get('/en-db-recent', [AdminController::class, 'enrecent'])->name('admin-recent-manage');// Done Sepenuhnya
 
     //CRUD Genre
-    Route::get('/en-db-genre', [AdminController::class, 'engenre'])->name('admin-genre-manage');
+    Route::get('/en-db-genre', [AdminController::class, 'engenre'])->name('admin-genre-manage');// Done Sepenuhnya
 
     //CRUD Anime
     Route::get('/en-db-anime', [AdminController::class, 'enanime'])->name('admin-anime-manage');
