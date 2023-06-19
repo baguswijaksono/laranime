@@ -42,13 +42,7 @@ class HistoryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'email' => 'required',
-            'animeId' => 'required'
-        ]);
 
-        Watchlists::create($request->all());
-        return back();
     }
 
     /**
@@ -91,8 +85,14 @@ class HistoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $request->validate([
+            'email' => 'required',
+        ]);
+    
+        History::where('email', $request->email)->delete();
+        return back();
     }
+    
 }

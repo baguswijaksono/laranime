@@ -23,7 +23,11 @@
             <li><a class="dropdown-item" href="{{route('blacklist')}}">Blacklist</a></li>
             <li><a class="dropdown-item" href="{{route('minage')}}">Minimum Age</a></li>
             <li><a class="dropdown-item" href="{{ route('genre') }}">Genre</a></li>
+            @if(Auth::user()->role == 'superadmin')
             <li><a class="dropdown-item" href="{{ route('user') }}">User</a></li>
+            @endif
+
+
           </ul>
         </li>
         <li class="nav-item dropdown">

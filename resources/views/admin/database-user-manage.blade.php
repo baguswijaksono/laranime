@@ -28,9 +28,54 @@
               <td>{{ $item->date_of_birth }}</td>
               <td>{{ $item->role }}</td>
               <td>
-  <a href="#" class="btn btn-primary">Set Admin</a>
-  <a href="#" class="btn btn-warning">Ban</a>
-  <a href="#" class="btn btn-danger">Delete</a>
+                <!-- Modal -->
+              <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop3{{ $item->id }}">Promote</button>
+<div class="modal fade" id="staticBackdrop3{{ $item->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Blacklist Confirmation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>yakin nih mau hapus dari blacklist</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <form method="POST" action="{{route('adminPromote')}}">
+        @csrf 
+<input type="hidden" name="email" value="{{ $item->email }}">
+<button type="submit" class="btn btn-danger">Promote</button>
+</form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+                  <!-- Modal -->
+                  <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop4{{ $item->id }}">Delete</button>
+<div class="modal fade" id="staticBackdrop4{{ $item->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Blacklist Confirmation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>yakin nih mau hapus dari blacklist</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <form method="POST" action="{{route('delUser')}}">
+        @csrf 
+<input type="hidden" name="email" value="{{ $item->email }}">
+<button type="submit" class="btn btn-danger">Promote</button>
+</form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
 </td>
 
             </tr>

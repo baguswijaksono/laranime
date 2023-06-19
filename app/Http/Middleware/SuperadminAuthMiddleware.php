@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AdminAuthMiddleware
+class SuperadminAuthMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,10 +17,10 @@ class AdminAuthMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::user() && (Auth::user()->getRole() == 'admin' || Auth::user()->getRole() == 'superadmin')) {
+        if (Auth::user() && (Auth::user()->getRole() == 'superadmin')) {
             return $next($request);
         } else {
-            return redirect()->route('home');
+            return redirect()->route('admin');
         }
     }
 }

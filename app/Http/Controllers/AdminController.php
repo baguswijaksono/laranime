@@ -18,9 +18,22 @@ use App\Models\userActivity;
 
 class AdminController extends Controller
 {
+    public function promoteToAdmin(Request $request)
+    {
+        $email = $request->input('email');
+        $user = User::where('email', $email )->first();   
+        $user->role = 'admin';
+        $user->save();
+        return back();
+    }
 
-    public $enapi = 'https://gogoanime-api-production.up.railway.app';
-    public $idapi = 'https://otakudesu-unofficial-api.rzkfyn.tech/api/v1';
+    public function delete(Request $request)
+    {
+        $email = $request->input('email');
+        $user = User::where('email', $email )->first();   
+        $user->delete();
+        return back();
+    }
 
     public function index()
     {

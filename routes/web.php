@@ -47,14 +47,21 @@ Route::middleware(['auth'])->group(function(){
 
     // CRUD History
     Route::get('/en-history', [HistoryController::class, 'index'])->name('history');
-    Route::post('/adding-history', [HistoryController::class, 'store']);
-    Route::post('/del-history', [HistoryController::class, 'destroy'])->name('history.destroy');
+    Route::post('/del-history', [HistoryController::class, 'destroy'])->name('history.destroy');//Done Sepenuhnya
 
     // CRUD Comment
     Route::post('/add-comment', [CommentsController::class, 'store']);//Done Sepenuhnya
     Route::get('/del-comment', [CommentsController::class, 'destroy']);//Done Sepenuhnya
     Route::get('/edit-comment', [CommentsController::class, 'update']);//Done Sepenuhnya
 
+});
+
+// super
+Route::middleware('superadmin')->group(function () {
+
+    Route::get('/user', [AdminController::class, 'viewUser'])->name('user');
+    Route::post('/user/promote', [AdminController::class, 'promoteToAdmin'])->name('adminPromote');//Done Sepenuhnya
+    Route::post('/user/delete', [AdminController::class, 'delete'])->name('delUser');//Done Sepenuhnya
 
 });
 
@@ -63,6 +70,7 @@ Route::middleware('admin')->group(function () {
 
     Route::get('/admin', [AdminController::class, 'index'])->name('admin');
     Route::get('/user', [AdminController::class, 'viewUser'])->name('user');
+    Route::post('/user/promote', [AdminController::class, 'promoteToAdmin'])->name('adminPromote');
 
     // CRUD blacklist
     Route::get('/en-blacklist', [BlacklistController::class, 'index'])->name('blacklist');
@@ -129,10 +137,10 @@ Route::middleware('admin')->group(function () {
 
 });
 
+
+
 Route::get('/underage', function () {
     return view('underage');
 });
 
 Auth::routes();
-
-
