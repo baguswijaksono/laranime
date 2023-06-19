@@ -159,9 +159,6 @@ class AdminController extends Controller
     
             return redirect()->route('admin-popular-manage', ['popular' => $popular]);
         }
-    
-        // Handle the case where the record is not found
-        // You can redirect back or show an error message
         return back()->with('error', 'Record not found');
     }
     
@@ -174,6 +171,47 @@ class AdminController extends Controller
         $minage = MinAge::pluck('animeId')->toArray(); 
         return view('admin.database-movie-manage', ['movie' => $movie ,'blacklist_animeIds' => $blacklist, 'min_age' => $minage]);
     }
+
+    public function enmovieEdit(Request $request,$animeId)
+    {
+        $movie = Movies::where('animeId', $animeId)->first();
+        return view('admin.database-movie-manage-edit',['movie'=>$movie ]);
+    }
+
+    public function enmovieEditsave(Request $request)
+    {
+        $animeId = $request->input('validationCustom02');
+        $animeTitle = $request->input('validationCustom03');
+        $animeImg = $request->input('validationCustom04');
+        $releasedDate = $request->input('validationCustom05');
+        $page = $request->input('validationCustom01');
+    
+        $update = Movies::where('animeId', $animeId)->first();
+    
+        if ($update) {
+            $update->page = $page;
+            $update->animeId = $animeId;
+            $update->animeTitle = $animeTitle;
+            $update->animeImg = $animeImg;
+            $update->releasedDate = $releasedDate;
+            $update->save();
+    
+            $movie = Movies::all();
+    
+            return redirect()->route('admin-movie-manage', ['movie' => $movie]);
+        }
+
+        return back()->with('error', 'Record not found');
+    }
+
+    public function enmovieDel(Request $request)
+    {
+        $animeId = $request->input('animeId');
+        $Movies = Movies::where('animeId', $animeId)->first();
+        $Movies->delete();
+        return back();
+    }
+    
 
     public function entopair(Request $request)
     {

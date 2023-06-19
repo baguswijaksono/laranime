@@ -59,7 +59,7 @@ Route::middleware(['auth'])->group(function(){
 // super
 Route::middleware('superadmin')->group(function () {
 
-    Route::get('/user', [AdminController::class, 'viewUser'])->name('user');
+    Route::get('/user', [AdminController::class, 'viewUser'])->name('user');//Done Sepenuhnya
     Route::post('/user/promote', [AdminController::class, 'promoteToAdmin'])->name('adminPromote');//Done Sepenuhnya
     Route::post('/user/delete', [AdminController::class, 'delete'])->name('delUser');//Done Sepenuhnya
 
@@ -73,13 +73,13 @@ Route::middleware('admin')->group(function () {
     Route::post('/user/promote', [AdminController::class, 'promoteToAdmin'])->name('adminPromote');
 
     // CRUD blacklist
-    Route::get('/en-blacklist', [BlacklistController::class, 'index'])->name('blacklist');
+    Route::get('/en-blacklist', [BlacklistController::class, 'index'])->name('blacklist');//Done Sepenuhnya
     Route::post('/adding-blacklist', [BlacklistController::class, 'store'])->name('blacklist.add');// Done Sepenuhnya
     Route::post('/del-blacklist', [BlacklistController::class, 'destroy'])->name('blacklist.destroy');// Done Sepenuhnya
     Route::post('/edit-blacklist', [BlacklistController::class, 'update'])->name('blacklist.edit');// Done Sepenuhnya
 
     // CRUD minage
-    Route::get('/en-minage', [MinAgeController::class, 'index'])->name('minage');
+    Route::get('/en-minage', [MinAgeController::class, 'index'])->name('minage');//Done Sepenuhnya
     Route::post('/adding-minage', [MinAgeController::class, 'store'])->name('minage.add');// Done Sepenuhnya
     Route::post('/del-minage', [MinAgeController::class, 'destroy'])->name('minage.destroy');// Done Sepenuhnya
     Route::post('/edit-minage', [MinAgeController::class, 'update'])->name('minage.edit');// Done Sepenuhnya
@@ -118,9 +118,9 @@ Route::middleware('admin')->group(function () {
 
     // CRUD Movies
     Route::get('/en-db-movies', [AdminController::class, 'enmovie'])->name('admin-movie-manage');// Done Sepenuhnya
-    Route::get('/en-db-movies/{page}/info', [AdminController::class, 'enmovieInfo']);
-    Route::get('/en-db-movies/{page}/edit', [AdminController::class, 'enmovieEdit']);
-    Route::post('/en-db-movies/delete', [AdminController::class, 'enmovieDel'])->name('admin-popular-manage')->name('movie.del');
+    Route::get('/en-db-movie/{animeId}/edit', [AdminController::class, 'enmovieEdit']);// Done Sepenuhnya
+    Route::post('/en-db-movie/save-edit', [AdminController::class, 'enmovieEditsave']);//Done Sepenuhnya
+    Route::post('/en-db-movie/delete', [AdminController::class, 'enmovieDel'])->name('movie.del');//Done Sepenuhnya
 
     //CRUD Top Airing
     Route::get('/en-db-topair', [AdminController::class, 'entopair'])->name('admin-topAir-manage');// Done Sepenuhnya
@@ -136,8 +136,6 @@ Route::middleware('admin')->group(function () {
     Route::get('/en-db-anime/eps/{animeId}', [AdminController::class, 'enanimeEps'])->name('admin-epslist-manage');
 
 });
-
-
 
 Route::get('/underage', function () {
     return view('underage');
