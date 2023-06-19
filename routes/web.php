@@ -68,9 +68,7 @@ Route::middleware('superadmin')->group(function () {
 // admin
 Route::middleware('admin')->group(function () {
 
-    Route::get('/admin', [AdminController::class, 'index'])->name('admin');
-    Route::get('/user', [AdminController::class, 'viewUser'])->name('user');
-    Route::post('/user/promote', [AdminController::class, 'promoteToAdmin'])->name('adminPromote');
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin');//Done Sepenuhnya
 
     // CRUD blacklist
     Route::get('/en-blacklist', [BlacklistController::class, 'index'])->name('blacklist');//Done Sepenuhnya
@@ -114,18 +112,24 @@ Route::middleware('admin')->group(function () {
 
     // CRUD Popular
     Route::get('/en-db-popular', [AdminController::class, 'enpopular'])->name('admin-popular-manage');// Done Sepenuhnya
+    Route::get('/en-db-popular/insert', function () {return view('insert.popular');})->name('popularPreInsert');// Done Sepenuhnya
+    Route::post('/en-db-popular/insert/save', [AdminController::class, 'enpopularIns'])->name('popular.ins');// Done Sepenuhnya
     Route::get('/en-db-popular/{animeId}/edit', [AdminController::class, 'enpopularEdit']); //Done Sepenuhnya
     Route::post('/en-db-popular/save-edit', [AdminController::class, 'enpopularEditsave']);//Done Sepenuhnya
     Route::post('/en-db-popular/delete', [AdminController::class, 'enpopularDel'])->name('popular.del');// Done Sepenuhnya
 
     // CRUD Movies
     Route::get('/en-db-movies', [AdminController::class, 'enmovie'])->name('admin-movie-manage');// Done Sepenuhnya
+    Route::get('/en-db-movies/insert', function () {return view('insert.movies');})->name('moviePreInsert');// Done Sepenuhnya
+    Route::post('/en-db-movies/insert/save', [AdminController::class, 'enmovieIns'])->name('movie.ins');// Done Sepenuhnya
     Route::get('/en-db-movie/{animeId}/edit', [AdminController::class, 'enmovieEdit']);// Done Sepenuhnya
     Route::post('/en-db-movie/save-edit', [AdminController::class, 'enmovieEditsave']);//Done Sepenuhnya
     Route::post('/en-db-movie/delete', [AdminController::class, 'enmovieDel'])->name('movie.del');//Done Sepenuhnya
 
     //CRUD Top Airing
     Route::get('/en-db-topair', [AdminController::class, 'entopair'])->name('admin-topAir-manage');// Done Sepenuhnya
+    Route::get('/en-db-topair/insert', function () {return view('insert.topair');})->name('topairPreInsert');// Done Sepenuhnya
+    Route::post('/en-db-topair/insert/save', [AdminController::class, 'entopairIns'])->name('entopair.ins');// Done Sepenuhnya
     Route::get('/en-db-topair/{animeId}/edit', [AdminController::class, 'entopairEdit']);// Done Sepenuhnya
     Route::post('/en-db-topair/save-edit', [AdminController::class, 'entopairEditsave']);//Done Sepenuhnya
     Route::post('/en-db-topair/delete', [AdminController::class, 'entopairDel'])->name('topair.del');// Done Sepenuhnya
@@ -144,6 +148,9 @@ Route::middleware('admin')->group(function () {
 
     //CRUD Anime
     Route::get('/en-db-anime', [AdminController::class, 'enanime'])->name('admin-anime-manage');
+
+
+    //CRUD Episode
     Route::get('/en-db-anime/eps/{animeId}', [AdminController::class, 'enanimeEps'])->name('admin-epslist-manage');
 
 });

@@ -50,10 +50,10 @@
             Insert Database
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{{route('prepopulatePopular')}}">Insert Popular</a></li>
+            <li><a class="dropdown-item" href="{{route('popularPreInsert')}}">Insert Popular</a></li>
             <li><a class="dropdown-item" href="{{route('prepopulateAnime')}}">Insert Anime</a></li>
-            <li><a class="dropdown-item" href="{{route('prepopulateMovie')}}">Insert Movie</a></li>
-            <li><a class="dropdown-item" href="{{ route('prepopulateTopAir') }}">Insert Top Airing</a></li>
+            <li><a class="dropdown-item" href="{{route('moviePreInsert')}}">Insert Movie</a></li>
+            <li><a class="dropdown-item" href="{{ route('topairPreInsert') }}">Insert Top Airing</a></li>
             <li><a class="dropdown-item" href="{{ route('prepopulateRecent') }}">Insert Recent</a></li>
             <li><a class="dropdown-item" href="{{ route('prepopulateGenre') }}">Insert Genre</a></li>
                      

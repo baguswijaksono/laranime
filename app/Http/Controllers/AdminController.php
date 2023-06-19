@@ -124,6 +124,42 @@ class AdminController extends Controller
         return view('admin.database-popular-manage', ['popular' => $popular,'blacklist_animeIds' => $blacklist, 'min_age' => $minage]);
     }
 
+    public function enpopularIns(Request $request)
+    {
+        $popular = new Popular();
+        $popular->page = $request->input('page');
+        $popular->animeId = $request->input('animeId');
+        $popular->animeTitle = $request->input('animeTitle');
+        $popular->animeImg = $request->input('animeImg');
+        $popular->releasedDate = $request->input('releasedDate');
+        $popular->save();
+        return redirect()->route('admin-popular-manage');
+    }
+
+    public function enmovieIns(Request $request)
+    {
+        $Movies = new Movies();
+        $Movies->page = $request->input('page');
+        $Movies->animeId = $request->input('animeId');
+        $Movies->animeTitle = $request->input('animeTitle');
+        $Movies->animeImg = $request->input('animeImg');
+        $Movies->releasedDate = $request->input('releasedDate');
+        $Movies->save();
+        return redirect()->route('admin-movie-manage');
+    }  
+    
+    public function entopairIns(Request $request)
+    {
+        $TopAir = new TopAir();
+        $TopAir->page = $request->input('page');
+        $TopAir->animeId = $request->input('animeId');
+        $TopAir->animeTitle = $request->input('animeTitle');
+        $TopAir->animeImg = $request->input('animeImg');
+        $TopAir->latestEp = $request->input('latestEp');
+        $TopAir->save();
+        return redirect()->route('admin-topAir-manage');
+    }  
+    
     public function enpopularDel(Request $request)
     {
         $animeId = $request->input('animeId');
@@ -163,7 +199,6 @@ class AdminController extends Controller
     }
     
     
-
     public function enmovie(Request $request)
     {
         $movie = Movies::all();
