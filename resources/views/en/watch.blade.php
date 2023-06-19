@@ -38,25 +38,52 @@
 <div class="genre-list">
 
 @php
-$valueArray = explode(',', $details['genres']);
+    $valueArray = explode(',', $details['genres']);
+    $colorArray = ['#abc4ff', '#e2e2e2', '#b8e0d2', '#eac4d5', '#fff1e6']; // Array hex colors
 @endphp
 
+@if (Auth::check() && Auth::user()->theme === 'light')
+@foreach($valueArray as $key => $genre)
+    @php
+        $modifiedString = str_replace('"', '', $genre);
+        $modifiedString = str_replace('[', '', $modifiedString);
+        $modifiedString = str_replace(']', '', $modifiedString);
+        $color = $colorArray[$key % count($colorArray)]; // Get color based on the index
+    @endphp
 
-@foreach($valueArray as $genre)
-@php
-$modifiedString = str_replace('"', '', $genre);
-$modifiedString = str_replace('[', '', $modifiedString);
-$modifiedString = str_replace(']', '', $modifiedString);
-
-@endphp
-<a href="/en/genre/{{ str_word_count($modifiedString) > 1 ? str_replace(' ', '-', strtolower($modifiedString)) : strtolower($modifiedString) }}/1" class="btn btn-secondary btn-sm" >{{ $modifiedString }}</a>
+    <a href="/en/genre/{{ str_word_count($modifiedString) > 1 ? str_replace(' ', '-', strtolower($modifiedString)) : strtolower($modifiedString) }}/1"
+       class="btn btn-sm"
+       style="background-color: {{ $color }};"
+    >
+        {{ $modifiedString }}
+    </a>
 @endforeach
+@else
+@foreach($valueArray as $key => $genre)
+    @php
+        $modifiedString = str_replace('"', '', $genre);
+        $modifiedString = str_replace('[', '', $modifiedString);
+        $modifiedString = str_replace(']', '', $modifiedString);
+        $color = $colorArray[$key % count($colorArray)]; // Get color based on the index
+    @endphp
+
+    <a href="/en/genre/{{ str_word_count($modifiedString) > 1 ? str_replace(' ', '-', strtolower($modifiedString)) : strtolower($modifiedString) }}/1"
+       class="btn btn-success btn-sm">{{ $modifiedString }}
+    </a>
+@endforeach
+
+@endif
+
 
 
 </div>
 <div style="padding-top: 15px;">
 <div class="sinopsis"style='max-width: 1056px;'>
+@if (Auth::check() && Auth::user()->theme === 'light')
+<div class="alert alert-light" role="alert">
+@else
 <div class="alert alert-dark" role="alert">
+@endif
 {{ $details['synopsis'] }}
 </div>
 </div>
@@ -76,9 +103,16 @@ $modifiedString = str_replace(']', '', $modifiedString);
 <input type="hidden" class="form-control" placeholder="Enter your comment..." value="{{ $x }}" name="episodeId">
 <input type="hidden" class="form-control" placeholder="Enter your comment..." value="{{ date('Y-m-d H:i:s'); }}" name="at">
 <div style="width:5px;"></div>
+@if (Auth::check() && Auth::user()->theme === 'light')
+<button class="btn btn-primary" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
+  <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
+</svg></button>
+@else
 <button class="btn btn-success" type="submit"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send-fill" viewBox="0 0 16 16">
   <path d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
 </svg></button>
+@endif
+
   </form>
       </div>
       <div class="mt-2">
@@ -95,8 +129,6 @@ $modifiedString = str_replace(']', '', $modifiedString);
   <span class="badge
     @if($comment['role'] === 'admin')
       bg-primary
-    @else
-      bg-secondary
     @endif
   ">{{$comment['role']}}</span>
 
@@ -165,11 +197,6 @@ $modifiedString = str_replace(']', '', $modifiedString);
 </h6>
 
 
-
-
-
-
-
 <p style="padding-right: 20px;">
 @php
 $timestamp = strtotime($comment['at']);
@@ -194,8 +221,6 @@ if ($elapsed_time < 60) {
 </p>
             </div>
             <p>{{$comment['comment']}}</p>
-            
-
           </div>
         </div>
 
@@ -228,7 +253,7 @@ if ($elapsed_time < 60) {
   @if (Auth::check() && Auth::user()->theme === 'light')
   <a href="/en/watch/{{ $episodes['episodeId'] }}" class="btn" style="color:#31302E; width:75px; background-color: #f0f0f0;">{{ $episodes['episodeNum'] }}</a>
 @else
-<a href="/en/watch/{{ $episodes['episodeId'] }}" class="btn btn-secondary" style="width: 75px">{{ $episodes['episodeNum'] }}</a>
+<a href="/en/watch/{{ $episodes['episodeId'] }}" class="btn btn-secondary" style="width: 75px;">{{ $episodes['episodeNum'] }}</a>
 @endif
 
   @endif
@@ -242,7 +267,28 @@ if ($elapsed_time < 60) {
   </div>
 @endif
 
-<h2 style="padding-top: 15px;padding-bottom: 15px;">Rekomendasi</h2>
+@if(count($recs) > 1)
+    <h2 style="padding-top: 15px; padding-bottom: 15px;">Rekomendasi</h2>
+@endif
+@foreach($recs as $rek)
+    @if($rek->animeTitle != $details->animeTitle)
+        <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <a href="{{route('userAnimeDtls' ,['anime'=>$rek->animeId])}}"><img src="{{$rek->animeImg}}" class="img-fluid rounded-start"></a>
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title">{{$rek->animeTitle}}</h5>
+                        <p class="card-text" style="display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;">{{$rek->synopsis}}</p>
+                        <p class="card-text"><small class="text-body-secondary">Released on {{$rek->releasedDate}}</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    @endif
+@endforeach
 
 
 

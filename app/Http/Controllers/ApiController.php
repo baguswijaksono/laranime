@@ -128,8 +128,6 @@ class ApiController extends Controller
         ->get()
         ->toArray();
 
-        
-
         $comments = array_reverse($commentsArray);
         
         $parts = explode('/', $url);
