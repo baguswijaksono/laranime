@@ -74,7 +74,7 @@ Route::middleware('admin')->group(function () {
     Route::get('/en-minage', [MinAgeController::class, 'index'])->name('minage');
     Route::post('/adding-minage', [MinAgeController::class, 'store'])->name('minage.add');// Done Sepenuhnya
     Route::post('/del-minage', [MinAgeController::class, 'destroy'])->name('minage.destroy');// Done Sepenuhnya
-    Route::post('/edit-minage', [MinAgeController::class, 'show'])->name('minage.edit');
+    Route::post('/edit-minage', [MinAgeController::class, 'update'])->name('minage.edit');// Done Sepenuhnya
 
     //Databases Popular Anime
     Route::get('/pre-populate-popular', [AdminController::class, 'prepopulatePopular'])->name('prepopulatePopular'); //Done Sepenuhnya
@@ -128,8 +128,6 @@ Route::middleware('admin')->group(function () {
     Route::get('/en-db-anime/eps/{animeId}', [AdminController::class, 'enanimeEps'])->name('admin-epslist-manage');
 
 });
-
-
 
 Route::get('/underage', function () {
     return view('underage');

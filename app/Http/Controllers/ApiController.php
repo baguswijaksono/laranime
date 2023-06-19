@@ -61,6 +61,7 @@ class ApiController extends Controller
         $blacklist = Blacklist::pluck('animeId')->toArray(); 
         $watchlist = Watchlists::where('email', Auth::user()->email)->pluck('animeId')->toArray();
         return view('en.search', [
+            'watchlist'=>$watchlist,
             'data' => $data, 
             'blacklist_animeIds' => $blacklist]);
     }

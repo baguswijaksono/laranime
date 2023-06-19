@@ -74,9 +74,15 @@ class MinAgeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'animeId' => 'required',
+            'minAge' => 'required'
+        ]);
+        $MinAge = MinAge::findOrFail($request->input('id'));
+        $MinAge->update($request->all());
+        return back();
     }
 
     /**
