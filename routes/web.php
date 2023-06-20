@@ -149,6 +149,8 @@ Route::middleware('admin')->group(function () {
 
     //CRUD Episode
     Route::get('/en-db-anime/eps/{animeId}', [AdminController::class, 'enanimeEps'])->name('admin-epslist-manage');
+    Route::get('/en-db-anime/ep/insert', function () {return view('insert.episode');})->name('epPreInsert');// Done Sepenuhnya
+    Route::post('/en-db-anime/ep/insert/save', [AdminController::class, 'enepIns'])->name('ep.ins');// Done Sepenuhnya
 
 });
 

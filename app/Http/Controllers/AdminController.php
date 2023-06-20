@@ -172,6 +172,16 @@ class AdminController extends Controller
         $Recent->save();
         return redirect()->route('admin-recent-manage');
     }  
+
+    public function enepIns(Request $request)
+    {
+        $epsList = new epsList();
+        $epsList->episodeNum = $request->input('episodeNum');
+        $epsList->episodeId = $request->input('episodeId');
+        $epsList->animeId = $request->input('animeId');
+        $epsList->save();
+        return redirect()->route('admin-epslist-manage',['animeId'=>$request->input('animeId')]);
+    }  
     
     public function enpopularDel(Request $request)
     {
