@@ -159,6 +159,19 @@ class AdminController extends Controller
         $TopAir->save();
         return redirect()->route('admin-topAir-manage');
     }  
+
+    public function enrecentIns(Request $request)
+    {
+        $Recent = new Recent();
+        $Recent->page = $request->input('page');
+        $Recent->episodeId = $request->input('episodeId');
+        $Recent->animeTitle = $request->input('animeTitle');
+        $Recent->animeImg = $request->input('animeImg');
+        $Recent->episodeNum = $request->input('episodeNum');
+        $Recent->subOrDub = $request->input('subOrDub');
+        $Recent->save();
+        return redirect()->route('admin-recent-manage');
+    }  
     
     public function enpopularDel(Request $request)
     {
