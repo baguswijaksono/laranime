@@ -17,24 +17,12 @@ use App\Models\Watchlists;
 
 class HomeController extends Controller
 {
-        // Englisht Start //
-        public $enapi = 'https://gogoanime-api-production.up.railway.app';
-        public $idapi = 'https://otakudesu-unofficial-api.rzkfyn.tech/api/v1';
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index()
     {
         $blacklist = Blacklist::pluck('animeId')->toArray(); 
@@ -53,15 +41,6 @@ class HomeController extends Controller
 
         
         return view('welcome', ['data' => $data,'data2' => $data2,'data3' => $data3,'data4' => $data4, 'blacklist_animeIds' => $blacklist]);
-    }
-
-    public function indexId()
-    {
-        $blacklist = Blacklist::pluck('animeId')->toArray(); 
-        $response = Http::get($this->idapi . '/home');
-        $data = $response->json();
-        
-        return view('welcomeId', ['data' => $data, 'blacklist_animeIds' => $blacklist]);
     }
 
     public function light()

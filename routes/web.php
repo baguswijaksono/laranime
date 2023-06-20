@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\AdminController;
@@ -14,23 +13,20 @@ use App\Http\Controllers\UserController;
 
 Route::middleware(['auth'])->group(function(){
     
-    Route::get('/', function () { return redirect('/en');});// Done Sepenuhnya
+    Route::get('/', function () { return redirect('/en');})->name('home');// Done Sepenuhnya
 
-    Route::get('/en', [HomeController::class, 'index'])->name('home');// Done Sepenuhnya
+    Route::get('/en', [HomeController::class, 'index']);// Done Sepenuhnya
+    Route::get('/en/all-anime', [HomeController::class, 'allAnime'])->name('all');// Done Sepenuhnya
+    Route::get('/en/season-anime', [HomeController::class, 'seasonAnime'])->name('season');// Done Sepenuhnya
+    Route::get('/en/season/{specify}', [HomeController::class, 'specifyseasonAnime']);// Done Sepenuhnya
 
     Route::get('/setting', function () {return view('setting');});// Done Sepenuhnya
-
     Route::post('/setting/update', [UserController::class, 'updateUser'])->name('updateUser');// Done Sepenuhnya
 
     Route::get('/dark', [HomeController::class, 'dark'])->name('dark');// Done Sepenuhnya
     Route::get('/light', [HomeController::class, 'light'])->name('light');// Done Sepenuhnya
 
-    Route::get('/en/all-anime', [HomeController::class, 'allAnime'])->name('all');// Done Sepenuhnya
-
-    Route::get('/en/season-anime', [HomeController::class, 'seasonAnime'])->name('season');// Done Sepenuhnya
-    Route::get('/en/season/{specify}', [HomeController::class, 'specifyseasonAnime']);// Done Sepenuhnya
-    
-    // bahasa inggris
+    // Bahasa inggris
     Route::get('/en/recent-release/{page}', [ApiController::class, 'GetRecentEpisodes'])->name('userRecent');// Done Sepenuhnya
     Route::get('/en/popular/{page}', [ApiController::class, 'GetPopularAnime'])->name('userPopular');// Done Sepenuhnya
     Route::get('/en/search/{keyw}', [ApiController::class, 'GetAnimeSearch']);// Done Sepenuhnya
@@ -58,7 +54,7 @@ Route::middleware(['auth'])->group(function(){
 
 // super
 Route::middleware('superadmin')->group(function () {
-
+    // CRUD User
     Route::get('/user', [AdminController::class, 'viewUser'])->name('user');//Done Sepenuhnya
     Route::post('/user/promote', [AdminController::class, 'promoteToAdmin'])->name('adminPromote');//Done Sepenuhnya
     Route::post('/user/delete', [AdminController::class, 'delete'])->name('delUser');//Done Sepenuhnya
@@ -148,7 +144,6 @@ Route::middleware('admin')->group(function () {
 
     //CRUD Anime
     Route::get('/en-db-anime', [AdminController::class, 'enanime'])->name('admin-anime-manage');
-
 
     //CRUD Episode
     Route::get('/en-db-anime/eps/{animeId}', [AdminController::class, 'enanimeEps'])->name('admin-epslist-manage');

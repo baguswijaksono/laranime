@@ -54,22 +54,12 @@ form {
     <label for="validationCustom03" class="form-label">Email</label>
     <input type="text" class="form-control" id="validationCustom03" name="validationCustom03" value="{{ Auth::user()->email }}" required>
     <div class="invalid-feedback">
-      Please provide a valid city.
+      Please provide a valid email.
     </div>
   </div>
 
 
-  
-  <div class="col-12">
-  <label for="inputPassword5" class="form-label">Password</label>
-<input type="password" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock">
-<div id="passwordHelpBlock" class="form-text">
-  Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
-</div>
-</div>
-
   </div>
-
 
   <div class="col-12">
     <button class="btn btn-primary" type="submit">Save Changes</button>
