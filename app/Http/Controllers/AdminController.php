@@ -236,6 +236,14 @@ class AdminController extends Controller
         return view('admin.database-movie-manage-edit',['movie'=>$movie ]);
     }
 
+    public function preenanimupdate(Request $request,$id)
+    {
+        $anim = EnDetails::where('id', $id)->first();
+        return view('admin.database-anime-manage-edit',['anim'=>$anim ]);
+    }
+
+    
+
     public function enmovieEditsave(Request $request)
     {
         $animeId = $request->input('validationCustom02');
@@ -427,9 +435,19 @@ class AdminController extends Controller
     public function enanime(Request $request)
     {
         $endetails = EnDetails::all();
+        $blacklist = Blacklist::pluck('animeId')->toArray(); 
+        $minage = MinAge::pluck('animeId')->toArray(); 
     
-        return view('admin.database-anime-manage', ['endetails' => $endetails]);
+        return view('admin.database-anime-manage', ['endetails' => $endetails,'blacklist_animeIds' => $blacklist, 'min_age' => $minage]);
     }
+
+    public function enanimeDel(Request $request)
+    {
+        $anim = EnDetails::where('id', $request->input('id'))->first();
+        $anim->delete();
+        return back();
+    }
+    
 
     public function enanimeEps(Request $request , $animeId)
     {
@@ -444,6 +462,60 @@ class AdminController extends Controller
     
         return view('admin.database-user-manage', ['User' => $User]);
     }
+
+    public function enEpsupdate(Request $request,)
+    {
+        $ep = epsList::where('id', $request->input('id'))->first();
+            $ep->animeId = $request->input('animeId');
+            $ep->episodeId = $request->input('episodeId');
+            $ep->episodeNum = $request->input('episodeNum');
+            $ep->save();
+        return back();
+    } 
+
+    public function enanimupdate(Request $request)
+    {
+        $anim = EnDetails::where('id', $request->input('id'))->first();
+        $anim->animeId = $request->input('animeId');
+        $anim->animeTitle = $request->input('animeTitle');
+        $anim->type = $request->input('type');
+        $anim->animeImg = $request->input('animeImg');
+        $anim->releasedDate = $request->input('releasedDate');
+        $anim->status = $request->input('status');
+        $anim->genres = $request->input('genres');
+        $anim->otherNames = $request->input('otherNames');
+        $anim->synopsis = $request->input('synopsis');
+        $anim->totalEpisodes = $request->input('totalEpisodes');
+        $anim->save();
+        return redirect()->route('admin-anime-manage');
+    } 
+
+    public function enanimeIns(Request $request)
+    {
+        $anim = new EnDetails;
+        $anim->animeId = $request->input('animeId');
+        $anim->animeTitle = $request->input('animeTitle');
+        $anim->type = $request->input('type');
+        $anim->animeImg = $request->input('animeImg');
+        $anim->releasedDate = $request->input('releasedDate');
+        $anim->status = $request->input('status');
+        $anim->genres = $request->input('genres');
+        $anim->otherNames = $request->input('otherNames');
+        $anim->synopsis = $request->input('synopsis');
+        $anim->totalEpisodes = $request->input('totalEpisodes');
+        $anim->save();
+        return redirect()->route('admin-anime-manage');
+    } 
+
+    
+
+    public function enepDel(Request $request)
+    {
+        $id = $request->input('id');
+        $ep = epsList::where('id', $id)->first();
+        $ep->delete();
+        return back();
+    }  
     
     
 

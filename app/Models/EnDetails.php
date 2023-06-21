@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class EnDetails extends Model
 {
-    protected $fillable = ['anime_id', 'animeTitle','type','releasedDate','status','genres','otherNames','synopsis','totalEpisodes','episodesList','animeImg'];
+    protected $fillable = ['anime_id', 'animeTitle','type','releasedDate','status','genres','otherNames','synopsis','totalEpisodes','animeImg'];
     public $timestamps = false;
     use HasFactory;
 }

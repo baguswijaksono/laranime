@@ -30,8 +30,62 @@
               <td>{{ $item->episodeId }}</td>
               <td>{{ $item->episodeNum }}</td>
               <td>
-  <a href="#" class="btn btn-warning btn-sm">Edit</a>
-  <a href="#" class="btn btn-danger btn-sm">Danger</a>
+              <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop2_{{$item['id']}}">Edit</button>
+      <!-- Modal -->
+      <div class="modal fade" id="staticBackdrop2_{{$item['id']}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdrop2Label" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Min Age Confirmation</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="{{route('enepslistedit')}}">
+              @csrf 
+            <div class="modal-body">
+              <p>yakin nih mau masukin {{$item['id']}} ke dalem min age</p>
+              <input type="hidden" name="id" value="{{$item['id']}}">
+              <input class="form-control" value="{{$item['animeId']}}" name="animeId" type="hidden" placeholder="Enter Anime id here">
+              <input class="form-control" value="{{$item['episodeId']}}" name="episodeId" type="text" placeholder="Enter Anime episode id here">
+              <input class="form-control" value="{{$item['episodeNum']}}" name="episodeNum" type="number" placeholder="Enter Anime episode number here">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+      
+
+      <button type="submit" class="btn btn-danger">Add to Min age</button>
+      </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+  
+<!-- Modal Delete-->
+  <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop3_{{$item['id']}}">Delete</button>
+<div class="modal fade" id="staticBackdrop3_{{$item['id']}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Blacklist Confirmation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>yakin nih mau hapus {{$item['episodeId']}} dari blacklist</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <form method="POST" action="{{route('ep.del')}}">
+        @csrf 
+<input type="hidden" name="id" value="{{$item['id']}}">
+<button type="submit" class="btn btn-danger">delete from Blacklist</button>
+</form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Delete-->
 </td>
 
             </tr>

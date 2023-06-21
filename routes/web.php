@@ -145,10 +145,20 @@ Route::middleware('admin')->group(function () {
     Route::post('/en-db-genre/delete', [AdminController::class, 'engenreDel'])->name('engenre.del');// Done Sepenuhnya
 
     //CRUD Anime
-    Route::get('/en-db-anime', [AdminController::class, 'enanime'])->name('admin-anime-manage');
+    Route::get('/en-db-anime', [AdminController::class, 'enanime'])->name('admin-anime-manage');// Done Sepenuhnya
+
+    Route::get('/en-db-anime/insert', function () {return view('insert.anime');})->name('animePreInsert');// Done Sepenuhnya
+    Route::post('/en-db-anime/insert/save', [AdminController::class, 'enanimeIns'])->name('anime.ins');// Done Sepenuhnya
+
+
+    Route::get('/en-db-anime/{id}/edit', [AdminController::class, 'preenanimupdate'])->name('preenanimupdate');// Done Sepenuhnya
+    Route::post('/en-db-anime/edit/save', [AdminController::class, 'enanimupdate'])->name('enanimupdate');// Done Sepenuhnya
+    Route::post('/en-db-anime/del', [AdminController::class, 'enanimeDel'])->name('enanimdel');// Done Sepenuhnya
 
     //CRUD Episode
-    Route::get('/en-db-anime/eps/{animeId}', [AdminController::class, 'enanimeEps'])->name('admin-epslist-manage');
+    Route::get('/en-db-anime/eps/{animeId}', [AdminController::class, 'enanimeEps'])->name('admin-epslist-manage');// Done Sepenuhnya
+    Route::post('/en-db-anime/eps/update', [AdminController::class, 'enEpsupdate'])->name('enepslistedit');// Done Sepenuhnya
+    Route::post('/en-db-anime/ep/del', [AdminController::class, 'enepDel'])->name('ep.del');// Done Sepenuhnya
     Route::get('/en-db-anime/ep/insert', function () {return view('insert.episode');})->name('epPreInsert');// Done Sepenuhnya
     Route::post('/en-db-anime/ep/insert/save', [AdminController::class, 'enepIns'])->name('ep.ins');// Done Sepenuhnya
 

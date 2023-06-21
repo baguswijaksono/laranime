@@ -25,7 +25,6 @@ return new class extends Migration
             $table->longText('synopsis');
             $table->string('animeImg');
             $table->string('totalEpisodes');
-            $table->longText('episodesList'); 
         });
     }
     
