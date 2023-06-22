@@ -242,8 +242,6 @@ class AdminController extends Controller
         return view('admin.database-anime-manage-edit',['anim'=>$anim ]);
     }
 
-    
-
     public function enmovieEditsave(Request $request)
     {
         $animeId = $request->input('validationCustom02');
@@ -505,8 +503,20 @@ class AdminController extends Controller
         $anim->totalEpisodes = $request->input('totalEpisodes');
         $anim->save();
         return redirect()->route('admin-anime-manage');
-    } 
-
+    }
+    
+    public function engenreIns(Request $request)
+    {
+        $genre = new GenreEn;
+        $genre->page = $request->input('page');
+        $genre->genre = $request->input('genre');
+        $genre->animeId = $request->input('animeId');
+        $genre->animeTitle = $request->input('animeTitle');
+        $genre->animeImg = $request->input('animeImg');
+        $genre->releasedDate = $request->input('releasedDate');
+        $genre->save();
+        return redirect()->route('admin-genre-manage');
+    }
     
 
     public function enepDel(Request $request)

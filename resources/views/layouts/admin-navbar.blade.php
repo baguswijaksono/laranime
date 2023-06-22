@@ -56,7 +56,7 @@
             <li><a class="dropdown-item" href="{{ route('topairPreInsert') }}">Insert Top Airing</a></li>
             <li><a class="dropdown-item" href="{{ route('recentPreInsert') }}">Insert Recent</a></li>
             <li><a class="dropdown-item" href="{{ route('epPreInsert') }}">Insert Episode</a></li>
-            <li><a class="dropdown-item" href="{{ route('prepopulateGenre') }}">Insert Genre</a></li>        
+            <li><a class="dropdown-item" href="{{ route('genrePreInsert') }}">Insert Genre</a></li>        
           </ul>
         </li>
 

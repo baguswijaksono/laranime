@@ -140,17 +140,16 @@ Route::middleware('admin')->group(function () {
 
     //CRUD Genre
     Route::get('/en-db-genre', [AdminController::class, 'engenre'])->name('admin-genre-manage');// Done Sepenuhnya
+    Route::get('/en-db-genre/insert', function () {return view('insert.genre');})->name('genrePreInsert');
+    Route::post('/en-db-genre/insert/save', [AdminController::class, 'engenreIns'])->name('genre.ins');
     Route::get('/en-db-genre/{animeId}/edit', [AdminController::class, 'engenreEdit']);// Done Sepenuhnya
     Route::post('/en-db-genre/save-edit', [AdminController::class, 'engenreEditsave']);//Done Sepenuhnya
     Route::post('/en-db-genre/delete', [AdminController::class, 'engenreDel'])->name('engenre.del');// Done Sepenuhnya
 
     //CRUD Anime
     Route::get('/en-db-anime', [AdminController::class, 'enanime'])->name('admin-anime-manage');// Done Sepenuhnya
-
     Route::get('/en-db-anime/insert', function () {return view('insert.anime');})->name('animePreInsert');// Done Sepenuhnya
     Route::post('/en-db-anime/insert/save', [AdminController::class, 'enanimeIns'])->name('anime.ins');// Done Sepenuhnya
-
-
     Route::get('/en-db-anime/{id}/edit', [AdminController::class, 'preenanimupdate'])->name('preenanimupdate');// Done Sepenuhnya
     Route::post('/en-db-anime/edit/save', [AdminController::class, 'enanimupdate'])->name('enanimupdate');// Done Sepenuhnya
     Route::post('/en-db-anime/del', [AdminController::class, 'enanimeDel'])->name('enanimdel');// Done Sepenuhnya
