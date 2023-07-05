@@ -11,7 +11,7 @@ class MinAgeController extends Controller
     public function index()
     {
         $minAge = MinAge::all();
-        return view('admin.minage-manage', compact('minAge'));
+        return view('admin.minage.index', compact('minAge'));
     }
 
     public function store(Request $request)

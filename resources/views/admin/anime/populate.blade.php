@@ -69,7 +69,6 @@
     $popular->synopsis = $animeData['synopsis'];
     $popular->animeImg = $animeData['animeImg'];
     $popular->totalEpisodes = $animeData['totalEpisodes'];
-    $popular->episodesList = ''; // Convert episodesList array jadi format JSON
 
     // Save the data to the database
     

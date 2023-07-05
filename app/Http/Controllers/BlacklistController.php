@@ -11,7 +11,7 @@ class BlacklistController extends Controller
     public function index()
     {
         $blacklist = Blacklist::all();
-        return view('blacklist.index', compact('blacklist'));
+        return view('admin.blacklist.index', compact('blacklist'));
     }
     
     public function create()

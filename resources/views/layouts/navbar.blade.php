@@ -50,8 +50,6 @@
   <input class="form-control" type="text" placeholder="Search" aria-label="Search" id="inputan" style="width: 55vw; text-align: center;">
 </form>
 
-
-      
       <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         @guest

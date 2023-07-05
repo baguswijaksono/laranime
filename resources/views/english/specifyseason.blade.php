@@ -36,18 +36,16 @@
     </select>
 </div>
 
-<div class="row p-2 justify-content-start">
-  @foreach($all as $item)
-    <div class="col">
+<center>
+@foreach($all as $item)
       @include('layouts.anime-card', [
         'animeId' => $item->animeId,
         'animeTitle' => $item->animeTitle,
         'animeImg' => $item->animeImg,
         'status' => $item->status,
       ])
-    </div>
   @endforeach
-</div>
+</center>
 
 
 </div>

@@ -14,6 +14,7 @@
   @include('layouts.navbar')
   <div style="display: inline-block;">
 
+<center>
 @foreach($data as $item)
   @if(!in_array($item->animeId, $blacklist_animeIds))
     @include('layouts.anime-card', [
@@ -24,6 +25,7 @@
     ])
   @endif
 @endforeach
+</center>
 </div>
 @include('layouts.pagination')
 

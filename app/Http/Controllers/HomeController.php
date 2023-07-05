@@ -63,14 +63,14 @@ class HomeController extends Controller
     public function allAnime()
     {
         $all = EnDetails::orderBy('animeId')->get();   
-        return view('en.all', ['all' => $all]);
+        return view('english.all', ['all' => $all]);
     }
 
     public function seasonAnime()
     {
         $season = EnDetails::distinct('type')->get(); 
         $all = EnDetails::all();   
-        return view('en.season', ['all' => $all,'season' => $season]);
+        return view('english.season', ['all' => $all,'season' => $season]);
     }
 
     public function specifyseasonAnime(Request $request,$specify)
@@ -80,7 +80,7 @@ class HomeController extends Controller
         $season = EnDetails::distinct('type')->get(); 
         $specify = str_replace("-", " ", $specify);
         $results = EnDetails::where('type', $specify)->get();  
-        return view('en.specifyseason', [
+        return view('english.specifyseason', [
             'all' => $results,
             'season' => $season,
             'blacklist_animeIds' => $blacklist,

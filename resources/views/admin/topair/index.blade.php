@@ -11,13 +11,6 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
 <body>
-@php
-  $page = isset($_GET['page']) && $_GET['page'] != 0 ? $_GET['page'] : 1;
-  $next = $page+1;
-  $next2 = $next+1;
-  $prev = $page-1;
-  $prev2 = $prev-1;
-@endphp
   @include('layouts.admin-navbar')
   <table class="table">
   <thead id="tableHead">
@@ -35,8 +28,13 @@
     <tbody>
       @php
 $i=0;
+$page = isset($_GET['page']) && $_GET['page'] != 0 ? $_GET['page'] : 1;
+  $next = $page+1;
+  $next2 = $next+1;
+  $prev = $page-1;
+  $prev2 = $prev-1;
       @endphp
-    @foreach ($popular as $item)
+    @foreach ($topair as $item)
   @if ($item->page == $page)
   @php
   $i++;
@@ -180,17 +178,17 @@ $i=0;
 
 </td>
       <td>   
-        <a href="/en-db-popular/{{ $item->animeId }}/edit" class="btn btn-warning btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+        <a href="/en-db-topair/{{ $item->animeId }}/edit" class="btn btn-warning btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
   <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
   <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
 </svg></a>
 
-        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop_{{$item['animeId']}}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdropdel{{$item['animeId']}}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
   <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"/>
 </svg></button>
 
 <!-- Modal -->
-<div class="modal fade" id="staticBackdrop_{{$item['animeId']}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="staticBackdropdel{{$item['animeId']}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
@@ -198,16 +196,15 @@ $i=0;
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p >yakin nih mau hapus {{$item['animeId']}} dari popular</p>
+        <p >yakin nih mau hapus {{$item['animeId']}} dari Top air</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <form method="POST" action="{{ route('popular.del') }}">
-
+        <form method="POST" action="{{ route('topair.del') }}">
         @csrf 
-<input type="hidden" name="animeId" value="{{$item['animeId']}}">
-<button type="submit" class="btn btn-danger">delete from Blacklist</button>
-</form>
+        <input type="hidden" name="animeId" value="{{$item['animeId']}}">
+        <button type="submit" class="btn btn-danger">delete from Blacklist</button>
+      </form>
       </div>
     </div>
   </div>
@@ -228,15 +225,16 @@ $i=0;
 
 <p>Im sorry {{ Auth::user()->name }} but is seems now more anime on this list</p>
 </center>
+
   <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
       <li class="page-item">
-        <a class="page-link" href="{{ route('admin-popular-manage') }}?page={{$prev}}">Previous</a>
+        <a class="page-link" href="{{ route('admin-topAir-manage') }}?page={{$prev}}">Previous</a>
       </li>
-      <li class="page-item"><a class="page-link" href="{{ route('admin-popular-manage') }}?page={{$prev}}">{{$prev}}</a></li>
+      <li class="page-item"><a class="page-link" href="{{ route('admin-topAir-manage') }}?page={{$prev}}">{{$prev}}</a></li>
       <li class="page-item active"><a class="page-link" href="#">{{$page}}</a></li>
       <li class="page-item disabled">
-        <a class="page-link" href="{{ route('admin-popular-manage') }}?page={{$next}}">Next</a>
+        <a class="page-link" href="{{ route('admin-topAir-manage') }}?page={{$next}}">Next</a>
       </li>
     </ul>
   </nav>
@@ -248,10 +246,10 @@ $i=0;
         <a class="page-link">Previous</a>
       </li>
       <li class="page-item active"><a class="page-link" href="#">{{$page}}</a></li>
-      <li class="page-item"><a class="page-link" href="{{ route('admin-popular-manage') }}?page={{$next}}">{{$next}}</a></li>
-      <li class="page-item"><a class="page-link" href="{{ route('admin-popular-manage') }}?page={{$next2}}">{{$next2}}</a></li>
+      <li class="page-item"><a class="page-link" href="{{ route('admin-topAir-manage') }}?page={{$next}}">{{$next}}</a></li>
+      <li class="page-item"><a class="page-link" href="{{ route('admin-topAir-manage') }}?page={{$next2}}">{{$next2}}</a></li>
       <li class="page-item">
-        <a class="page-link" href="{{ route('admin-popular-manage') }}?page={{$next}}">Next</a>
+        <a class="page-link" href="{{ route('admin-topAir-manage') }}?page={{$next}}">Next</a>
       </li>
     </ul>
   </nav>
@@ -259,15 +257,15 @@ $i=0;
   <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
       <li class="page-item">
-        <a class="page-link" href="{{ route('admin-popular-manage') }}?page={{$prev}}">Previous</a>
+        <a class="page-link" href="{{ route('admin-topAir-manage') }}?page={{$prev}}">Previous</a>
       </li>
-      <li class="page-item"><a class="page-link" href="{{ route('admin-popular-manage') }}?page={{$prev2}}">{{$prev2}}</a></li>
-      <li class="page-item"><a class="page-link" href="{{ route('admin-popular-manage') }}?page={{$prev}}">{{$prev}}</a></li>
+      <li class="page-item"><a class="page-link" href="{{ route('admin-topAir-manage') }}?page={{$prev2}}">{{$prev2}}</a></li>
+      <li class="page-item"><a class="page-link" href="{{ route('admin-topAir-manage') }}?page={{$prev}}">{{$prev}}</a></li>
       <li class="page-item active"><a class="page-link" href="#">{{$page}}</a></li>
-      <li class="page-item"><a class="page-link" href="{{ route('admin-popular-manage') }}?page={{$next}}">{{$next}}</a></li>
-      <li class="page-item"><a class="page-link" href="{{ route('admin-popular-manage') }}?page={{$next2}}">{{$next2}}</a></li>
+      <li class="page-item"><a class="page-link" href="{{ route('admin-topAir-manage') }}?page={{$next}}">{{$next}}</a></li>
+      <li class="page-item"><a class="page-link" href="{{ route('admin-topAir-manage') }}?page={{$next2}}">{{$next2}}</a></li>
       <li class="page-item">
-        <a class="page-link" href="{{ route('admin-popular-manage') }}?page={{$next}}">Next</a>
+        <a class="page-link" href="{{ route('admin-topAir-manage') }}?page={{$next}}">Next</a>
       </li>
     </ul>
   </nav>
@@ -275,14 +273,14 @@ $i=0;
   <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
       <li class="page-item">
-        <a class="page-link" href="{{ route('admin-popular-manage') }}?page={{$prev}}">Previous</a>
+        <a class="page-link" href="{{ route('admin-topAir-manage') }}?page={{$prev}}">Previous</a>
       </li>
-      <li class="page-item"><a class="page-link" href="{{ route('admin-popular-manage') }}?page={{$prev}}">{{$prev}}</a></li>
+      <li class="page-item"><a class="page-link" href="{{ route('admin-topAir-manage') }}?page={{$prev}}">{{$prev}}</a></li>
       <li class="page-item active"><a class="page-link" href="#">{{$page}}</a></li>
-      <li class="page-item"><a class="page-link" href="{{ route('admin-popular-manage') }}?page={{$next}}">{{$next}}</a></li>
-      <li class="page-item"><a class="page-link" href="{{ route('admin-popular-manage') }}?page={{$next2}}">{{$next2}}</a></li>
+      <li class="page-item"><a class="page-link" href="{{ route('admin-topAir-manage') }}?page={{$next}}">{{$next}}</a></li>
+      <li class="page-item"><a class="page-link" href="{{ route('admin-topAir-manage') }}?page={{$next2}}">{{$next2}}</a></li>
       <li class="page-item">
-        <a class="page-link" href="{{ route('admin-popular-manage') }}?page={{$next}}">Next</a>
+        <a class="page-link" href="{{ route('admin-topAir-manage') }}?page={{$next}}">Next</a>
       </li>
     </ul>
   </nav>

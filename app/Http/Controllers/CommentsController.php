@@ -56,8 +56,6 @@ class CommentsController extends Controller
     $commentId = $request->input('id');
     $user = $request->input('user');
     $comment = Comments::find($commentId);
-
-    // Delete the comment if found
     if ($comment) {
         $comment->delete();
         return back();

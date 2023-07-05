@@ -13,17 +13,19 @@
   <body>
   @include('layouts.navbar')
   <div style="display: inline-block;">
-
+<center>
 @foreach($data as $item)
   @if(!in_array($item->animeId, $blacklist_animeIds))
     @include('layouts.anime-card', [
       'animeId' => $item->animeId,
       'animeTitle' => $item->animeTitle,
       'animeImg' => $item->animeImg,
-      'status' => $item->latestEp,
+      'status' => $item->releasedDate,
     ])
   @endif
 @endforeach
+</center>
+
 </div>
 @include('layouts.pagination')
 

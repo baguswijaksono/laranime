@@ -146,7 +146,7 @@
       <li class="page-item">
         <a class="page-link" href="{{ route('userTopair', ['page' => $prev]) }}">Previous</a>
       </li>
-      <li class="page-item"><a class="page-link" href="{{ route('userPopular', ['page' => $prev]) }}">{{$prev}}</a></li>
+      <li class="page-item"><a class="page-link" href="{{ route('userTopair', ['page' => $prev]) }}">{{$prev}}</a></li>
       <li class="page-item active"><a class="page-link" href="#">{{$lastSegment}}</a></li>
       <li class="page-item"><a class="page-link" href="{{ route('userTopair', ['page' => $next]) }}">{{$next}}</a></li>
       <li class="page-item"><a class="page-link" href="{{ route('userTopair', ['page' => $next2]) }}">{{$next2}}</a></li>

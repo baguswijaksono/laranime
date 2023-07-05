@@ -12,7 +12,7 @@ class GenreListController extends Controller
     public function index()
     {
         $genrelist = genreList::all();
-        return view('admin.genre-manage', ['genrelist' => $genrelist]);
+        return view('admin.genre.list', ['genrelist' => $genrelist]);
     }
 
     public function store(Request $request)

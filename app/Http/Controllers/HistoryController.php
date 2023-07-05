@@ -15,7 +15,7 @@ class HistoryController extends Controller
         ->where('email', $email)
         ->groupBy('url')
         ->get();
-        return view('en.history', compact('history'));
+        return view('user.history', compact('history'));
     }
 
     public function destroy(Request $request)

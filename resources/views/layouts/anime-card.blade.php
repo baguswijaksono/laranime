@@ -3,14 +3,62 @@
     $segmentsrl = explode('/', $urlrl); 
     $secondLastSegmentrl = $segmentsrl[count($segmentsrl) - 2];
 @endphp
+ <style>
+  .image-container {
+  position: relative;
+  display: inline-block;
+}
 
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.overlay-text {
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size:12px;
+  transform: translate(-50%, -50%);
+}
+
+.image-container:hover .overlay {
+  opacity: 1;
+}
+
+ </style>
 
 <div style="padding-left: 15px; padding-top: 15px; display: inline-block;">
 <div class="card" style=" width: 175px;">
 @if($secondLastSegmentrl=='recent-release')
-<a href="/en/watch/{{ $animeId}}">  <img src="{{ $animeImg }}" class="rounded" alt="" style="height : 250px; width: 175px;">
+<a href="/en/watch/{{$animeId}}">
+  <div class="image-container" >
+    <img src="{{ $animeImg }}" class="rounded" alt="" style="height : 250px; width: 175px;">
+    <div class="overlay">
+      <p class="overlay-text">{{ $animeTitle }}</p>
+    </div>
+  </div>
+</a>
+
 @else
-<a href="/en/anime-details/{{$animeId}}">  <img src="{{ $animeImg }}" class="rounded" alt="" style="height : 250px; width: 175px;">
+<a href="/en/anime-details/{{$animeId}}">
+  <div class="image-container" >
+    <img src="{{ $animeImg }}" class="rounded" alt="" style="height : 250px; width: 175px;">
+    <div class="overlay">
+      <p class="overlay-text">{{ $animeTitle }}</p>
+    </div>
+  </div>
+</a>
+
 @endif
 </a>
   <div class="card-body">
@@ -28,8 +76,6 @@
 @else
 <a href="/en/anime-details/{{ $animeId}}" class="btn btn-light btn-sm">Details</a>
 @endif
-
-
     @if(!in_array($item->animeId, $watchlist))
     <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop2_{{$item['animeId']}}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-fill" viewBox="0 0 16 16">
   <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/>

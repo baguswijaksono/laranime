@@ -1,6 +1,15 @@
 <?php
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ApiController;
+
+use App\Http\Controllers\PopularController;
+use App\Http\Controllers\RecentController;
+use App\Http\Controllers\MovieController;
+use App\Http\Controllers\TopAiringController;
+use App\Http\Controllers\GenresController;
+use App\Http\Controllers\SuperAdminController;
+use App\Http\Controllers\AnimeController;
+
+
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BlacklistController;
 use App\Http\Controllers\HomeController;
@@ -20,21 +29,21 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/en/season-anime', [HomeController::class, 'seasonAnime'])->name('season');// Done Sepenuhnya
     Route::get('/en/season/{specify}', [HomeController::class, 'specifyseasonAnime']);// Done Sepenuhnya
 
-    Route::get('/setting', function () {return view('setting');});// Done Sepenuhnya
+    Route::get('/setting', function () {return view('user.setting');});// Done Sepenuhnya
     Route::post('/setting/update', [UserController::class, 'updateUser'])->name('updateUser');// Done Sepenuhnya
 
     Route::get('/dark', [HomeController::class, 'dark'])->name('dark');// Done Sepenuhnya
     Route::get('/light', [HomeController::class, 'light'])->name('light');// Done Sepenuhnya
 
     // Bahasa inggris
-    Route::get('/en/recent-release/{page}', [ApiController::class, 'GetRecentEpisodes'])->name('userRecent');// Done Sepenuhnya
-    Route::get('/en/popular/{page}', [ApiController::class, 'GetPopularAnime'])->name('userPopular');// Done Sepenuhnya
-    Route::get('/en/search/{keyw}', [ApiController::class, 'GetAnimeSearch']);// Done Sepenuhnya
-    Route::get('/en/anime-movies/{page}', [ApiController::class, 'GetAnimeMovies'])->name('userMovie');// Done Sepenuhnya
-    Route::get('/en/top-airing/{page}', [ApiController::class, 'getTopAiring'])->name('userTopair');// Done Sepenuhnya
-    Route::get('/en/genre/{genre}/{page}', [ApiController::class, 'GetAnimeGenres'])->name('userGenre');// Done Sepenuhnya
-    Route::get('/en/anime-details/{anime}', [ApiController::class, 'GetAnimeDetails'])->name('userAnimeDtls');// Done Sepenuhnya
-    Route::get('/en/watch/{episodeId}', [ApiController::class, 'GetStreamingURLs']);// Done Sepenuhnya
+    Route::get('/en/recent-release/{page}', [RecentController::class, 'GetRecentEpisodes'])->name('userRecent');// Done Sepenuhnya
+    Route::get('/en/popular/{page}', [PopularController::class, 'GetPopularAnime'])->name('userPopular');// Done Sepenuhnya
+    Route::get('/en/search/{keyw}', [AnimeController::class, 'GetAnimeSearch'])->name('userSearch');// Done Sepenuhnya
+    Route::get('/en/anime-movies/{page}', [MovieController::class, 'GetAnimeMovies'])->name('userMovie');// Done Sepenuhnya
+    Route::get('/en/top-airing/{page}', [TopAiringController::class, 'getTopAiring'])->name('userTopair');// Done Sepenuhnya
+    Route::get('/en/genre/{genre}/{page}', [GenresController::class, 'GetAnimeGenres'])->name('userGenre');// Done Sepenuhnya
+    Route::get('/en/anime-details/{anime}', [AnimeController::class, 'GetAnimeDetails'])->name('userAnimeDtls');// Done Sepenuhnya
+    Route::get('/en/watch/{episodeId}', [AnimeController::class, 'GetStreamingURLs']);// Done Sepenuhnya
 
     // CRUD watchlist
     Route::get('/en-watchlist', [WatchListController::class, 'index'])->name('watchlist');// Done Sepenuhnya
@@ -55,9 +64,9 @@ Route::middleware(['auth'])->group(function(){
 // super
 Route::middleware('superadmin')->group(function () {
     // CRUD User
-    Route::get('/user', [AdminController::class, 'viewUser'])->name('user');//Done Sepenuhnya
-    Route::post('/user/promote', [AdminController::class, 'promoteToAdmin'])->name('adminPromote');//Done Sepenuhnya
-    Route::post('/user/delete', [AdminController::class, 'delete'])->name('delUser');//Done Sepenuhnya
+    Route::get('/user', [SuperAdminController::class, 'viewUser'])->name('user');//Done Sepenuhnya
+    Route::post('/user/promote', [SuperAdminController::class, 'promoteToAdmin'])->name('adminPromote');//Done Sepenuhnya
+    Route::post('/user/delete', [SuperAdminController::class, 'delete'])->name('delUser');//Done Sepenuhnya
 
 });
 
@@ -79,24 +88,24 @@ Route::middleware('admin')->group(function () {
     Route::post('/edit-minage', [MinAgeController::class, 'update'])->name('minage.edit');// Done Sepenuhnya
 
     //Populate Popular Anime
-    Route::get('/pre-populate-popular', [AdminController::class, 'prepopulatePopular'])->name('prepopulatePopular'); //Done Sepenuhnya
-    Route::get('/populate-popular', [AdminController::class, 'populatePopular'])->name('populatePopular'); //Done Sepenuhnya
+    Route::get('/pre-populate-popular', [PopularController::class, 'prepopulatePopular'])->name('prepopulatePopular'); //Done Sepenuhnya
+    Route::get('/populate-popular', [PopularController::class, 'populatePopular'])->name('populatePopular'); //Done Sepenuhnya
 
     //Populate Movie Anime
-    Route::get('/pre-populate-movie', [AdminController::class, 'prepopulateMovie'])->name('prepopulateMovie'); //Done Sepenuhnya
-    Route::get('/populate-movie', [AdminController::class, 'populateMovie'])->name('populateMovie'); //Done Sepenuhnya
+    Route::get('/pre-populate-movie', [MovieController::class, 'prepopulateMovie'])->name('prepopulateMovie'); //Done Sepenuhnya
+    Route::get('/populate-movie', [MovieController::class, 'populateMovie'])->name('populateMovie'); //Done Sepenuhnya
 
     //Populate Anime Details
-    Route::get('/pre-populate-anime', [AdminController::class, 'prepopulateAnime'])->name('prepopulateAnime');
-    Route::get('/populate-anime', [AdminController::class, 'populateAnime'])->name('populateAnime');
+    Route::get('/pre-populate-anime', [AnimeController::class, 'prepopulateAnime'])->name('prepopulateAnime');
+    Route::get('/populate-anime', [AnimeController::class, 'populateAnime'])->name('populateAnime');
 
     //Populate Top Airing Anime
     Route::get('/pre-populate-top-airing', [AdminController::class, 'prepopulateTopAir'])->name('prepopulateTopAir');//Done Sepenuhnya
     Route::get('/populate-top-airing', [AdminController::class, 'populateTopAir'])->name('populateTopAir');//Done Sepenuhnya
 
     //Populate Recent Episode
-    Route::get('/pre-populate-recent-release', [AdminController::class, 'prepopulateRecent'])->name('prepopulateRecent');//Done Sepenuhnya
-    Route::get('/populate-recent-release', [AdminController::class, 'populateRecent'])->name('populateRecent');//Done Sepenuhnya
+    Route::get('/pre-populate-recent-release', [RecentController::class, 'prepopulateRecent'])->name('prepopulateRecent');//Done Sepenuhnya
+    Route::get('/populate-recent-release', [RecentController::class, 'populateRecent'])->name('populateRecent');//Done Sepenuhnya
 
     Route::get('/pre-populate-genre', [AdminController::class, 'prepopulateGenre'])->name('prepopulateGenre');//Done Sepenuhnya
     Route::get('/populate-genre', [AdminController::class, 'populateGenre'])->name('populateGenre');//Done Sepenuhnya
@@ -107,28 +116,28 @@ Route::middleware('admin')->group(function () {
     Route::post('/delete-genre', [GenreListController::class, 'destroy'])->name('genre.del');//Done Sepenuhnya
 
     // CRUD Popular
-    Route::get('/en-db-popular', [AdminController::class, 'enpopular'])->name('admin-popular-manage');// Done Sepenuhnya
+    Route::get('/en-db-popular', [PopularController::class, 'enpopular'])->name('admin-popular-manage');// Done Sepenuhnya
     Route::get('/en-db-popular/insert', function () {return view('insert.popular');})->name('popularPreInsert');// Done Sepenuhnya
-    Route::post('/en-db-popular/insert/save', [AdminController::class, 'enpopularIns'])->name('popular.ins');// Done Sepenuhnya
-    Route::get('/en-db-popular/{animeId}/edit', [AdminController::class, 'enpopularEdit']); //Done Sepenuhnya
-    Route::post('/en-db-popular/save-edit', [AdminController::class, 'enpopularEditsave']);//Done Sepenuhnya
-    Route::post('/en-db-popular/delete', [AdminController::class, 'enpopularDel'])->name('popular.del');// Done Sepenuhnya
+    Route::post('/en-db-popular/insert/save', [PopularController::class, 'enpopularIns'])->name('popular.ins');// Done Sepenuhnya
+    Route::get('/en-db-popular/{animeId}/edit', [PopularController::class, 'enpopularEdit']); //Done Sepenuhnya
+    Route::post('/en-db-popular/save-edit', [PopularController::class, 'enpopularEditsave']);//Done Sepenuhnya
+    Route::post('/en-db-popular/delete', [PopularController::class, 'enpopularDel'])->name('popular.del');// Done Sepenuhnya
 
     // CRUD Movies
-    Route::get('/en-db-movies', [AdminController::class, 'enmovie'])->name('admin-movie-manage');// Done Sepenuhnya
+    Route::get('/en-db-movies', [MovieController::class, 'enmovie'])->name('admin-movie-manage');// Done Sepenuhnya
     Route::get('/en-db-movies/insert', function () {return view('insert.movies');})->name('moviePreInsert');// Done Sepenuhnya
-    Route::post('/en-db-movies/insert/save', [AdminController::class, 'enmovieIns'])->name('movie.ins');// Done Sepenuhnya
-    Route::get('/en-db-movie/{animeId}/edit', [AdminController::class, 'enmovieEdit']);// Done Sepenuhnya
-    Route::post('/en-db-movie/save-edit', [AdminController::class, 'enmovieEditsave']);//Done Sepenuhnya
-    Route::post('/en-db-movie/delete', [AdminController::class, 'enmovieDel'])->name('movie.del');//Done Sepenuhnya
+    Route::post('/en-db-movies/insert/save', [MovieController::class, 'enmovieIns'])->name('movie.ins');// Done Sepenuhnya
+    Route::get('/en-db-movie/{animeId}/edit', [MovieController::class, 'enmovieEdit']);// Done Sepenuhnya
+    Route::post('/en-db-movie/save-edit', [MovieController::class, 'enmovieEditsave']);//Done Sepenuhnya
+    Route::post('/en-db-movie/delete', [MovieController::class, 'enmovieDel'])->name('movie.del');//Done Sepenuhnya
 
     //CRUD Top Airing
-    Route::get('/en-db-topair', [AdminController::class, 'entopair'])->name('admin-topAir-manage');// Done Sepenuhnya
+    Route::get('/en-db-topair', [TopAiringController::class, 'entopair'])->name('admin-topAir-manage');// Done Sepenuhnya
     Route::get('/en-db-topair/insert', function () {return view('insert.topair');})->name('topairPreInsert');// Done Sepenuhnya
-    Route::post('/en-db-topair/insert/save', [AdminController::class, 'entopairIns'])->name('entopair.ins');// Done Sepenuhnya
-    Route::get('/en-db-topair/{animeId}/edit', [AdminController::class, 'entopairEdit']);// Done Sepenuhnya
-    Route::post('/en-db-topair/save-edit', [AdminController::class, 'entopairEditsave']);//Done Sepenuhnya
-    Route::post('/en-db-topair/delete', [AdminController::class, 'entopairDel'])->name('topair.del');// Done Sepenuhnya
+    Route::post('/en-db-topair/insert/save', [TopAiringController::class, 'entopairIns'])->name('entopair.ins');// Done Sepenuhnya
+    Route::get('/en-db-topair/{animeId}/edit', [TopAiringController::class, 'entopairEdit']);// Done Sepenuhnya
+    Route::post('/en-db-topair/save-edit', [TopAiringController::class, 'entopairEditsave']);//Done Sepenuhnya
+    Route::post('/en-db-topair/delete', [TopAiringController::class, 'entopairDel'])->name('topair.del');// Done Sepenuhnya
 
     //CRUD Recent
     Route::get('/en-db-recent', [AdminController::class, 'enrecent'])->name('admin-recent-manage');// Done Sepenuhnya
