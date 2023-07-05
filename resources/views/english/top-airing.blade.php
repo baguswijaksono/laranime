@@ -16,14 +16,29 @@
 
 <center>
 @foreach($data as $item)
-  @if(!in_array($item->animeId, $blacklist_animeIds))
-    @include('layouts.anime-card', [
-      'animeId' => $item->animeId,
-      'animeTitle' => $item->animeTitle,
-      'animeImg' => $item->animeImg,
-      'status' => $item->latestEp,
-    ])
-  @endif
+          @if(!in_array($item->animeId, $blacklist_animeIds))
+            @if(!in_array($item->animeId, $minagelist))
+              @include('layouts.anime-card', [
+                'animeId' => $item->animeId,
+                'animeTitle' => $item->animeTitle,
+                'animeImg' => $item->animeImg,
+                'status' => $item->latestEp,
+              ])
+            @else
+              @php
+                $minAge = \App\Models\MinAge::where('animeId', $item->animeId)->value('minAge');
+              @endphp
+              @if($age > $minAge)
+                @include('layouts.anime-card', [
+                  'animeId' => $item->animeId,
+                  'animeTitle' => $item->animeTitle,
+                  'animeImg' => $item->animeImg,
+                  'status' => $item->releasedDate,
+                ])
+              @endif
+            @endif
+
+          @endif
 @endforeach
 </center>
 </div>

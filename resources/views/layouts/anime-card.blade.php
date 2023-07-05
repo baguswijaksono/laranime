@@ -69,6 +69,7 @@
     $animeParts = explode('-', $animeId);
     $animeParts = array_slice($animeParts, 0, -2);
     $animeId = implode('-', $animeParts);
+    $item->animeId = $animeId;
 @endphp
 @endif
     @if (Auth::check() && Auth::user()->theme === 'light')
@@ -82,14 +83,14 @@
 </svg></button>
       <!-- Modal -->
       <div class="modal fade" id="staticBackdrop2_{{$item['animeId']}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdrop2Label" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="staticBackdropLabel">Watch list Confirmation</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <p>yakin nih mau masukin {{ $animeId}}  ke dalem min age</p>
+              <p>Sure want to add {{ $animeTitle}} to your Watchlist ?</p>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -97,14 +98,13 @@
               @csrf 
       <input type="hidden" name="animeId" value="{{ $animeId}}">
       <input type="hidden" name="email" value=" {{ Auth::user()->email }}">
-      <button type="submit" class="btn btn-danger">Add</button>
+      <button type="submit" class="btn btn-primary">Add</button>
       </form>
 
             </div>
           </div>
         </div>
       </div> 
-
       @else
       <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop_{{$item['animeId']}}">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
@@ -113,14 +113,14 @@
               </button>
         <!-- Modal -->
         <div class="modal fade" id="staticBackdrop_{{$item['animeId']}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog">
+          <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel">Delete Watchlist Confirmation</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <p>yakin nih mau hapus {{$item['animeId']}} dari Watchlist</p>
+                <p>Sure want to delete {{ $animeTitle}} from your Watchlist ?</p>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -128,7 +128,7 @@
                 @csrf 
   <input type="hidden" name="animeId" value="{{$animeId}}">
   <input type="hidden" name="email" value=" {{ Auth::user()->email }}">
-  <button type="submit" class="btn btn-danger">delete from Watchlist</button>
+  <button type="submit" class="btn btn-danger">Delete</button>
 </form>
               </div>
             </div>

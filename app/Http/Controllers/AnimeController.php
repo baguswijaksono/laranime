@@ -8,9 +8,11 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use App\Models\GenreEn;
 use App\Models\EnDetails;
+use App\Models\MinAge;
 use App\Models\epsList;
 use App\Models\History;
 use App\Models\Watchlists;
+use Carbon\Carbon;
 
 class AnimeController extends Controller
 {
@@ -73,7 +75,7 @@ class AnimeController extends Controller
         $blacklist = Blacklist::pluck('animeId')->toArray(); 
         $minage = MinAge::pluck('animeId')->toArray(); 
     
-        return view('admin.database-anime-manage', ['endetails' => $endetails,'blacklist_animeIds' => $blacklist, 'min_age' => $minage]);
+        return view('admin.anime.index', ['endetails' => $endetails,'blacklist_animeIds' => $blacklist, 'min_age' => $minage]);
     }
 
     public function enanimeDel(Request $request)
@@ -93,19 +95,44 @@ class AnimeController extends Controller
 
         $blacklist = Blacklist::pluck('animeId')->toArray(); 
         $watchlist = Watchlists::where('email', Auth::user()->email)->pluck('animeId')->toArray();
+
+        $birthday = Auth::user()->date_of_birth;
+        $currentDate = Carbon::now();
+        $birthDate = Carbon::createFromFormat('Y-m-d', $birthday);
+        $age = $birthDate->diffInYears($currentDate);
+        $minage = MinAge::pluck('animeId')->toArray(); 
+
         return view('english.search', [
+            'age'=>$age,
+            'minagelist'=>$minage,
             'watchlist'=>$watchlist,
             'data' => $data, 
             'blacklist_animeIds' => $blacklist]);
     }
-    
+
 
     public function GetAnimeDetails(Request $request,$anime)
     {
-        $data = EnDetails::where('animeId', $anime)->get();
+        $data = EnDetails::where('animeId', $anime)->first();
         $episode = epsList::where('animeId', $anime)->get();
+
+        $blacklist = Blacklist::pluck('animeId')->toArray(); 
+        $watchlist = Watchlists::where('email', Auth::user()->email)->pluck('animeId')->toArray();
+
+        $birthday = Auth::user()->date_of_birth;
+        $currentDate = Carbon::now();
+        $birthDate = Carbon::createFromFormat('Y-m-d', $birthday);
+        $age = $birthDate->diffInYears($currentDate);
+        $minage = MinAge::pluck('animeId')->toArray(); 
+
         return view('english.anime-details', [
-            'data' => $data , 'episode' => $episode]);
+            'data' => $data , 
+            'age'=>$age,
+            'minagelist'=>$minage,
+            'blacklist_animeIds' => $blacklist,
+            'watchlist'=>$watchlist,
+            'episode' => $episode
+        ]);
     }
 
     public function GetStreamingURLs(Request $request, $episodeId)
@@ -113,7 +140,11 @@ class AnimeController extends Controller
         $url = url()->current();
         $userEmail = Auth::user()->email;
         $userName = Auth::user()->name;
-    
+
+        History::where('url', '=', $url)
+        ->where('email', '=', $userEmail)
+        ->delete();
+ 
         $history = new History;
         $history->url = $url;
         $history->email = $userEmail; 
@@ -137,13 +168,25 @@ class AnimeController extends Controller
         $new_url_parts = explode("-episode", $title);
         $anime = $new_url_parts[0];
 
-        $details = EnDetails::where('animeId', $anime)->get();
+        $details = EnDetails::where('animeId', $anime)->first();
         $episode = epsList::where('animeId', $anime)->get();
+
+        $blacklist = Blacklist::pluck('animeId')->toArray(); 
+
+        $birthday = Auth::user()->date_of_birth;
+        $currentDate = Carbon::now();
+        $birthDate = Carbon::createFromFormat('Y-m-d', $birthday);
+        $age = $birthDate->diffInYears($currentDate);
+        $minage = MinAge::pluck('animeId')->toArray(); 
 
 
         $recs = EnDetails::where('animeId', 'LIKE', '%' . $parts2[0] . '%')->get();
         return view('english.watch', [
+            'animeId' => $anime,
+            'age'=>$age,
             'details' => $details,
+            'minagelist'=>$minage,
+            'blacklist_animeIds' => $blacklist,
             'episode' => $episode,
             'recs' => $recs,
             'episode_number' => $episode_number,

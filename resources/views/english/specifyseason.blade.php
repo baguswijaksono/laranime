@@ -17,7 +17,6 @@
     $segments = explode('/', $url);
     $anime = end($segments);
     $nama = str_replace("-", " ", $anime);
-
 @endphp
 
 <div class="p-4">
@@ -38,13 +37,30 @@
 
 <center>
 @foreach($all as $item)
-      @include('layouts.anime-card', [
-        'animeId' => $item->animeId,
-        'animeTitle' => $item->animeTitle,
-        'animeImg' => $item->animeImg,
-        'status' => $item->status,
-      ])
-  @endforeach
+          @if(!in_array($item->animeId, $blacklist_animeIds))
+            @if(!in_array($item->animeId, $minagelist))
+              @include('layouts.anime-card', [
+                'animeId' => $item->animeId,
+                'animeTitle' => $item->animeTitle,
+                'animeImg' => $item->animeImg,
+                'status' => $item->releasedDate,
+              ])
+            @else
+              @php
+                $minAge = \App\Models\MinAge::where('animeId', $item->animeId)->value('minAge');
+              @endphp
+              @if($age > $minAge)
+                @include('layouts.anime-card', [
+                  'animeId' => $item->animeId,
+                  'animeTitle' => $item->animeTitle,
+                  'animeImg' => $item->animeImg,
+                  'status' => $item->releasedDate,
+                ])
+              @endif
+            @endif
+
+          @endif
+        @endforeach
 </center>
 
 

@@ -91,9 +91,20 @@ class TopAiringController extends Controller
         $data = TopAir::where('page', $page)->get();    
         $blacklist = Blacklist::pluck('animeId')->toArray(); 
         $watchlist = Watchlists::where('email', Auth::user()->email)->pluck('animeId')->toArray();
+
+        $birthday = Auth::user()->date_of_birth;
+        $currentDate = Carbon::now();
+        $birthDate = Carbon::createFromFormat('Y-m-d', $birthday);
+        $age = $birthDate->diffInYears($currentDate);
+        $minage = MinAge::pluck('animeId')->toArray(); 
+
         return view('english.top-airing', [
+            'page'=> $page,
             'data' => $data, 
             'blacklist_animeIds' => $blacklist,
-            'watchlist'=>$watchlist]);
+            'watchlist'=>$watchlist,
+            'age'=>$age,
+            'minagelist'=>$minage
+        ]);
     }
 }

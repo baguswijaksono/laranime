@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Blacklist;
 use App\Models\EnDetails;
 use App\Models\User;
+use App\Models\MinAge;
 use Carbon\Carbon;
 use App\Models\Watchlists;
 
@@ -30,10 +31,20 @@ class RecentController extends Controller
         $data = Recent::where('page', $page)->get();    
         $blacklist = Blacklist::pluck('animeId')->toArray();
         $watchlist = Watchlists::where('email', Auth::user()->email)->pluck('animeId')->toArray();
+
+        $birthday = Auth::user()->date_of_birth;
+        $currentDate = Carbon::now();
+        $birthDate = Carbon::createFromFormat('Y-m-d', $birthday);
+        $age = $birthDate->diffInYears($currentDate);
+        $minage = MinAge::pluck('animeId')->toArray(); 
+
         return view('english.recent-release', [
+            'page'=> $page,
             'data' => $data, 
             'blacklist_animeIds' => $blacklist,
             'watchlist'=>$watchlist,
+            'age'=>$age,
+            'minagelist'=>$minage
         ]);
     }
 
@@ -55,7 +66,7 @@ class RecentController extends Controller
         $recent = Recent::all();
         $blacklist = Blacklist::pluck('animeId')->toArray(); 
         $minage = MinAge::pluck('animeId')->toArray(); 
-        return view('admin.database-recent-manage', ['recent' => $recent,'blacklist_animeIds' => $blacklist, 'min_age' => $minage]);
+        return view('admin.recent.index', ['recent' => $recent,'blacklist_animeIds' => $blacklist, 'min_age' => $minage]);
     }
 
     public function enrecentEdit(Request $request,$episodeId)

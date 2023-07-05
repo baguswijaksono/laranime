@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>All Anime</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
   </head>
   <body>
@@ -82,17 +82,42 @@ $previousLetter = '';
     @endphp
   @endif
 
-  <li class="list-group-item d-flex justify-content-between align-items-center ">
-  <a class="fs-6" href="/en/anime-details/{{$item->animeId}}">{{$item->animeTitle}}</a>
-  @if ($item->status == 'Completed')
+
+
+@if(!in_array($item->animeId, $blacklist_animeIds))
+            @if(!in_array($item->animeId, $minagelist))
+            <li class="list-group-item d-flex justify-content-between align-items-center ">
+            <a class="fs-6" href="/en/anime-details/{{$item->animeId}}">{{$item->animeTitle}}</a>
+            @if ($item->status == 'Completed')
     <span class="badge bg-primary rounded">Completed</span>
 @elseif ($item->status == 'Ongoing')
 <span class="badge bg-success rounded">Ongoing</span>
 @else
-    {{-- Handle other cases if needed --}}
+ 
 @endif
 
   </li>
+            @else
+              @php
+                $minAge = \App\Models\MinAge::where('animeId', $item->animeId)->value('minAge');
+              @endphp
+              @if($age > $minAge)
+              <li class="list-group-item d-flex justify-content-between align-items-center ">
+              <a class="fs-6" href="/en/anime-details/{{$item->animeId}}">{{$item->animeTitle}}</a>
+              @if ($item->status == 'Completed')
+    <span class="badge bg-primary rounded">Completed</span>
+@elseif ($item->status == 'Ongoing')
+<span class="badge bg-success rounded">Ongoing</span>
+@else
+ 
+@endif
+
+  </li>
+              @endif
+            @endif
+@endif
+
+
 @endforeach
 
 

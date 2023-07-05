@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Blacklist;
 use App\Models\EnDetails;
 use App\Models\User;
+use App\Models\MinAge;
+use App\Models\genreList;
 use Carbon\Carbon;
 use App\Models\Watchlists;
 
@@ -28,12 +30,25 @@ class GenresController extends Controller
     {
         $data = GenreEn::where('page', $page)
         ->where('genre', $genre)->get();  
+        $name = genreList::where('slug', $genre)->pluck('name')->first();
+
+        $birthday = Auth::user()->date_of_birth;
+        $currentDate = Carbon::now();
+        $birthDate = Carbon::createFromFormat('Y-m-d', $birthday);
+        $age = $birthDate->diffInYears($currentDate);
+        $minage = MinAge::pluck('animeId')->toArray(); 
+
         $blacklist = Blacklist::pluck('animeId')->toArray();
         $watchlist = Watchlists::where('email', Auth::user()->email)->pluck('animeId')->toArray();
         return view('english.genre', [
+            'name' => $name,
+            'genre' => $genre,
+            'page' => $page,
             'data' => $data, 
             'blacklist_animeIds' => $blacklist,
-            'watchlist'=>$watchlist
+            'watchlist'=>$watchlist,
+            'age'=>$age,
+            'minagelist'=>$minage
         ]);
     }
 
@@ -56,7 +71,7 @@ class GenresController extends Controller
         $blacklist = Blacklist::pluck('animeId')->toArray(); 
         $minage = MinAge::pluck('animeId')->toArray(); 
         $genreList = genreList::all();
-        return view('admin.database-genre-manage', ['genre' => $genre,'blacklist_animeIds' => $blacklist, 'min_age' => $minage,'genreList'=>$genreList]);
+        return view('admin.genre.index', ['genre' => $genre,'blacklist_animeIds' => $blacklist, 'min_age' => $minage,'genreList'=>$genreList]);
     }
 
     public function engenreDel(Request $request)

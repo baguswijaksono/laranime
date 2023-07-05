@@ -97,11 +97,14 @@ class PopularController extends Controller
         $currentDate = Carbon::now();
         $birthDate = Carbon::createFromFormat('Y-m-d', $birthday);
         $age = $birthDate->diffInYears($currentDate);
+        $minage = MinAge::pluck('animeId')->toArray(); 
         return view('english.popular', [
+            'page'=> $page,
             'data' => $data, 
             'blacklist_animeIds' => $blacklist, 
             'watchlist'=>$watchlist,
-            'age'=>$age
+            'age'=>$age,
+            'minagelist'=>$minage
         ]);
     }
 }

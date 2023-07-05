@@ -45,7 +45,7 @@ form {
   <label for="start" class="form-label">Date of birth</label>
   <input class="form-control" type="date" id="start" name="trip-start"
        value="{{ Auth::user()->date_of_birth }}"
-       min="2018-01-01" max="2018-12-31">
+       min="1900-01-01" max="2018-12-31">
 
 </div>
 

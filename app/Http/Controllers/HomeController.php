@@ -10,6 +10,8 @@ use App\Models\Popular;
 use App\Models\Recent;
 use App\Models\Movies;
 use App\Models\GenreEn;
+use App\Models\MinAge;
+use Carbon\Carbon;
 use App\Models\TopAir;
 use App\Models\EnDetails;
 use App\Models\User;
@@ -63,8 +65,25 @@ class HomeController extends Controller
     public function allAnime()
     {
         $all = EnDetails::orderBy('animeId')->get();   
-        return view('english.all', ['all' => $all]);
+        $blacklist = Blacklist::pluck('animeId')->toArray(); 
+        $minage = MinAge::pluck('animeId')->toArray(); 
+
+        $birthday = Auth::user()->date_of_birth;
+        $currentDate = Carbon::now();
+        $birthDate = Carbon::createFromFormat('Y-m-d', $birthday);
+        $age = $birthDate->diffInYears($currentDate);
+
+        return view('english.all', [
+            'all' => $all,
+            'blacklist_animeIds' => $blacklist,
+            'age'=>$age,
+            'minagelist'=>$minage
+
+        ]);
+
     }
+
+
 
     public function seasonAnime()
     {
@@ -77,6 +96,13 @@ class HomeController extends Controller
     {
         $blacklist = Blacklist::pluck('animeId')->toArray(); 
         $watchlist = Watchlists::where('email', Auth::user()->email)->pluck('animeId')->toArray();
+
+        $birthday = Auth::user()->date_of_birth;
+        $currentDate = Carbon::now();
+        $birthDate = Carbon::createFromFormat('Y-m-d', $birthday);
+        $age = $birthDate->diffInYears($currentDate);
+        $minage = MinAge::pluck('animeId')->toArray(); 
+
         $season = EnDetails::distinct('type')->get(); 
         $specify = str_replace("-", " ", $specify);
         $results = EnDetails::where('type', $specify)->get();  
@@ -84,8 +110,11 @@ class HomeController extends Controller
             'all' => $results,
             'season' => $season,
             'blacklist_animeIds' => $blacklist,
-            'watchlist'=>$watchlist]);
+            'watchlist'=>$watchlist,
+            'age'=>$age,
+            'minagelist'=>$minage
+        ]);
     }
     
-    
+
 }

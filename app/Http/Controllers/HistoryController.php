@@ -13,7 +13,7 @@ class HistoryController extends Controller
         $email = Auth::user()->email; 
         $history = History::select('url')
         ->where('email', $email)
-        ->groupBy('url')
+        ->orderBy('id', 'desc')
         ->get();
         return view('user.history', compact('history'));
     }

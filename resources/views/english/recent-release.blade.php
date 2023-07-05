@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Popular Anime - Page </title>
+    <title>Recent Release - Page {{$page}}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
   </head>
   <body>
@@ -15,14 +15,45 @@
   <div style="display: inline-block;">
   <center>
   @foreach($data as $item)
+
+  @php
+    $urlrl = request()->url(); 
+    $segmentsrl = explode('/', $urlrl); 
+    $secondLastSegmentrl = $segmentsrl[count($segmentsrl) - 2];
+    
+@endphp
+
+@if($secondLastSegmentrl=='recent-release')
+    @php
+    $animeParts = explode('-', $item->episodeId);
+    $animeParts = array_slice($animeParts, 0, -2);
+    $animeId = implode('-', $animeParts);
+    $item->animeId = $animeId;
+@endphp
+@endif
   @if(!in_array($item->animeId, $blacklist_animeIds))
-    @include('layouts.anime-card', [
+            @if(!in_array($item->animeId, $minagelist))
+            @include('layouts.anime-card', [
       'animeId' => $item->episodeId,
       'animeTitle' => $item->animeTitle,
       'animeImg' => $item->animeImg,
       'status' => 'Episode '.$item->episodeNum,
     ])
-  @endif
+            @else
+              @php
+                $minAge = \App\Models\MinAge::where('animeId', $item->animeId)->value('minAge');
+              @endphp
+              @if($age > $minAge)
+              @include('layouts.anime-card', [
+      'animeId' => $item->episodeId,
+      'animeTitle' => $item->animeTitle,
+      'animeImg' => $item->animeImg,
+      'status' => 'Episode '.$item->episodeNum,
+    ])
+              @endif
+            @endif
+
+          @endif
 @endforeach
   </center>
 

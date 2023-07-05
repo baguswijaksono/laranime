@@ -19,7 +19,15 @@
     $userWatchlistsCount = Watchlists::where('email', $email)->count();
 @endphp
     @if($userWatchlistsCount === 0)
-      <p>No Watchlist added yet available.</p>
+<center>
+<p style="padding-top: 40vh;">"You haven't added a single anime yet."</p>
+      @if (Auth::check() && Auth::user()->theme === 'light')
+      <a class="btn btn-dark" href="/">Browse Some Anime</a>
+@else
+<a class="btn btn-light" href="/">Browse Some Anime</a>
+@endif
+
+      </center>
     @else
     <div class="container text-center">
   <div class="row row-cols-4 row-cols-lg-5 g-2 g-lg-3">
@@ -51,14 +59,14 @@
               </button>
         <!-- Modal -->
         <div class="modal fade" id="staticBackdrop_{{$item}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog">
+          <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel">Delete Watchlist Confirmation</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <p>yakin nih mau hapus {{$item}} dari Watchlist</p>
+                <p>Sure want to delete {{$item}} from Watchlist ?</p>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -66,7 +74,7 @@
                 @csrf 
   <input type="hidden" name="animeId" value="{{$item}}">
   <input type="hidden" name="email" value=" {{ Auth::user()->email }}">
-  <button type="submit" class="btn btn-danger">delete from Watchlist</button>
+  <button type="submit" class="btn btn-danger">Delete</button>
 </form>
               </div>
             </div>
