@@ -9,15 +9,6 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Server
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{{ route('home') }}">English</a></li>
-                    </ul>
-                </li>
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Manage
                     </a>
                     <ul class="dropdown-menu">

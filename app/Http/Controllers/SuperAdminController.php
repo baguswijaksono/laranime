@@ -10,7 +10,7 @@ class SuperAdminController extends Controller
     {
         $User = User::all();
     
-        return view('admin.database-user-manage', ['User' => $User]);
+        return view('superadmin.user-manage', ['User' => $User]);
     }
 
     public function promoteToAdmin(Request $request)
