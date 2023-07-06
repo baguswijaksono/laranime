@@ -8,11 +8,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Genre List Manage</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
-
 <body>
     @include('layouts.admin-navbar')
     @php
@@ -20,8 +19,77 @@
         $totalGenre = genreList::count();
     @endphp
     @if ($totalGenre === 0)
-        <p>No genres available.</p>
+    <center>
+          <p style="padding-top: 40vh;">"No Genre have been added yet."</p>
+
+          <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop2">Add Genre</button>
+        </center>
+      <!-- Add Genre Modal -->
+      <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+          aria-labelledby="staticBackdrop2Label" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="staticBackdrop2Label">Add Genre</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal"
+                          aria-label="Close"></button>
+                  </div>
+                  <form method="POST" action="{{ route('genre.add') }}">
+                      @csrf
+                      <div class="modal-body">
+                        <label for="exampleFormControlInput1" class="form-label">Genre Name</label>
+                          <input class="form-control" name="name" type="text" placeholder="Insert genre name here"
+                              aria-label="default input example">
+                              <label for="exampleFormControlInput1" class="form-label">Genre Slug</label>
+                          <input class="form-control" name="slug" type="text" placeholder="Insert genre slug here"
+                              aria-label="default input example">
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                          <button type="submit" class="btn btn-primary">Add Genre</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+
+
     @else
+    <nav class="navbar">
+      <div class="container-fluid">
+        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+        data-bs-target="#staticBackdrop2">Add Genre</button>
+    <!-- Add Genre Modal -->
+    <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdrop2Label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdrop2Label">Add Genre</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <form method="POST" action="{{ route('genre.add') }}">
+                    @csrf
+                    <div class="modal-body">
+                      <label for="exampleFormControlInput1" class="form-label">Genre Name</label>
+                        <input class="form-control" name="name" type="text" placeholder="Insert genre name here"
+                            aria-label="default input example">
+                            <label for="exampleFormControlInput1" class="form-label">Genre Slug</label>
+                        <input class="form-control" name="slug" type="text" placeholder="Insert genre slug here"
+                            aria-label="default input example">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Add Genre</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+      </div>
+  </nav>
         <table class="table">
             <thead>
                 <tr>
@@ -44,7 +112,7 @@
                             <div class="modal fade" id="staticBackdropedit_{{ $item->id }}"
                                 data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
                                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                <div class="modal-dialog">
+                                <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="staticBackdropLabel">Edit Genre</h5>
@@ -111,39 +179,7 @@
                 @endforeach
             </tbody>
         </table>
-
-        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-            data-bs-target="#staticBackdrop2">Add Genre</button>
-
-        <!-- Add Genre Modal -->
-        <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="staticBackdrop2Label" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="staticBackdrop2Label">Adding Genre Confirmation</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                    </div>
-                    <form method="POST" action="{{ route('genre.add') }}">
-                        @csrf
-                        <div class="modal-body">
-                            <p>Are you sure you want to add a new genre?</p>
-                            <input class="form-control" name="name" type="text" placeholder="Default input"
-                                aria-label="default input example">
-                            <input class="form-control" name="slug" type="text" placeholder="Default input"
-                                aria-label="default input example">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                            <button type="submit" class="btn btn-danger">Add to Genre</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
     @endif
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
     </script>
