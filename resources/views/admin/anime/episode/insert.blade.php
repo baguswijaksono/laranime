@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Anime Episode Insert</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 </head>
@@ -38,42 +38,23 @@
 <body>
     @include('layouts.admin-navbar')
 
-    <form class="row g-3 needs-validation" novalidate action="{{ route('recent.ins') }}" method="POST">
+    <form class="row g-3 needs-validation" novalidate action="{{ route('ep.ins') }}" method="POST">
         @csrf
         <div class="col-md-12">
-            <label for="page" class="form-label">Page</label>
-            <input type="text" class="form-control" id="page" name="page" value="" required>
+            <label for="pepisodeIdage" class="form-label">Episode Id</label>
+            <input placeholder="Leave episodeId here" type="text" class="form-control" id="episodeId" name="episodeId" value="" required>
         </div>
 
         <div class="col-md-12">
-            <label for="episodeId" class="form-label">Episode Id</label>
-            <input type="text" class="form-control" id="episodeId" name="episodeId" value="" required>
+            <label for="animeId" class="form-label">Anime Id</label>
+            <input placeholder="Leave animeId here" type="text" class="form-control" id="animeId" name="animeId" value="" required>
         </div>
 
         <div class="col-md-12">
-            <label for="animeTitle" class="form-label">Anime Title</label>
-            <input type="text" class="form-control" id="animeTitle" name="animeTitle" value="" required>
-
+            <label for="episodeNum" class="form-label">Episode Number</label>
+            <input placeholder="Leave episodeNumber here" type="number" class="form-control" id="episodeNum" name="episodeNum" value="" required>
         </div>
 
-        <div class="col-md-12">
-            <label for="animeImg" class="form-label">Anime Image</label>
-            <input type="text" class="form-control" id="animeImg" name="animeImg" value="" required>
-        </div>
-
-        <div class="col-md-12">
-            <label for="episodeNum" class="form-label">Latest Episode Number</label>
-            <input type="text" class="form-control" id="episodeNum" name="episodeNum" value="" required>
-        </div>
-
-        <div class="col-md-12">
-            <label for="subOrDub" class="form-label">Sub or Dub</label>
-            <select id="subOrDub" name="subOrDub" class="form-select">
-                <option selected>Open this select menu</option>
-                <option value="SUB">Sub</option>
-                <option value="DUB">Dub</option>
-            </select>
-        </div>
 
         <div class="col-12">
             <button class="btn btn-primary" type="submit">Save Changes</button>

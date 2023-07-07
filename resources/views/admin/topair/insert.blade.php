@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Top Airing Insert</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 </head>
@@ -42,31 +42,31 @@
         @csrf
         <div class="col-md-12">
             <label for="page" class="form-label">Page</label>
-            <input type="text" class="form-control" id="page" name="page" value="" required>
+            <input placeholder="Enter the number indicating where you want this anime to be displayed on the popular page." type="number" class="form-control" id="page" name="page" value="" required>
 
         </div>
 
         <div class="col-md-12">
             <label for="animeId" class="form-label">Anime Id</label>
-            <input type="text" class="form-control" id="animeId" name="animeId" value="" required>
+            <input placeholder="Leave animeId here" type="text" class="form-control" id="animeId" name="animeId" value="" required>
 
         </div>
 
         <div class="col-md-12">
             <label for="animeTitle" class="form-label">Anime Title</label>
-            <input type="text" class="form-control" id="animeTitle" name="animeTitle" value="" required>
+            <input placeholder="Leave animeTitle here" type="text" class="form-control" id="animeTitle" name="animeTitle" value="" required>
 
         </div>
 
         <div class="col-md-12">
             <label for="animeImg" class="form-label">Anime Image</label>
-            <input type="text" class="form-control" id="animeImg" name="animeImg" value="" required>
+            <input type="text" placeholder="Use only valid url for image source" class="form-control" id="animeImg" name="animeImg" value="" required>
 
         </div>
 
         <div class="col-md-12">
             <label for="latestEp" class="form-label">Latest Episode</label>
-            <input type="text" class="form-control" id="latestEp" name="latestEp" value="" required>
+            <input type="text"  placeholder="Leave Latest episode here" class="form-control" id="latestEp" name="latestEp" value="" required>
 
         </div>
 

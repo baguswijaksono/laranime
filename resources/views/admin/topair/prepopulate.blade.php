@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Pre Populate Recent Release</title>
+    <title>Pre Populate Top Airing</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
@@ -45,7 +45,7 @@
             e.preventDefault();
             var inputan = document.querySelector('#inputan').value;
             var inputan2 = document.querySelector('#inputan2').value;
-            var url = window.location.origin + '/populate-recent-release?totalPages=' + inputan + '&minPages=' + inputan2;
+            var url = window.location.origin + '/populate-top-airing?totalPages=' + inputan + '&minPages=' + inputan2;
             window.location.href = url;
         });
     </script>

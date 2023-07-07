@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\epsList;
 
 class EpisodeController extends Controller
 {
@@ -13,7 +14,7 @@ class EpisodeController extends Controller
         $epsList->episodeId = $request->input('episodeId');
         $epsList->animeId = $request->input('animeId');
         $epsList->save();
-        return redirect()->route('admin-epslist-manage',['animeId'=>$request->input('animeId')]);
+        return redirect()->route('admin.anime.episode.index',['animeId'=>$request->input('animeId')]);
     }  
     
 
@@ -21,7 +22,7 @@ class EpisodeController extends Controller
     {
         $epsList = epsList::where('animeId',$animeId)->get();
     
-        return view('admin.database-epsList-manage', ['epslist' => $epsList]);
+        return view('admin.anime.episode.index', ['epslist' => $epsList]);
     }
 
     public function enEpsupdate(Request $request,)

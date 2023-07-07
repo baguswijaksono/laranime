@@ -72,7 +72,7 @@ class RecentController extends Controller
     public function enrecentEdit(Request $request,$episodeId)
     {
         $Recent = Recent::where('episodeId', $episodeId)->first();
-        return view('admin.database-recent-manage-edit',['Recent'=>$Recent ]);
+        return view('admin.recent.edit',['Recent'=>$Recent ]);
     }
 
     public function enrecentEditsave(Request $request)

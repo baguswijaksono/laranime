@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>recent-release Anime Data Insert</title>
+    <title>Populate Recent Release</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
@@ -65,24 +65,23 @@
                     }
             
                     $percent = ($page / $totalPages) * 100;
-                    echo '<script>
+                    echo "<script>
                         document.getElementsByClassName('progress-bar')[0].style.width = '" . $percent . "%';
                         document.getElementsByClassName('progress-bar')[0].setAttribute('aria-valuenow', '" . $percent . "');
                         document.getElementsByClassName('progress-bar')[0].innerHTML = '" . $percent . "%';
                         document.getElementsByClassName('logdata')[0].innerHTML =
-                            'recent-release Anime Data inserted successfully for recent-release page $page';
+                            'Recent Release Anime Data inserted successfully for Recent Release page $page';
 
                         if (" . $percent . " === 100) {
                             var buttonsDiv = document.createElement('div');
                             buttonsDiv.classList.add('text-center', 'mt-3');
 
-                            var button1 = document.createElement('a'); // Create an anchor element instead of a button
+                            var button1 = document.createElement('a');
                             button1.classList.add('btn', 'btn-primary', 'me-2');
                             button1.innerHTML = 'Insert Again';
-                            button1.href =
-                            'http://localhost/eslolin/scraper/add_recent-release.php'; // Set the href attribute to the desired URL
+                            button1.href ='/pre-populate-recent-release'; 
 
-                            var button2 = document.createElement('a'); // Create an anchor element instead of a button
+                            var button2 = document.createElement('a');
                             button2.classList.add('btn', 'btn-secondary');
                             button2.innerHTML = 'Back to Dashboard';
                             button2.href = '/admin';
@@ -92,7 +91,7 @@
 
                             document.body.appendChild(buttonsDiv);
                         }
-                    </script>';
+                    </script>";
             
                     flush();
                     ob_flush();

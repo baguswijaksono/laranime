@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Popular Anime Data Insert</title>
+    <title>recent-release Anime Data Insert</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
@@ -39,39 +39,37 @@
 
     <div class="container">
         @php
-            use App\Models\GenreEn;
+            use App\Models\TopAir;
             set_time_limit(43200);
             
             $totalPages = isset($_GET['totalPages']) ? intval($_GET['totalPages']) : 0;
             $minPages = isset($_GET['minPages']) ? intval($_GET['minPages']) : 1;
-            $genre = $_GET['genre'];
             
             if ($totalPages <= 0) {
             } else {
                 for ($page = $minPages; $page <= $totalPages; $page++) {
-                    $url = "https://gogoanime-api-production.up.railway.app/genre/$genre?page=$page";
+                    $url = "https://gogoanime-api-production.up.railway.app/top-airing?page=$page";
             
                     $json = file_get_contents($url);
                     $array = json_decode($json, true);
             
                     foreach ($array as $key) {
-                        $GenreEn = new GenreEn();
-                        $GenreEn->page = $page;
-                        $GenreEn->genre = $genre;
-                        $GenreEn->animeId = $key['animeId'];
-                        $GenreEn->animeImg = $key['animeImg'];
-                        $GenreEn->animeTitle = $key['animeTitle'];
-                        $GenreEn->releasedDate = $key['releasedDate'];
-                        $GenreEn->save();
+                        $recent = new TopAir();
+                        $recent->page = $page;
+                        $recent->animeId = $key['animeId'];
+                        $recent->animeTitle = $key['animeTitle'];
+                        $recent->animeImg = $key['animeImg'];
+                        $recent->latestEp = $key['latestEp'];
+                        $recent->save();
                     }
             
                     $percent = ($page / $totalPages) * 100;
-                    echo '<script>
+                    echo "<script>
                         document.getElementsByClassName('progress-bar')[0].style.width = '" . $percent . "%';
                         document.getElementsByClassName('progress-bar')[0].setAttribute('aria-valuenow', '" . $percent . "');
                         document.getElementsByClassName('progress-bar')[0].innerHTML = '" . $percent . "%';
                         document.getElementsByClassName('logdata')[0].innerHTML =
-                            'Genre Anime Data inserted successfully for $genre page $page';
+                            'Top Airing Anime Data inserted successfully for Top Airing page $page';
 
                         if (" . $percent . " === 100) {
                             var buttonsDiv = document.createElement('div');
@@ -80,7 +78,7 @@
                             var button1 = document.createElement('a'); // Create an anchor element instead of a button
                             button1.classList.add('btn', 'btn-primary', 'me-2');
                             button1.innerHTML = 'Insert Again';
-                            button1.href = 'http://localhost/eslolin/scraper/add_popular.php'; // Set the href attribute to the desired URL
+                            button1.href = '/pre-populate-top-airing'; // Set the href attribute to the desired URL
 
                             var button2 = document.createElement('a'); // Create an anchor element instead of a button
                             button2.classList.add('btn', 'btn-secondary');
@@ -92,7 +90,7 @@
 
                             document.body.appendChild(buttonsDiv);
                         }
-                    </script>';
+                    </script>";
             
                     flush();
                     ob_flush();

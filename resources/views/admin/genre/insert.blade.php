@@ -8,11 +8,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Genre Insert</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 </head>
-
 <style>
     form {
         width: 55vw;
@@ -36,20 +35,18 @@
 </style>
 
 <body>
-    @include('layouts.navbar')
+    @include('layouts.admin-navbar')
 
     <form class="row g-3 needs-validation" novalidate action="{{ route('genre.ins') }}" method="POST">
         @csrf
         <div class="col-md-12">
             <label for="page" class="form-label">Page</label>
-            <input type="text" class="form-control" id="page" name="page" value="" required>
+            <input type="number" placeholder="Enter the number indicating where you want this anime to be displayed on the genre page." class="form-control" id="page" name="page" value="" required>
         </div>
-
         <div class="col-md-12">
             <label for="genre" class="form-label">Genre</label>
-
             <select class="form-select" id="genre" name="genre" required>
-                <option selected></option>
+                <option selected>Open this</option>
                 @php
                     use App\Models\genreList;
                     $genreList = genreList::all();
@@ -58,30 +55,29 @@
                     <option value="{{ $gen->slug }}">{{ $gen->slug }}</option>
                 @endforeach
             </select>
-
         </div>
 
         <div class="col-md-12">
             <label for="animeId" class="form-label">Anime Id</label>
-            <input type="text" class="form-control " id="animeId" name="animeId" value="" required>
+            <input type="text" placeholder="Leave animeId here" class="form-control " id="animeId" name="animeId" value="" required>
 
         </div>
 
         <div class="col-md-12">
             <label for="animeTitle" class="form-label">Anime Title</label>
-            <input type="text" class="form-control" id="animeTitle" name="animeTitle" value="" required>
+            <input type="text" placeholder="Leave animeTitle here" class="form-control" id="animeTitle" name="animeTitle" value="" required>
 
         </div>
 
         <div class="col-md-12">
             <label for="animeImg" class="form-label">Anime Image</label>
-            <input type="text" class="form-control" id="animeImg" name="animeImg" value="" required>
+            <input type="text" placeholder="Use only valid url for image source" class="form-control" id="animeImg" name="animeImg" value="" required>
 
         </div>
 
         <div class="col-md-12">
             <label for="releasedDate" class="form-label">Release Date</label>
-            <input type="text" class="form-control" id="releasedDate" name="releasedDate" value="" required>
+            <input placeholder="Only year like 2021 , 2022 , 2023 " type="text" class="form-control" id="releasedDate" name="releasedDate" value="" required>
 
         </div>
 

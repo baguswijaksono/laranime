@@ -23,7 +23,7 @@ class TopAiringController extends Controller
     public function populateTopAir(Request $request)
     {
         
-        return view('admin.topair.populate-top-air');
+        return view('admin.topair.populate');
     }
 
     public function entopairEdit(Request $request,$animeId)

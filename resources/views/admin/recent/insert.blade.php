@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Recent Release Insert</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 </head>
@@ -28,7 +28,6 @@
         transform: translate(-50%, -50%);
         /* membuat form berada di tengah pusat */
     }
-
     .disabled-input {
         pointer-events: none;
         opacity: 0.6;
@@ -38,36 +37,41 @@
 <body>
     @include('layouts.admin-navbar')
 
-    <form class="row g-3 needs-validation" novalidate action="{{ route('popular.ins') }}" method="POST">
+    <form class="row g-3 needs-validation" novalidate action="{{ route('recent.ins') }}" method="POST">
         @csrf
         <div class="col-md-12">
             <label for="page" class="form-label">Page</label>
-            <input type="text" class="form-control" id="page" name="page" value="" required>
-
+            <input placeholder="Enter the number indicating where you want this anime to be displayed on the popular page." type="text" class="form-control" id="page" name="page" value="" required>
         </div>
 
         <div class="col-md-12">
-            <label for="animeId" class="form-label">Anime Id</label>
-            <input type="text" class="form-control" id="animeId" name="animeId" value="" required>
-
+            <label for="episodeId" class="form-label">Episode Id</label>
+            <input placeholder="Leave episodeId here" type="text" class="form-control" id="episodeId" name="episodeId" value="" required>
         </div>
 
         <div class="col-md-12">
             <label for="animeTitle" class="form-label">Anime Title</label>
-            <input type="text" class="form-control" id="animeTitle" name="animeTitle" value="" required>
+            <input placeholder="Leave animeTitle here" type="text" class="form-control" id="animeTitle" name="animeTitle" value="" required>
 
         </div>
 
         <div class="col-md-12">
             <label for="animeImg" class="form-label">Anime Image</label>
-            <input type="text" class="form-control" id="animeImg" name="animeImg" value="" required>
-
+            <input placeholder="Use only valid url for image source" type="text" class="form-control" id="animeImg" name="animeImg" value="" required>
         </div>
 
         <div class="col-md-12">
-            <label for="releasedDate" class="form-label">Released Date</label>
-            <input type="text" class="form-control" id="releasedDate" name="releasedDate" value="" required>
+            <label for="episodeNum" class="form-label">Latest Episode Number</label>
+            <input   placeholder="Leave Latest Episode Number here" type="text" class="form-control" id="episodeNum" name="episodeNum" value="" required>
+        </div>
 
+        <div class="col-md-12">
+            <label for="subOrDub" class="form-label">Sub or Dub</label>
+            <select id="subOrDub" name="subOrDub" class="form-select">
+                <option selected>Open this select menu</option>
+                <option value="SUB">Sub</option>
+                <option value="DUB">Dub</option>
+            </select>
         </div>
 
         <div class="col-12">

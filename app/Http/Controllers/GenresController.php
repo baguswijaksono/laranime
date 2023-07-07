@@ -18,12 +18,12 @@ class GenresController extends Controller
     public function prepopulateGenre(Request $request)
     {
         $genre = genreList::all();
-        return view('admin.prepopulate-genre', ['genre' => $genre]);
+        return view('admin.genre.prepopulate', ['genre' => $genre]);
     }
 
     public function populateGenre(Request $request)
     {
-        return view('admin.populate-genre');
+        return view('admin.genre.populate');
     }
 
     public function GetAnimeGenres(Request $request, $genre, $page)
@@ -62,7 +62,12 @@ class GenresController extends Controller
         $genre->animeImg = $request->input('animeImg');
         $genre->releasedDate = $request->input('releasedDate');
         $genre->save();
-        return redirect()->route('admin-genre-manage');
+        $queryParams = [
+            'genre' => $request->input('genre'),
+            'page' => $request->input('page'),
+        ];
+    
+        return redirect()->route('admin-genre-manage', $queryParams);
     }
 
     public function engenre(Request $request)
