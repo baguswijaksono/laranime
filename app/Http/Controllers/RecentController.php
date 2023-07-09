@@ -69,14 +69,15 @@ class RecentController extends Controller
         return view('admin.recent.index', ['recent' => $recent,'blacklist_animeIds' => $blacklist, 'min_age' => $minage]);
     }
 
-    public function enrecentEdit(Request $request,$episodeId)
+    public function enrecentEdit(Request $request,$id)
     {
-        $Recent = Recent::where('episodeId', $episodeId)->first();
+        $Recent = Recent::where('id', $id)->first();
         return view('admin.recent.edit',['Recent'=>$Recent ]);
     }
 
     public function enrecentEditsave(Request $request)
     {
+        $id = $request->input('id');
         $page = $request->input('validationCustom01');
         $episodeId = $request->input('validationCustom02');
         $animeTitle = $request->input('validationCustom03');
@@ -84,7 +85,7 @@ class RecentController extends Controller
         $episodeNum = $request->input('validationCustom05');
         $subordub = $request->input('validationCustom06');
     
-        $update = Recent::where('episodeId', $episodeId)->first();
+        $update = Recent::where('id', $id)->first();
     
         if ($update) {
             $update->page = $page;

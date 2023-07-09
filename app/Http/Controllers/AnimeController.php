@@ -66,7 +66,7 @@ class AnimeController extends Controller
     public function preenanimupdate(Request $request,$id)
     {
         $anim = EnDetails::where('id', $id)->first();
-        return view('admin.database-anime-manage-edit',['anim'=>$anim ]);
+        return view('admin.anime.edit',['anim'=>$anim ]);
     }
 
     public function enanime(Request $request)
@@ -139,7 +139,6 @@ class AnimeController extends Controller
     {
         $url = url()->current();
         $userEmail = Auth::user()->email;
-        $userName = Auth::user()->name;
 
         History::where('url', '=', $url)
         ->where('email', '=', $userEmail)
@@ -156,29 +155,24 @@ class AnimeController extends Controller
         ->toArray();
 
         $comments = array_reverse($commentsArray);
-        
-        $parts = explode('/', $url);
-        $title = $parts[5];
-        $episode_index = strpos($title, "episode-") + strlen("episode-");
-        $episode_number = substr($title, $episode_index);
-        $episode_number= str_replace("-", ".", $episode_number);
-        $parts2 = explode('-', $title);
-        $trimmed_parts2 = array_slice($parts2, 0, count($parts2) - 2);
 
-        $new_url_parts = explode("-episode", $title);
-        $anime = $new_url_parts[0];
-
+        $embedUrl = epsList::where('episodeId', $episodeId)->value('embedUrl');
+        $anime = epsList::where('episodeId', $episodeId)->value('animeId');
+        $episode_number = epsList::where('episodeId', $episodeId)->value('episodeNum');      
+          
         $details = EnDetails::where('animeId', $anime)->first();
-        $episode = epsList::where('animeId', $anime)->get();
 
-        $blacklist = Blacklist::pluck('animeId')->toArray(); 
+        $episode = epsList::where('animeId', $anime)->get();
 
         $birthday = Auth::user()->date_of_birth;
         $currentDate = Carbon::now();
         $birthDate = Carbon::createFromFormat('Y-m-d', $birthday);
         $age = $birthDate->diffInYears($currentDate);
+
+        $blacklist = Blacklist::pluck('animeId')->toArray(); 
         $minage = MinAge::pluck('animeId')->toArray(); 
 
+        $parts2 = explode('-', $anime);
 
         $recs = EnDetails::where('animeId', 'LIKE', '%' . $parts2[0] . '%')->get();
         return view('english.watch', [
@@ -191,7 +185,8 @@ class AnimeController extends Controller
             'recs' => $recs,
             'episode_number' => $episode_number,
             'comments' => $comments,
-            'x' => $episodeId
+            'x' => $episodeId,
+            'embed'=>$embedUrl
         ]);
     }
 }

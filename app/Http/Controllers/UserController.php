@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -22,5 +23,32 @@ class UserController extends Controller
         Session::flash('success', 'User information updated successfully.');
         return back();
     } 
+    
+    public function savechangePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => ['required','string','min:8'],
+            'password' => ['required', 'string', 'min:8', 'confirmed']
+        ]);
+
+        $currentPasswordStatus = Hash::check($request->current_password, auth()->user()->password);
+        if($currentPasswordStatus){
+
+            User::findOrFail(Auth::user()->id)->update([
+                'password' => Hash::make($request->password),
+            ]);
+
+            return redirect()->back()->with('message','Password Updated Successfully');
+
+        }else{
+
+            return redirect()->back()->with('message','Current Password does not match with Old Password');
+        }
+    }
+    
+    public function changePassword()
+    {
+        return view('user.change-password');
+    }
     
 }

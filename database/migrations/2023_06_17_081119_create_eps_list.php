@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('animeId');
             $table->string('episodeId');
             $table->string('episodeNum');
+            $table->string('embedUrl');
         });
     }
 

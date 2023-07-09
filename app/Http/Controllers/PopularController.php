@@ -55,21 +55,22 @@ class PopularController extends Controller
         return back();
     }
 
-    public function enpopularEdit(Request $request,$animeId)
+    public function enpopularEdit(Request $request,$id)
     {
-        $popular = Popular::where('animeId', $animeId)->first();
+        $popular = Popular::where('id', $id)->first();
         return view('admin.popular.edit',['popular'=>$popular ]);
     }
 
     public function enpopularEditsave(Request $request)
     {
+        $id = $request->input('id');
         $animeId = $request->input('validationCustom02');
         $animeTitle = $request->input('validationCustom03');
         $animeImg = $request->input('validationCustom04');
         $releasedDate = $request->input('validationCustom05');
         $page = $request->input('validationCustom01');
     
-        $update = Popular::where('animeId', $animeId)->first();
+        $update = Popular::where('id', $id)->first();
     
         if ($update) {
             $update->page = $page;

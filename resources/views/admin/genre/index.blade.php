@@ -79,22 +79,21 @@
                         <td>{{ $item->id }}</td>
                         <td>{{ $item->page }}</td>
                         <td>{{ $item->genre }}</td>
-                        <td>{{ $item->animeId }}</td>
+                        <td style="width: 750px;">{{ $item->animeId }}</td>
                         <td>
                             <img src="{{ $item->animeImg }}" style="max-width: 150px;">
                         </td>
                         <td>
-                            <a href="/en/anime-details/{{ $item->animeId }}" class="btn btn-primary btn-sm">Details</a>
+                            <a href="/en/anime-details/{{ $item->animeId }}" class="btn btn-dark btn-sm">Details</a>
                         </td>
 
                         <td>
-
                             @if (!in_array($item['animeId'], $blacklist_animeIds))
                                 @if (!in_array($item['animeId'], $min_age))
-                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#staticBackdrop_{{ $item['animeId'] }}">Add</button>
                                 @else
-                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                         data-bs-target="#staticBackdrop_{{ $item['animeId'] }}" disabled>Add</button>
                                 @endif
                                 <!-- Modal -->
@@ -110,19 +109,21 @@
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <p>yakin nih mau masukin {{ $item['animeId'] }} ke dalem blacklist</p>
+                                                <center>
+                                                    <p>Sure want to add {{ $item['animeId'] }} to blacklist ? </p>
+                                                </center>
                                                 <form method="POST" action="/adding-blacklist">
                                                     @csrf
                                                     <input type="hidden" name="animeId"
                                                         value="{{ $item['animeId'] }}">
                                                     <input class="form-control" name="reason" type="text"
-                                                        placeholder="Enter the reason here">
+                                                        placeholder="Enter the reason here" required>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
                                                     data-bs-dismiss="modal">Cancel</button>
 
-                                                <button type="submit" class="btn btn-danger">Add to Blacklist</button>
+                                                <button type="submit" class="btn btn-primary">Add to Blacklist</button>
                                                 </form>
 
                                             </div>
@@ -140,13 +141,16 @@
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="staticBackdropLabel">Blacklist Confirmation
+                                                <h5 class="modal-title" id="staticBackdropLabel">Delete Blacklist
+                                                    Confirmation
                                                 </h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <p>yakin nih mau hapus {{ $item['animeId'] }} dari blacklist</p>
+                                                <center>
+                                                    <p>Sure want to remove {{ $item['animeId'] }} from blacklist ? </p>
+                                                </center>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
@@ -155,8 +159,7 @@
                                                     @csrf
                                                     <input type="hidden" name="animeId"
                                                         value="{{ $item['animeId'] }}">
-                                                    <button type="submit" class="btn btn-danger">delete from
-                                                        Blacklist</button>
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -168,49 +171,49 @@
                         <td>
 
                             @if (!in_array($item['animeId'], $min_age))
-                                @if (!in_array($item['animeId'], $blacklist_animeIds))
-                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#staticBackdrop2_{{ $item['animeId'] }}">Set</button>
-                                @else
-                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#staticBackdrop2_{{ $item['animeId'] }}" disabled>Set</button>
-                                @endif
+                            @if (!in_array($item['animeId'], $blacklist_animeIds))
+                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#staticBackdrop2_{{ $item['animeId'] }}">Set</button>
+                            @else
+                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#staticBackdrop2_{{ $item['animeId'] }}" disabled>Set</button>
+                            @endif
 
-                                <!-- Modal -->
-                                <div class="modal fade" id="staticBackdrop2_{{ $item['animeId'] }}"
-                                    data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                                    aria-labelledby="staticBackdrop2Label" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="staticBackdropLabel">Min Age Confirmation
-                                                </h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <form method="POST" action="/adding-minage">
-                                                @csrf
-                                                <div class="modal-body">
-                                                    <p>yakin nih mau masukin {{ $item['animeId'] }} ke dalem min age
-                                                    </p>
-                                                    <input class="form-control" name="minAge" type="text"
-                                                        placeholder="Default input"
-                                                        aria-label="default input example">
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Cancel</button>
-                                                    <input type="hidden" name="animeId"
-                                                        value="{{ $item['animeId'] }}">
-
-                                                    <button type="submit" class="btn btn-danger">Add to Min
-                                                        age</button>
-                                            </form>
-
+                            <!-- Modal -->
+                            <div class="modal fade" id="staticBackdrop2_{{ $item['animeId'] }}"
+                                data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                aria-labelledby="staticBackdrop2Label" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="staticBackdropLabel">Min Age Confirmation
+                                            </h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
                                         </div>
+                                        <form method="POST" action="/adding-minage">
+                                            @csrf
+                                            <div class="modal-body">
+                                                <center>
+                                                    <p>Sure want to set min age for {{ $item['animeId'] }} ?</p>
+                                                </center>
+                                                <input class="form-control" name="minAge" type="number"
+                                                    placeholder="Set minimum age to watch this anime" required>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Cancel</button>
+                                                <input type="hidden" name="animeId"
+                                                    value="{{ $item['animeId'] }}">
+
+                                                <button type="submit" class="btn btn-primary">Set Min
+                                                    Age</button>
+                                        </form>
+
                                     </div>
                                 </div>
-                                </div>
+                            </div>
+                            </div>
                             @else
                                 <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
                                     data-bs-target="#staticBackdrop3_{{ $item['animeId'] }}">Delete</button>
@@ -248,7 +251,7 @@
 
                         </td>
                         <td>
-                            <a href="/en-db-genre/{{ $item->animeId }}/edit" class="btn btn-warning btn-sm"><svg
+                            <a href="/en-db-genre/{{ $item->id }}/edit" class="btn btn-warning btn-sm"><svg
                                     xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                     fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                     <path
@@ -304,29 +307,14 @@
 
     @if (0 == $i)
         <center>
-            <div style="padding-top: 7.5vw;">
-                <img src="https://i.ytimg.com/vi/KtjCvVFYKYs/maxresdefault.jpg" height="250px">
-            </div>
-
-            <p>Im sorry {{ Auth::user()->name }} but is seems now more anime on this list</p>
+            <p style="padding-top: 30vh;">"No Anime have been added yet."</p>
+            <a class="btn btn-primary btn-sm" href="{{ route('genrePreInsert') }}">Single anime Insert</a>
+            @if (Auth::check() && Auth::user()->theme === 'light')
+                <a class="btn btn-dark btn-sm" href="{{ route('prepopulateGenre') }}">Populate</a>
+            @else
+                <a class="btn btn-light btn-sm" href="{{ route('prepopulateGenre') }}">Populate</a>
+            @endif
         </center>
-
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                <li class="page-item">
-                    <a class="page-link"
-                        href="{{ route('admin-genre-manage') }}?genre={{ $genreparam }}&page={{ $prev }}">Previous</a>
-                </li>
-                <li class="page-item"><a class="page-link"
-                        href="{{ route('admin-genre-manage') }}?genre={{ $genreparam }}&page={{ $prev }}">{{ $prev }}</a>
-                </li>
-                <li class="page-item active"><a class="page-link" href="#">{{ $page }}</a></li>
-                <li class="page-item disabled">
-                    <a class="page-link"
-                        href="{{ route('admin-genre-manage') }}?genre={{ $genreparam }}&page={{ $next }}">Next</a>
-                </li>
-            </ul>
-        </nav>
     @else
         @if ($page == 1)
             <nav aria-label="Page navigation example">

@@ -36,10 +36,11 @@
 </style>
 
 <body>
-    @include('layouts.navbar')
+    @include('layouts.admin-navbar')
 
     <form class="row g-3 needs-validation" novalidate action="/en-db-popular/save-edit" method="POST">
         @csrf
+        <input type="hidden" class="form-control" id="id" name="id" value="{{ $popular->id }}" required>
         <div class="col-md-12">
             <label for="validationCustom01" class="form-label">Page</label>
             <input type="text" class="form-control" id="validationCustom01" name="validationCustom01"
@@ -49,7 +50,7 @@
 
         <div class="col-md-12">
             <label for="validationCustom01" class="form-label">Anime Id</label>
-            <input type="text" class="form-control disabled-input" id="validationCustom02" name="validationCustom02"
+            <input type="text" class="form-control" id="validationCustom02" name="validationCustom02"
                 value="{{ $popular->animeId }}" required>
 
         </div>

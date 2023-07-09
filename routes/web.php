@@ -31,6 +31,9 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/setting', function () {return view('user.setting');});// Done Sepenuhnya
     Route::post('/setting/update', [UserController::class, 'updateUser'])->name('updateUser');// Done Sepenuhnya
 
+    Route::get('change-password', [UserController::class, 'changePassword'])->name('changePassword');
+    Route::post('change-password-save', [UserController::class, 'savechangePassword'])->name('saveChangePassword');
+
     Route::get('/dark', [HomeController::class, 'dark'])->name('dark');// Done Sepenuhnya
     Route::get('/light', [HomeController::class, 'light'])->name('light');// Done Sepenuhnya
 
@@ -65,6 +68,7 @@ Route::middleware('superadmin')->group(function () {
     // CRUD User
     Route::get('/user', [SuperAdminController::class, 'viewUser'])->name('user');//Done Sepenuhnya
     Route::post('/user/promote', [SuperAdminController::class, 'promoteToAdmin'])->name('adminPromote');//Done Sepenuhnya
+    Route::post('/user/demote', [SuperAdminController::class, 'demoteToUser'])->name('adminDemote');//Done Sepenuhnya
     Route::post('/user/delete', [SuperAdminController::class, 'delete'])->name('delUser');//Done Sepenuhnya
 
 });
@@ -157,10 +161,10 @@ Route::middleware('admin')->group(function () {
     //CRUD Anime
     Route::get('/en-db-anime', [AnimeController::class, 'enanime'])->name('admin-anime-manage');// Done Sepenuhnya
     Route::get('/en-db-anime/insert', function () {return view('admin.anime.insert_anime');})->name('animePreInsert');// Done Sepenuhnya
-    Route::post('/en-db-anime/insert/save', [AdminController::class, 'enanimeIns'])->name('anime.ins');// Done Sepenuhnya
-    Route::get('/en-db-anime/{id}/edit', [AdminController::class, 'preenanimupdate'])->name('preenanimupdate');// Done Sepenuhnya
-    Route::post('/en-db-anime/edit/save', [AdminController::class, 'enanimupdate'])->name('enanimupdate');// Done Sepenuhnya
-    Route::post('/en-db-anime/del', [AdminController::class, 'enanimeDel'])->name('enanimdel');// Done Sepenuhnya
+    Route::post('/en-db-anime/insert/save', [AnimeController::class, 'enanimeIns'])->name('anime.ins');// Done Sepenuhnya
+    Route::get('/en-db-anime/{id}/edit', [AnimeController::class, 'preenanimupdate'])->name('preenanimupdate');// Done Sepenuhnya
+    Route::post('/en-db-anime/edit/save', [AnimeController::class, 'enanimupdate'])->name('enanimupdate');// Done Sepenuhnya
+    Route::post('/en-db-anime/del', [AnimeController::class, 'enanimeDel'])->name('enanimdel');// Done Sepenuhnya
 
     //CRUD Episode
     Route::get('/en-db-anime/eps/{animeId}', [EpisodeController::class, 'enanimeEps'])->name('admin-epslist-manage');// Done Sepenuhnya

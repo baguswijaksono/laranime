@@ -13,8 +13,9 @@ class EpisodeController extends Controller
         $epsList->episodeNum = $request->input('episodeNum');
         $epsList->episodeId = $request->input('episodeId');
         $epsList->animeId = $request->input('animeId');
+        $epsList->embedUrl = $request->input('embedUrl');
         $epsList->save();
-        return redirect()->route('admin.anime.episode.index',['animeId'=>$request->input('animeId')]);
+        return redirect()->route('admin-epslist-manage',['animeId'=>$request->input('animeId')]);
     }  
     
 
@@ -31,6 +32,7 @@ class EpisodeController extends Controller
             $ep->animeId = $request->input('animeId');
             $ep->episodeId = $request->input('episodeId');
             $ep->episodeNum = $request->input('episodeNum');
+            $ep->embedUrl = $request->input('embedUrl');
             $ep->save();
         return back();
     } 

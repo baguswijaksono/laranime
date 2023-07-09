@@ -54,21 +54,22 @@ class MovieController extends Controller
         return back();
     }
 
-    public function enmovieEdit(Request $request,$animeId)
+    public function enmovieEdit(Request $request,$id)
     {
-        $movie = Movies::where('animeId', $animeId)->first();
+        $movie = Movies::where('id', $id)->first();
         return view('admin.movie.edit',['movie'=>$movie ]);
     }
 
     public function enmovieEditsave(Request $request)
     {
+        $id = $request->input('id');
         $animeId = $request->input('validationCustom02');
         $animeTitle = $request->input('validationCustom03');
         $animeImg = $request->input('validationCustom04');
         $releasedDate = $request->input('validationCustom05');
         $page = $request->input('validationCustom01');
     
-        $update = Movies::where('animeId', $animeId)->first();
+        $update = Movies::where('id', $id)->first();
     
         if ($update) {
             $update->page = $page;

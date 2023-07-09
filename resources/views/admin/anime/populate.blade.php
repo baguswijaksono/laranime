@@ -4,7 +4,6 @@
 @else
     <html lang="en" data-bs-theme="dark">
 @endif
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,7 +11,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
-
 <body>
     <div class="container" style="max-width: 1000px; padding-top: 45vh;">
         <div class="progress">
@@ -22,7 +20,6 @@
             </div>
         </div>
     </div>
-
     <center>
         <div class='logdata'>
         </div>
@@ -73,6 +70,7 @@
                     $eps->animeId = $animeId;
                     $eps->episodeId = $episode['episodeId'];
                     $eps->episodeNum = $episode['episodeNum'];
+                    $eps->embedUrl = "https://player.anikatsu.me/?id=" . $episode['episodeId'];
                     $eps->save();
                 }
 
@@ -120,8 +118,6 @@
         }
     }
 @endphp
-
-
 </body>
 
 </html>

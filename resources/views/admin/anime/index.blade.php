@@ -18,7 +18,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap demo</title>
+    <title>Anime Manage</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
@@ -60,158 +60,187 @@
                     <td>{{ $item->animeTitle }}</td>
                     <td>{{ $item->type }}</td>
                     <td>{{ $item->releasedDate }}</td>
-                    <td>{{ $item->status }}</td>
-                    <td>{{ $item->genres }}</td>
+                    <td>
+                        @if ($item->status === 'Completed')
+                        <span class="badge text-bg-primary">Completed</span>
+                        @else
+                        <span class="badge text-bg-success">Ongoing</span>
+                        @endif
+                    </td>
+                    
+                    <td>@php
+                        $stringVariable = '["Fantasy", "Historical", "Romance"]';
+                        $myList = json_decode($stringVariable);
+                    @endphp
+                    
+                    @foreach($myList as $genress)
+                        {{ $genress }}
+                    @endforeach
+                    </td>
                     <td>{{ $item->otherNames }}</td>
-                    <td><img src="{{ $item->animeImg }}" style="max-width: 50px; width: 35px;"></td>
+                    <td><img src="{{ $item->animeImg }}" style="max-width: 125px;"></td>
                     <td>{{ $item->totalEpisodes }}</td>
-                    <td><a href="/en-db-anime/eps/{{ $item->animeId }}" class="btn btn-primary btn-sm">Details</a></td>
+                    <td><a href="/en-db-anime/eps/{{ $item->animeId }}" class="btn btn-dark btn-sm">Details</a></td>
                     <td>
                         @if (!in_array($item['animeId'], $blacklist_animeIds))
-                            @if (!in_array($item['animeId'], $min_age))
-                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#staticBackdrop_{{ $item['animeId'] }}">Add</button>
-                            @else
-                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#staticBackdrop_{{ $item['animeId'] }}" disabled>Add</button>
-                            @endif
-                            <!-- Modal -->
-                            <div class="modal fade" id="staticBackdrop_{{ $item['animeId'] }}"
-                                data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                                aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="staticBackdropLabel">Blacklist Confirmation</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>yakin nih mau masukin {{ $item['animeId'] }} ke dalem blacklist</p>
-                                            <form method="POST" action="/adding-blacklist">
-                                                @csrf
-                                                <input type="hidden" name="animeId" value="{{ $item['animeId'] }}">
-                                                <input class="form-control" name="reason" type="text"
-                                                    placeholder="Enter the reason here">
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Cancel</button>
-
-                                            <button type="submit" class="btn btn-danger">Add to Blacklist</button>
-                                            </form>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @else
-                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#staticBackdrop_{{ $item['animeId'] }}">Delete</button>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="staticBackdrop_{{ $item['animeId'] }}"
-                                data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                                aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="staticBackdropLabel">Blacklist Confirmation</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>yakin nih mau hapus {{ $item['animeId'] }} dari blacklist</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Cancel</button>
-                                            <form method="POST" action="/del-blacklist">
-                                                @csrf
-                                                <input type="hidden" name="animeId" value="{{ $item['animeId'] }}">
-                                                <button type="submit" class="btn btn-danger">delete from
-                                                    Blacklist</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
-
-                    </td>
-                    <td>
-
                         @if (!in_array($item['animeId'], $min_age))
-                            @if (!in_array($item['animeId'], $blacklist_animeIds))
-                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#staticBackdrop2_{{ $item['animeId'] }}">Set</button>
-                            @else
-                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#staticBackdrop2_{{ $item['animeId'] }}" disabled>Set</button>
-                            @endif
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="staticBackdrop2_{{ $item['animeId'] }}"
-                                data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                                aria-labelledby="staticBackdrop2Label" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="staticBackdropLabel">Min Age Confirmation</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <form method="POST" action="/adding-minage">
+                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#staticBackdrop_{{ $item['animeId'] }}">Add</button>
+                        @else
+                            <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#staticBackdrop_{{ $item['animeId'] }}" disabled>Add</button>
+                        @endif
+                        <!-- Modal -->
+                        <div class="modal fade" id="staticBackdrop_{{ $item['animeId'] }}"
+                            data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">Blacklist Confirmation
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <center>
+                                            <p>Sure want to add {{ $item['animeId'] }} to blacklist ? </p>
+                                        </center>
+                                        <form method="POST" action="/adding-blacklist">
                                             @csrf
-                                            <div class="modal-body">
-                                                <p>yakin nih mau masukin {{ $item['animeId'] }} ke dalem min age</p>
-                                                <input class="form-control" name="minAge" type="text"
-                                                    placeholder="Default input" aria-label="default input example">
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Cancel</button>
-                                                <input type="hidden" name="animeId" value="{{ $item['animeId'] }}">
+                                            <input type="hidden" name="animeId" value="{{ $item['animeId'] }}">
+                                            <input class="form-control" name="reason" type="text"
+                                                placeholder="Enter the reason here" required>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cancel</button>
 
-                                                <button type="submit" class="btn btn-danger">Add to Min age</button>
+                                        <button type="submit" class="btn btn-primary">Add to Blacklist</button>
                                         </form>
 
                                     </div>
                                 </div>
                             </div>
-                            </div>
+                        </div>
                         @else
-                            <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#staticBackdrop3_{{ $item['animeId'] }}">Delete</button>
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop_{{ $item['animeId'] }}">Delete</button>
 
-                            <!-- Modal -->
-                            <div class="modal fade" id="staticBackdrop3_{{ $item['animeId'] }}"
-                                data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                                aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="staticBackdropLabel">Blacklist Confirmation
-                                            </h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <p>yakin nih mau hapus {{ $item['animeId'] }} dari blacklist</p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-bs-dismiss="modal">Cancel</button>
-                                            <form method="POST" action="/del-minage">
+                    <!-- Modal -->
+                    <div class="modal fade" id="staticBackdrop_{{ $item['animeId'] }}"
+                        data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">Delete Blacklist
+                                        Confirmation
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <center>
+                                        <p>Sure want to remove {{ $item['animeId'] }} from blacklist ? </p>
+                                    </center>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cancel</button>
+                                    <form method="POST" action="/del-blacklist">
+                                        @csrf
+                                        <input type="hidden" name="animeId"
+                                            value="{{ $item['animeId'] }}">
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                        @endif
+
+                    </td>
+                    <td>
+                            @if (!in_array($item['animeId'], $min_age))
+                                @if (!in_array($item['animeId'], $blacklist_animeIds))
+                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#staticBackdrop2_{{ $item['animeId'] }}">Set</button>
+                                @else
+                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#staticBackdrop2_{{ $item['animeId'] }}" disabled>Set</button>
+                                @endif
+                                <!-- Modal -->
+                                <div class="modal fade" id="staticBackdrop2_{{ $item['animeId'] }}"
+                                    data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                                    aria-labelledby="staticBackdrop2Label" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="staticBackdropLabel">Min Age Confirmation
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <form method="POST" action="/adding-minage">
                                                 @csrf
-                                                <input type="hidden" name="animeId" value="{{ $item['animeId'] }}">
-                                                <button type="submit" class="btn btn-danger">delete from
-                                                    Blacklist</button>
+                                                <div class="modal-body">
+                                                    <center>
+                                                        <p>Sure want to set min age for {{ $item['animeId'] }} ?</p>
+                                                    </center>
+                                                    <input class="form-control" name="minAge" type="number"
+                                                        placeholder="Set minimum age to watch this anime" required>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Cancel</button>
+                                                    <input type="hidden" name="animeId"
+                                                        value="{{ $item['animeId'] }}">
+
+                                                    <button type="submit" class="btn btn-primary">Set Min
+                                                        Age</button>
                                             </form>
+
                                         </div>
                                     </div>
                                 </div>
+                                </div>
+                        @else
+                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop3_{{ $item['animeId'] }}">Unset</button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="staticBackdrop3_{{ $item['animeId'] }}"
+                        data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">Minimum Age Unset
+                                        Confirmation</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <center>
+                                        <p>Sure want to unset minimum age requirement for
+                                            {{ $item['animeId'] }} ?</p>
+                                    </center>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Cancel</button>
+                                    <form method="POST" action="/del-minage">
+                                        @csrf
+                                        <input type="hidden" name="animeId"
+                                            value="{{ $item['animeId'] }}">
+                                        <button type="submit" class="btn btn-danger">Unset</button>
+                                    </form>
+                                </div>
                             </div>
+                        </div>
+                    </div>
                         @endif
                     </td>
                     <td>
@@ -267,28 +296,15 @@
     </table>
 
     @if (0 == $i)
-        <center>
-            <div style="padding-top: 7.5vw;">
-                <img src="https://i.ytimg.com/vi/KtjCvVFYKYs/maxresdefault.jpg" height="250px">
-            </div>
-
-            <p>Im sorry {{ Auth::user()->name }} but is seems now more anime on this list</p>
-        </center>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                <li class="page-item">
-                    <a class="page-link"
-                        href="{{ route('admin-anime-manage') }}?page={{ $prev }}">Previous</a>
-                </li>
-                <li class="page-item"><a class="page-link"
-                        href="{{ route('admin-anime-manage') }}?page={{ $prev }}">{{ $prev }}</a>
-                </li>
-                <li class="page-item active"><a class="page-link" href="#">{{ $page }}</a></li>
-                <li class="page-item disabled">
-                    <a class="page-link" href="{{ route('admin-anime-manage') }}?page={{ $next }}">Next</a>
-                </li>
-            </ul>
-        </nav>
+    <center>
+        <p style="padding-top: 40vh;">"No Anime have been added yet."</p>
+        <a class="btn btn-primary btn-sm" href="{{ route('animePreInsert') }}">Single anime Insert</a>
+        @if (Auth::check() && Auth::user()->theme === 'light')
+            <a class="btn btn-dark btn-sm" href="{{ route('prepopulateAnime') }}">Populate</a>
+        @else
+            <a class="btn btn-light btn-sm" href="{{ route('prepopulateAnime') }}">Populate</a>
+        @endif
+    </center>
     @else
         @if ($page == 1)
             <nav aria-label="Page navigation example">

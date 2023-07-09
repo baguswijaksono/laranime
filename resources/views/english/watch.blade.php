@@ -1,4 +1,4 @@
-          @if (!in_array($animeId, $blacklist_animeIds))
+@if (!in_array($animeId, $blacklist_animeIds))
               @if (!in_array($animeId, $minagelist))
                   <!-- aa -->
                   <!doctype html>
@@ -38,7 +38,7 @@
                                   <li>
                                       <div class="jendala-stream">
                                           <div class="ratio ratio-16x9">
-                                              <iframe src="https://player.anikatsu.me/?id={{ $x }}"
+                                              <iframe src="{{$embed}}"
                                                   title="{{ $details['animeTitle'] }}" allowfullscreen></iframe>
                                           </div>
 
@@ -86,7 +86,7 @@
 
                                           </div>
                                           <div style="padding-top: 15px;">
-                                              <div class="sinopsis"style='max-width: 1056px;'>
+                                              <div class="sinopsis"style='width: 1056px;'>
                                                   @if (Auth::check() && Auth::user()->theme === 'light')
                                                       <div class="alert alert-light" role="alert">
                                                       @else
@@ -117,9 +117,7 @@
                                                               <input type="hidden" class="form-control"
                                                                   placeholder="Enter your comment..."
                                                                   value="{{ Auth::user()->role }}" name="role">
-                                                              <input type="hidden" class="form-control"
-                                                                  placeholder="Enter your comment..."
-                                                                  value="{{ $x }}" name="episodeId">
+                                                              <input type="hidden" class="form-control" value="{{ $x }}" name="episodeId">
                                                               <input type="hidden" class="form-control"
                                                                   placeholder="Enter your comment..."
                                                                   value="{{ date('Y-m-d H:i:s') }}" name="at">
@@ -450,7 +448,7 @@
                                       <li>
                                           <div class="jendala-stream">
                                               <div class="ratio ratio-16x9">
-                                                  <iframe src="https://player.anikatsu.me/?id={{ $x }}"
+                                                  <iframe src="{{$embed}}"
                                                       title="{{ $details['animeTitle'] }}" allowfullscreen></iframe>
                                               </div>
 
@@ -498,7 +496,7 @@
 
                                               </div>
                                               <div style="padding-top: 15px;">
-                                                  <div class="sinopsis"style='max-width: 1056px;'>
+                                                  <div class="sinopsis"style='width: 1056px;'>
                                                       @if (Auth::check() && Auth::user()->theme === 'light')
                                                           <div class="alert alert-light" role="alert">
                                                           @else

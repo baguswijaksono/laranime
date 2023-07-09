@@ -22,6 +22,17 @@ class SuperAdminController extends Controller
         return back();
     }
 
+    public function demoteToUser(Request $request)
+    {
+        $email = $request->input('email');
+        $user = User::where('email', $email )->first();   
+        $user->role = 'client';
+        $user->save();
+        return back();
+    }
+
+    
+
     public function delete(Request $request)
     {
         $email = $request->input('email');

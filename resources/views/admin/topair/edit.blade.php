@@ -36,12 +36,14 @@
 </style>
 
 <body>
-    @include('layouts.navbar')
+    @include('layouts.admin-navbar')
 
     <form class="row g-3 needs-validation" novalidate action="/en-db-topair/save-edit" method="POST">
         @csrf
         <div class="col-md-12">
             <label for="validationCustom01" class="form-label">Page</label>
+            <input type="hidden" class="form-control" id="id" name="id"
+            value="{{ $topair->id }}" required>
             <input type="text" class="form-control" id="validationCustom01" name="validationCustom01"
                 value="{{ $topair->page }}" required>
 
@@ -49,7 +51,7 @@
 
         <div class="col-md-12">
             <label for="validationCustom01" class="form-label">Anime Id</label>
-            <input type="text" class="form-control disabled-input" id="validationCustom02" name="validationCustom02"
+            <input type="text" class="form-control" id="validationCustom02" name="validationCustom02"
                 value="{{ $topair->animeId }}" required>
 
         </div>

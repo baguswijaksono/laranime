@@ -87,16 +87,16 @@ class GenresController extends Controller
         return back();
     }
 
-    public function engenreEdit(Request $request,$animeId)
+    public function engenreEdit(Request $request,$id)
     {
         $genreList = genreList::all();
-        $GenreEn = GenreEn::where('animeId', $animeId)->first();
-        return view('admin.database-genre-manage-edit',['GenreEn'=>$GenreEn ,'genreList'=>$genreList]);
+        $GenreEn = GenreEn::where('id', $id)->first();
+        return view('admin.genre.edit',['GenreEn'=>$GenreEn ,'genreList'=>$genreList]);
     }  
 
     public function engenreEditsave(Request $request)
     {
-        $id = $request->input('validationCustom020');
+        $id = $request->input('id');
         $page = $request->input('validationCustom01');
         $genre = $request->input('validationCustom010');
         $animeId = $request->input('validationCustom02');

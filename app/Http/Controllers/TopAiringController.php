@@ -26,9 +26,9 @@ class TopAiringController extends Controller
         return view('admin.topair.populate');
     }
 
-    public function entopairEdit(Request $request,$animeId)
+    public function entopairEdit(Request $request,$id)
     {
-        $TopAir = TopAir::where('animeId', $animeId)->first();
+        $TopAir = TopAir::where('id', $id)->first();
         return view('admin.topair.edit',['topair'=>$TopAir ]);
     }
 
@@ -54,13 +54,14 @@ class TopAiringController extends Controller
 
     public function entopairEditsave(Request $request)
     {
+        $id = $request->input('id');
         $animeId = $request->input('validationCustom02');
         $animeTitle = $request->input('validationCustom03');
         $animeImg = $request->input('validationCustom04');
         $latestEp = $request->input('validationCustom05');
         $page = $request->input('validationCustom01');
     
-        $update = TopAir::where('animeId', $animeId)->first();
+        $update = TopAir::where('id', $id)->first();
     
         if ($update) {
             $update->page = $page;
